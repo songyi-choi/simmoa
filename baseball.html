@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baseball Team Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "MS Sans Serif", "Microsoft Sans Serif", sans-serif;
+            background: #008080;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .window {
+            background: #C0C0C0;
+            border: 2px outset #FFFFFF;
+            box-shadow: inset -1px -1px 0 #000000, inset 1px 1px 0 #DFDFDF, inset -2px -2px 0 #808080, inset 2px 2px 0 #FFFFFF;
+        }
+
+        .title-bar {
+            background: linear-gradient(to right, #000080, #1084d0);
+            padding: 3px 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .title-text {
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .title-buttons {
+            display: flex;
+            gap: 2px;
+        }
+
+        .title-button {
+            width: 16px;
+            height: 14px;
+            background: #C0C0C0;
+            border: 1px outset white;
+            font-size: 9px;
+            padding: 0;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .title-button.close {
+            font-size: 8px;
+            font-weight: bold;
+        }
+
+        .menu-bar {
+            background: #C0C0C0;
+            border-bottom: 1px solid #808080;
+            display: flex;
+            padding: 2px 0;
+        }
+
+        .menu-item {
+            padding: 2px 8px;
+            font-size: 11px;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .content {
+            padding: 20px;
+            background: #C0C0C0;
+        }
+
+        .progress-section {
+            margin-bottom: 20px;
+        }
+
+        .progress-label {
+            font-size: 10px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            background: white;
+            border: 2px inset #808080;
+            height: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: #000080;
+            transition: width 0.3s ease;
+        }
+
+        .question-box {
+            background: white;
+            border: 2px inset #808080;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 13px;
+            font-weight: bold;
+            line-height: 1.5;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-button {
+            background: #C0C0C0;
+            border: 2px outset white;
+            padding: 12px 15px;
+            font-size: 11px;
+            cursor: pointer;
+            text-align: left;
+            font-family: inherit;
+            box-shadow: inset -1px -1px 0 #000000, inset 1px 1px 0 #DFDFDF, inset -2px -2px 0 #808080;
+        }
+
+        .option-button:hover {
+            background: #0000AA;
+            color: white;
+        }
+
+        .option-button:active {
+            border: 2px inset white;
+        }
+
+        .status-bar {
+            background: #C0C0C0;
+            border-top: 1px solid white;
+            padding: 3px 5px;
+            font-size: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .status-item {
+            border: 1px inset #808080;
+            padding: 1px 8px;
+        }
+
+        .status-item.main {
+            flex: 1;
+        }
+
+        .status-item.percentage {
+            width: 80px;
+            text-align: center;
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 15px;
+            color: white;
+            font-size: 10px;
+            text-shadow: 1px 1px 0 #000000;
+        }
+
+        /* Result Styles */
+        .result-box {
+            background: white;
+            border: 2px inset #808080;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .result-emoji {
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .result-title {
+            font-size: 11px;
+            color: #000080;
+            margin-bottom: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .result-team {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000000;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .result-stadium {
+            font-size: 11px;
+            color: #808080;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .result-description {
+            background: #FFFFCC;
+            border: 1px solid #808080;
+            padding: 15px;
+            font-size: 11px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .result-traits {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .trait-badge {
+            background: #C0C0C0;
+            border: 2px outset white;
+            padding: 4px 10px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .info-box {
+            background: white;
+            border: 2px inset #808080;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-title {
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .info-content {
+            font-size: 10px;
+            line-height: 1.8;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .action-button {
+            background: #C0C0C0;
+            border: 2px outset white;
+            padding: 8px 25px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: inherit;
+            box-shadow: inset -1px -1px 0 #000000, inset 1px 1px 0 #DFDFDF, inset -2px -2px 0 #808080;
+        }
+
+        .action-button:active {
+            border: 2px inset white;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Start Screen -->
+        <div id="startScreen" class="window">
+            <div class="title-bar">
+                <div class="title-text">
+                    <span>⚾</span>
+                    <span>Baseball Team Test.exe</span>
+                </div>
+                <div class="title-buttons">
+                    <button class="title-button">_</button>
+                    <button class="title-button">□</button>
+                    <button class="title-button close">×</button>
+                </div>
+            </div>
+
+            <div class="menu-bar">
+                <div class="menu-item">File</div>
+                <div class="menu-item">Edit</div>
+                <div class="menu-item">Help</div>
+            </div>
+
+            <div class="content" style="padding: 40px 30px; text-align: center;">
+                <div style="font-size: 48px; margin-bottom: 20px;">⚾</div>
+                <div style="font-size: 16px; font-weight: bold; margin-bottom: 10px;">
+                    Baseball Team Matching System
+                </div>
+                <div style="font-size: 11px; color: #808080; margin-bottom: 30px;">
+                    Version 1.0 Build 1997
+                </div>
+                
+                <div style="background: white; border: 2px inset #808080; padding: 20px; margin-bottom: 25px; text-align: left;">
+                    <div style="font-size: 11px; line-height: 1.8;">
+                        이 프로그램은 당신의 성향을 분석하여<br>
+                        가장 어울리는 KBO 야구팀을 찾아드립니다.<br><br>
+                        총 10개의 질문에 답변해주세요.<br>
+                        솔직하게 답변할수록 정확한 결과를 얻을 수 있습니다.
+                    </div>
+                </div>
+
+                <button class="action-button" onclick="startTest()" style="padding: 10px 40px; font-size: 12px;">
+                    시작하기
+                </button>
+            </div>
+
+            <div class="status-bar">
+                <div class="status-item main">Ready to start</div>
+                <div class="status-item percentage">0%</div>
+            </div>
+        </div>
+
+        <!-- Question Screen -->
+        <div id="questionScreen" class="window hidden">
+            <div class="title-bar">
+                <div class="title-text">
+                    <span>⚾</span>
+                    <span>Baseball Team Test.exe</span>
+                </div>
+                <div class="title-buttons">
+                    <button class="title-button">_</button>
+                    <button class="title-button">□</button>
+                    <button class="title-button close">×</button>
+                </div>
+            </div>
+
+            <div class="menu-bar">
+                <div class="menu-item">File</div>
+                <div class="menu-item">Edit</div>
+                <div class="menu-item">Help</div>
+            </div>
+
+            <div class="content">
+                <div class="progress-section">
+                    <div class="progress-label" id="progressLabel">Question 1 of 7</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 14.3%"></div>
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-text" id="questionText"></div>
+                </div>
+
+                <div class="options" id="optionsContainer"></div>
+            </div>
+
+            <div class="status-bar">
+                <div class="status-item main">Ready</div>
+                <div class="status-item percentage" id="statusPercentage">14%</div>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="resultScreen" class="window hidden">
+            <div class="title-bar">
+                <div class="title-text">
+                    <span>⚾</span>
+                    <span>Baseball Team Test - Result</span>
+                </div>
+                <div class="title-buttons">
+                    <button class="title-button">_</button>
+                    <button class="title-button">□</button>
+                    <button class="title-button close">×</button>
+                </div>
+            </div>
+
+            <div class="menu-bar">
+                <div class="menu-item">File</div>
+                <div class="menu-item">Edit</div>
+                <div class="menu-item">Help</div>
+            </div>
+
+            <div class="content" style="padding: 30px;">
+                <div class="result-box">
+                    <div class="result-emoji" id="resultEmoji"></div>
+                    <div class="result-title">★★★ MATCH RESULT ★★★</div>
+                    <div class="result-team" id="resultTeam"></div>
+                    <div class="result-stadium" id="resultStadium"></div>
+                    <div class="result-description" id="resultDescription"></div>
+                    <div class="result-traits" id="resultTraits"></div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-title">
+                        <span style="color: #FF0000;">📊</span>
+                        System Information
+                    </div>
+                    <div class="info-content" id="resultInfo"></div>
+                </div>
+
+                <div class="button-group">
+                    <button class="action-button" onclick="resetTest()">Retry Test</button>
+                    <button class="action-button">OK</button>
+                </div>
+            </div>
+
+            <div class="status-bar">
+                <div class="status-item main">Test completed successfully</div>
+                <div class="status-item percentage">100%</div>
+            </div>
+        </div>
+
+        <div class="footer-text">
+            © 1997 Baseball Team Test Corporation. All rights reserved.
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "출근길에 가장 자주 듣는 노래는?",
+                options: [
+                    { text: "트로트 - 인생은 미완성", scores: { doosan: 3, samsung: 3, lg: 2, kt: 1, kiwoom: 1, ssg: 1, lotte: 2, nc: 1, hanwha: 2, kia: 3 } },
+                    { text: "발라드 - 눈물 한 스푼", scores: { doosan: 2, samsung: 2, lg: 2, kt: 2, kiwoom: 2, ssg: 2, lotte: 3, nc: 2, hanwha: 3, kia: 2 } },
+                    { text: "힙합 - 요즘 뜨는 거", scores: { doosan: 2, samsung: 1, lg: 3, kt: 3, kiwoom: 3, ssg: 3, lotte: 1, nc: 3, hanwha: 2, kia: 1 } },
+                    { text: "아이돌 - 최신 차트 1위곡", scores: { doosan: 1, samsung: 1, lg: 2, kt: 2, kiwoom: 2, ssg: 2, lotte: 2, nc: 2, hanwha: 2, kia: 2 } },
+                    { text: "팝송 - 빌보드 Top 100", scores: { doosan: 2, samsung: 2, lg: 2, kt: 3, kiwoom: 2, ssg: 2, lotte: 1, nc: 2, hanwha: 1, kia: 1 } },
+                    { text: "록/메탈 - 출근이 전쟁", scores: { doosan: 2, samsung: 1, lg: 3, kt: 2, kiwoom: 2, ssg: 2, lotte: 2, nc: 2, hanwha: 2, kia: 2 } }
+                ]
+            },
+            {
+                question: "회식 메뉴 고를 때 당신의 선택은?",
+                options: [
+                    { text: "고깃집 (소고기/돼지고기)", scores: { doosan: 3, samsung: 2, lg: 2, kt: 1, kiwoom: 2, ssg: 1, lotte: 1, nc: 2, hanwha: 2, kia: 2 } },
+                    { text: "회/해산물 - 바다 냄새가 솔솔", scores: { doosan: 1, samsung: 1, lg: 1, kt: 1, kiwoom: 1, ssg: 3, lotte: 3, nc: 2, hanwha: 1, kia: 1 } },
+                    { text: "치맥 - 클래식은 배신하지 않아", scores: { doosan: 2, samsung: 2, lg: 3, kt: 2, kiwoom: 2, ssg: 2, lotte: 2, nc: 2, hanwha: 2, kia: 3 } },
+                    { text: "퓨전 요리 - 뭔가 새로운 거", scores: { doosan: 1, samsung: 1, lg: 2, kt: 3, kiwoom: 3, ssg: 2, lotte: 1, nc: 3, hanwha: 2, kia: 1 } },
+                    { text: "일식 - 깔끔하게", scores: { doosan: 2, samsung: 3, lg: 2, kt: 2, kiwoom: 1, ssg: 2, lotte: 2, nc: 1, hanwha: 1, kia: 1 } },
+                    { text: "중식 - 짜장면이 진리", scores: { doosan: 2, samsung: 2, lg: 2, kt: 2, kiwoom: 2, ssg: 2, lotte: 2, nc: 2, hanwha: 3, kia: 2 } }
+                ]
+            },
+            {
+                question: "주말에 가장 끌리는 활동은?",
+                options: [
+                    { text: "번화가에서 쇼핑/카페 투어", scores: { doosan: 3, samsung: 1, lg: 3, kt: 2, kiwoom: 3, ssg: 2, lotte: 1, nc: 1, hanwha: 1, kia: 1 } },
+                    { text: "산업단지 근처 맛집 탐방", scores: { doosan: 1, samsung: 2, lg: 1, kt: 3, kiwoom: 1, ssg: 3, lotte: 1, nc: 3, hanwha: 2, kia: 1 } },
+                    { text: "항구 근처 산책/드라이브", scores: { doosan: 1, samsung: 1, lg: 1, kt: 1, kiwoom: 1, ssg: 3, lotte: 3, nc: 1, hanwha: 1, kia: 1 } },
+                    { text: "전통시장/구도심 구경", scores: { doosan: 2, samsung: 3, lg: 2, kt: 1, kiwoom: 2, ssg: 1, lotte: 2, nc: 2, hanwha: 3, kia: 3 } },
+                    { text: "집에서 넷플릭스", scores: { doosan: 2, samsung: 2, lg: 2, kt: 2, kiwoom: 2, ssg: 2, lotte: 2, nc: 2, hanwha: 3, kia: 2 } }
+                ]
+            },
+            {
+                question: "술자리에서 당신의 포지션은?",
+                options: [
+                    { text: "분위기 메이커 - 노래방 1순위", scores: { doosan: 2, samsung: 1, lg: 3, kt: 2, kiwoom: 3, ssg: 2, lotte: 3, nc: 2, hanwha: 2, kia: 3 } },
+                    { text: "조용한 관찰자 - 듣는 게 편해", scores: { doosan: 2, samsung: 3, lg: 1, kt: 2, kiwoom: 1, ssg: 2, lotte: 1, nc: 2, hanwha: 2, kia: 1 } },
+                    { text: "분석가 - 야구 이야기만 3시간", scores: { doosan: 3, samsung: 3, lg: 2, kt: 3, kiwoom: 2, ssg: 3, lotte: 2, nc: 3, hanwha: 2, kia: 2 } },
+                    { text: "분위기 따라 - 케바케", scores: { doosan: 2, samsung: 2, lg: 2, kt: 2, kiwoom: 2, ssg: 2, lotte: 2, nc: 2, hanwha: 3, kia: 2 } },
+                    { text: "주량 자랑 - 폭탄주 환영", scores: { doosan: 3, samsung: 2, lg: 3, kt: 1, kiwoom: 2, ssg: 2, lotte: 3, nc: 2, hanwha: 2, kia: 3 } }
+                ]
+            },
+            {
+                question: "야구 경기 보다가 지면 당신의 반응은?",
+                options: [
+                    { text: "어차피 질 줄 알았어... (체념)", scores: { doosan: 1, samsung: 1, lg: 2, kt: 1, kiwoom: 2, ssg: 1, lotte: 3, nc: 2, hanwha: 3, kia: 1 } },
+                    { text: "아 진짜! 왜 이래!! (분노)", scores: { doosan: 3, samsung: 2, lg: 3, kt: 2, kiwoom: 2, ssg: 2, lotte: 2, nc: 2, hanwha: 2, kia: 3 } },
+                    { text: "다음엔 이길 거야! (희망)", scores: { doosan: 2, samsung: 3, lg: 2, kt: 3, kiwoom: 3, ssg: 3, lotte: 1, nc: 3, hanwha: 2, kia: 2 } },
+                    { text: "과정이 중요한 거지 뭐 (철학)", scores: { doosan: 2, samsung: 2, lg: 2, kt: 2, kiwoom: 2, ssg: 2, lotte: 2, nc: 2, hanwha: 2, kia: 2 } },
+                    { text: "조용히 채널 돌림 (회피)", scores: { doosan: 1, samsung: 2, lg: 1, kt: 2, kiwoom: 1, ssg: 2, lotte: 2, nc: 1, hanwha: 3, kia: 1 } }
+                ]
+            },
+            {
+                question: "친구한테 소개할 우리 동네 명물은?",
+                options: [
+                    { text: "지하철 2호선", scores: { doosan: 3, samsung: 1, lg: 3, kt: 1, kiwoom: 2, ssg: 1, lotte: 1, nc: 1, hanwha: 1, kia: 1 } },
+                    { text: "우리 동네 IT 회사들", scores: { doosan: 1, samsung: 2, lg: 1, kt: 3, kiwoom: 1, ssg: 2, lotte: 1, nc: 2, hanwha: 1, kia: 1 } },
+                    { text: "바다 보이는 카페", scores: { doosan: 1, samsung: 1, lg: 1, kt: 1, kiwoom: 1, ssg: 3, lotte: 3, nc: 1, hanwha: 1, kia: 1 } },
+                    { text: "역사 깊은 전통시장", scores: { doosan: 2, samsung: 3, lg: 2, kt: 1, kiwoom: 1, ssg: 1, lotte: 2, nc: 2, hanwha: 2, kia: 3 } },
+                    { text: "우리 동네 돔구장", scores: { doosan: 1, samsung: 1, lg: 1, kt: 1, kiwoom: 3, ssg: 1, lotte: 1, nc: 1, hanwha: 1, kia: 1 } },
+                    { text: "공단 야경", scores: { doosan: 1, samsung: 1, lg: 1, kt: 1, kiwoom: 1, ssg: 1, lotte: 1, nc: 3, hanwha: 1, kia: 1 } },
+                    { text: "정부청사 근처", scores: { doosan: 1, samsung: 1, lg: 1, kt: 1, kiwoom: 1, ssg: 1, lotte: 1, nc: 1, hanwha: 3, kia: 1 } }
+                ]
+            },
+            {
+                question: "인생에서 가장 중요한 건?",
+                options: [
+                    { text: "역사와 전통", scores: { doosan: 3, samsung: 3, lg: 2, kt: 1, kiwoom: 1, ssg: 1, lotte: 3, nc: 1, hanwha: 2, kia: 3 } },
+                    { text: "끊임없는 도전", scores: { doosan: 2, samsung: 2, lg: 2, kt: 3, kiwoom: 3, ssg: 3, lotte: 2, nc: 3, hanwha: 3, kia: 2 } },
+                    { text: "열정과 패기", scores: { doosan: 3, samsung: 2, lg: 3, kt: 2, kiwoom: 2, ssg: 2, lotte: 3, nc: 2, hanwha: 2, kia: 3 } },
+                    { text: "합리적 선택", scores: { doosan: 1, samsung: 3, lg: 1, kt: 3, kiwoom: 2, ssg: 3, lotte: 1, nc: 2, hanwha: 2, kia: 1 } },
+                    { text: "인간관계", scores: { doosan: 2, samsung: 2, lg: 3, kt: 2, kiwoom: 3, ssg: 2, lotte: 3, nc: 2, hanwha: 2, kia: 2 } }
+                ]
+            },
+            {
+                question: "당신이 선호하는 운동 스타일은?",
+                options: [
+                    { text: "헬스장 - 혼자 집중", scores: { doosan: 2, samsung: 3, lg: 2, kt: 3, kiwoom: 2, ssg: 2, lotte: 1, nc: 2, hanwha: 2, kia: 1 } },
+                    { text: "축구/농구 - 팀플레이", scores: { doosan: 2, samsung: 2, lg: 3, kt: 2, kiwoom: 3, ssg: 2, lotte: 3, nc: 2, hanwha: 2, kia: 3 } },
+                    { text: "러닝 - 나와의 싸움", scores: { doosan: 3, samsung: 3, lg: 2, kt: 3, kiwoom: 2, ssg: 3, lotte: 1, nc: 3, hanwha: 3, kia: 2 } },
+                    { text: "수영 - 물속이 좋아", scores: { doosan: 1, samsung: 2, lg: 1, kt: 2, kiwoom: 1, ssg: 3, lotte: 3, nc: 2, hanwha: 1, kia: 1 } },
+                    { text: "등산 - 자연 속에서", scores: { doosan: 2, samsung: 2, lg: 2, kt: 1, kiwoom: 2, ssg: 1, lotte: 2, nc: 1, hanwha: 3, kia: 3 } },
+                    { text: "운동? 안 해요", scores: { doosan: 1, samsung: 1, lg: 2, kt: 2, kiwoom: 2, ssg: 2, lotte: 2, nc: 2, hanwha: 3, kia: 2 } }
+                ]
+            },
+            {
+                question: "당신의 소비 패턴은?",
+                options: [
+                    { text: "명품 한 개 vs 합리적 여러 개", scores: { doosan: 3, samsung: 3, lg: 2, kt: 2, kiwoom: 2, ssg: 3, lotte: 1, nc: 2, hanwha: 1, kia: 2 } },
+                    { text: "가성비가 최고야", scores: { doosan: 1, samsung: 2, lg: 2, kt: 3, kiwoom: 2, ssg: 2, lotte: 2, nc: 3, hanwha: 3, kia: 2 } },
+                    { text: "일단 지르고 보자", scores: { doosan: 2, samsung: 1, lg: 3, kt: 2, kiwoom: 3, ssg: 2, lotte: 3, nc: 2, hanwha: 1, kia: 3 } },
+                    { text: "오래 고민하고 신중하게", scores: { doosan: 2, samsung: 3, lg: 1, kt: 2, kiwoom: 1, ssg: 2, lotte: 1, nc: 2, hanwha: 3, kia: 1 } },
+                    { text: "기분 내키는 대로", scores: { doosan: 2, samsung: 1, lg: 2, kt: 2, kiwoom: 3, ssg: 2, lotte: 2, nc: 2, hanwha: 2, kia: 2 } }
+                ]
+            },
+            {
+                question: "스트레스 받을 때 당신의 해소법은?",
+                options: [
+                    { text: "친구 만나서 수다", scores: { doosan: 2, samsung: 1, lg: 3, kt: 2, kiwoom: 3, ssg: 2, lotte: 3, nc: 2, hanwha: 2, kia: 3 } },
+                    { text: "혼자 조용히 생각 정리", scores: { doosan: 2, samsung: 3, lg: 1, kt: 3, kiwoom: 1, ssg: 2, lotte: 1, nc: 2, hanwha: 3, kia: 1 } },
+                    { text: "폭식/폭음", scores: { doosan: 3, samsung: 2, lg: 3, kt: 1, kiwoom: 2, ssg: 2, lotte: 3, nc: 2, hanwha: 2, kia: 2 } },
+                    { text: "운동/게임으로 발산", scores: { doosan: 2, samsung: 2, lg: 2, kt: 3, kiwoom: 3, ssg: 3, lotte: 2, nc: 3, hanwha: 2, kia: 2 } },
+                    { text: "쇼핑으로 힐링", scores: { doosan: 3, samsung: 2, lg: 2, kt: 2, kiwoom: 2, ssg: 3, lotte: 1, nc: 1, hanwha: 1, kia: 1 } },
+                    { text: "그냥 참고 견딤", scores: { doosan: 1, samsung: 2, lg: 2, kt: 1, kiwoom: 1, ssg: 1, lotte: 2, nc: 2, hanwha: 3, kia: 2 } }
+                ]
+            }
+        ];
+
+        const teams = {
+            doosan: {
+                name: "두산 베어스",
+                emoji: "🐻",
+                description: "잠실의 터줏대감. 돈 많고 역사 있는 집안이라 자부심도 강하고 기대치도 높습니다. 우승 못 하면 난리나는 곳.",
+                traits: ["전통", "승부욕", "서울"],
+                stadium: "잠실야구장"
+            },
+            samsung: {
+                name: "삼성 라이온즈",
+                emoji: "🦁",
+                description: "대구의 자존심이자 한국 야구의 양대 산맥. 90년대 황금기를 겪은 팬들은 지금도 그때를 못 잊습니다. 과거의 영광에 살아요.",
+                traits: ["왕조", "자부심", "대구"],
+                stadium: "라이온즈파크"
+            },
+            lg: {
+                name: "LG 트윈스",
+                emoji: "⚾",
+                description: "잠실 살림 반반. 두산만큼은 이기고 싶은 영원한 숙적 관계입니다. 팬들의 응원 열기가 장난 아니에요.",
+                traits: ["열정", "팬심", "서울"],
+                stadium: "잠실야구장"
+            },
+            kt: {
+                name: "KT 위즈",
+                emoji: "🧙",
+                description: "2015년생 막내팀이지만 이미 우승 한 번 했습니다. 데이터와 머니볼로 무장한 신세대 야구의 아이콘.",
+                traits: ["혁신", "젊음", "수원"],
+                stadium: "위즈파크"
+            },
+            kiwoom: {
+                name: "키움 히어로즈",
+                emoji: "🦸",
+                description: "넥센에서 키움으로 변신. 고척돔이라는 홈 어드밴티지로 상위권을 노립니다. 신생팀 이미지에서 탈피 중.",
+                traits: ["영웅", "소통", "서울"],
+                stadium: "고척돔"
+            },
+            ssg: {
+                name: "SSG 랜더스",
+                emoji: "⚡",
+                description: "SK에서 SSG로 간판만 바꿨는데 바로 우승. 돈이 많으면 야구도 잘할 수 있다는 걸 증명했습니다.",
+                traits: ["패기", "도전", "인천"],
+                stadium: "랜더스필드"
+            },
+            lotte: {
+                name: "롯데 자이언츠",
+                emoji: "⚓",
+                description: "부산 사람들의 정체성 그 자체. 못 해도 사랑받고, 잘 하면 도시가 들썩입니다. 팬심 하나는 전국 최강.",
+                traits: ["열광", "충성", "부산"],
+                stadium: "사직구장"
+            },
+            nc: {
+                name: "NC 다이노스",
+                emoji: "🦖",
+                description: "창원의 공룡은 생각보다 강합니다. 신생팀 주제에 벌써 한국시리즈 우승까지 경험했어요. 무시하면 큰코다칩니다.",
+                traits: ["강인함", "젊음", "창원"],
+                stadium: "NC파크"
+            },
+            hanwha: {
+                name: "한화 이글스",
+                emoji: "🦅",
+                description: "대전의 한이 서린 팀. 오래 기다리면 언젠간 좋은 날이 올 거라 믿는 팬들의 인내심이 눈물겹습니다. 힘내요.",
+                traits: ["인내", "끈기", "대전"],
+                stadium: "이글스파크"
+            },
+            kia: {
+                name: "KIA 타이거즈",
+                emoji: "🐯",
+                description: "광주의 호랑이이자 한국 야구 최다 우승팀. 우승 경험이 많아서 팬들도 여유 있고 베테랑 같습니다. 전통의 강호.",
+                traits: ["전설", "우승", "광주"],
+                stadium: "챔피언스필드"
+            }
+        };
+
+        let currentQuestion = 0;
+        let answers = [];
+
+        function startTest() {
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('questionScreen').classList.remove('hidden');
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById('questionText').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'option-button';
+                button.textContent = '○ ' + option.text;
+                button.onclick = () => handleAnswer(option);
+                optionsContainer.appendChild(button);
+            });
+
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progressLabel').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('statusPercentage').textContent = Math.floor(progress) + '%';
+        }
+
+        function handleAnswer(option) {
+            answers.push(option.scores);
+            
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                displayQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function calculateResult() {
+            const totalScores = {};
+            Object.keys(teams).forEach(team => {
+                totalScores[team] = 0;
+            });
+
+            answers.forEach(answer => {
+                Object.keys(answer).forEach(team => {
+                    totalScores[team] += answer[team];
+                });
+            });
+
+            const sortedTeams = Object.entries(totalScores).sort((a, b) => b[1] - a[1]);
+            return sortedTeams[0][0];
+        }
+
+        function showResult() {
+            const topTeam = calculateResult();
+            const team = teams[topTeam];
+
+            document.getElementById('resultEmoji').textContent = team.emoji;
+            document.getElementById('resultTeam').textContent = team.name;
+            document.getElementById('resultStadium').textContent = team.stadium;
+            document.getElementById('resultDescription').textContent = team.description;
+
+            const traitsContainer = document.getElementById('resultTraits');
+            traitsContainer.innerHTML = '';
+            team.traits.forEach(trait => {
+                const badge = document.createElement('div');
+                badge.className = 'trait-badge';
+                badge.textContent = trait;
+                traitsContainer.appendChild(badge);
+            });
+
+            const matchRate = Math.floor(Math.random() * 15 + 85);
+            document.getElementById('resultInfo').innerHTML = `
+                <div>Team Name: ${team.name}</div>
+                <div>Stadium: ${team.stadium}</div>
+                <div>Match Rate: ${matchRate}%</div>
+                <div>Status: Ready</div>
+            `;
+
+            document.getElementById('questionScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
+        }
+
+        function resetTest() {
+            currentQuestion = 0;
+            answers = [];
+            document.getElementById('startScreen').classList.remove('hidden');
+            document.getElementById('questionScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.add('hidden');
+        }
+
+        // Initialize - Show start screen
+    </script>
+</body>
+</html>
