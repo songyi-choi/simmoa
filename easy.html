@@ -539,7 +539,17 @@
     </div>
 
     <script>
-        const questions = [
+        // 셔플 함수
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        const allQuestions = [
             {
                 q: "아침에 일어났을 때 당신의 첫 생각은?",
                 options: [
@@ -742,8 +752,12 @@
 
         let currentQuestion = 0;
         let totalScore = 0;
+        let questions = [];
 
         function startTest() {
+            questions = shuffleArray(allQuestions);
+            currentQuestion = 0;
+            totalScore = 0;
             document.querySelector('.start-screen').classList.remove('active');
             document.querySelector('.question-screen').classList.add('active');
             showQuestion();

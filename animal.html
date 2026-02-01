@@ -322,7 +322,17 @@
     </div>
 
     <script>
-        const questions = [
+        // 셔플 함수
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        const allQuestions = [
             {
                 question: "주말 아침, 눈을 떴을 때 제일 먼저 드는 생각은?",
                 options: [
@@ -473,8 +483,12 @@
 
         let currentQuestion = 0;
         let scores = { energy: 0, thinking: 0, organized: 0 };
+        let questions = [];
 
         function startTest() {
+            questions = shuffleArray(allQuestions);
+            currentQuestion = 0;
+            scores = { energy: 0, thinking: 0, organized: 0 };
             document.getElementById('startScreen').classList.add('hidden');
             document.getElementById('quizScreen').classList.remove('hidden');
             renderQuestion();

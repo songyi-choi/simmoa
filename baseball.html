@@ -439,7 +439,17 @@
     </div>
 
     <script>
-        const questions = [
+        // 셔플 함수
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        const allQuestions = [
             {
                 question: "출근길에 가장 자주 듣는 노래는?",
                 options: [
@@ -623,8 +633,12 @@
 
         let currentQuestion = 0;
         let answers = [];
+        let questions = [];
 
         function startTest() {
+            questions = shuffleArray(allQuestions);
+            currentQuestion = 0;
+            answers = [];
             document.getElementById('startScreen').classList.add('hidden');
             document.getElementById('questionScreen').classList.remove('hidden');
             displayQuestion();
