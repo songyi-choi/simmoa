@@ -4,8 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>무쓸모 테스트 - 재미있는 심리테스트 모음</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Black+Han+Sans&family=Jua&family=Gaegu:wght@400;700&family=Single+Day&family=Hi+Melody&family=Poor+Story&display=swap" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        @font-face {
+            font-family: 'MullaebreweryYoungchoel';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-4@1.1/YDPCF-MullaebreweryYoungchoel-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'KerisKeduLine';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-3@1.0/KERISKEDU_Line.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -22,9 +38,38 @@
 
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #fef6e4;
+            background-image:
+                radial-gradient(circle at 20% 80%, rgba(255, 200, 200, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(200, 230, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 240, 200, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(200, 255, 220, 0.3) 0%, transparent 50%);
             min-height: 100vh;
             padding: 20px;
+            position: relative;
+        }
+
+        /* 손그림 낙서 장식 */
+        body::before {
+            content: '✿ ♡ ☆ ✧ ♪ ⭐';
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 20px;
+            opacity: 0.25;
+            letter-spacing: 12px;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '~ ★ ❀ ♫ ✦ ❤';
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 20px;
+            opacity: 0.25;
+            letter-spacing: 12px;
+            pointer-events: none;
         }
 
         .container {
@@ -35,19 +80,21 @@
         .header {
             text-align: center;
             padding: 40px 20px;
-            color: white;
+            color: #5c4a3d;
         }
 
         .header h1 {
-            font-family: 'Black Han Sans', sans-serif;
-            font-size: 3rem;
+            font-family: 'KerisKeduLine', cursive;
+            font-size: 4.5rem;
             margin-bottom: 15px;
-            text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+            color: #FF6B6B;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.1);
         }
 
         .header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
+            font-family: 'Hi Melody', cursive;
+            font-size: 1.4rem;
+            color: #8b7355;
         }
 
         .test-grid {
@@ -58,7 +105,6 @@
         }
 
         .test-card {
-            background: white;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 10px 40px rgba(0,0,0,0.2);
@@ -69,33 +115,326 @@
         }
 
         .test-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px) rotate(1deg);
             box-shadow: 0 20px 50px rgba(0,0,0,0.3);
         }
 
-        .test-card-emoji {
-            font-size: 5rem;
-            text-align: center;
-            padding: 40px 20px 20px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        /* 사주팔자 - 신비로운 동양풍 */
+        .card-fortune {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            border: 3px solid #e94560;
         }
 
-        .test-card-content {
+        .card-fortune .test-card-emoji {
+            font-size: 4rem;
+            text-align: center;
+            padding: 30px 20px 15px;
+            background: radial-gradient(circle, rgba(233,69,96,0.3) 0%, transparent 70%);
+            position: relative;
+        }
+
+        .card-fortune .test-card-emoji::after {
+            content: '✧･ﾟ: *✧･ﾟ:*';
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            color: #e94560;
+            opacity: 0.7;
+        }
+
+        .card-fortune .test-card-content {
             padding: 25px;
         }
 
-        .test-card-title {
-            font-family: 'Jua', sans-serif;
+        .card-fortune .test-card-title {
+            font-family: 'MullaebreweryYoungchoel', serif;
+            font-size: 1.8rem;
+            color: #eee;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(233,69,96,0.5);
+        }
+
+        .card-fortune .test-card-desc {
+            font-size: 0.95rem;
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .card-fortune .test-card-tag {
+            background: linear-gradient(135deg, #e94560, #533483);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .card-fortune .test-card-button {
+            background: linear-gradient(135deg, #e94560, #533483);
+            color: white;
+            padding: 15px;
+            font-family: 'MullaebreweryYoungchoel', serif;
+            font-size: 1.2rem;
+            border: none;
+            text-align: center;
+        }
+
+        /* 야구팀 - 윈도우98 레트로 */
+        .card-baseball {
+            background: #c0c0c0;
+            border: 3px outset #fff;
+            border-radius: 0;
+            box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff, inset -2px -2px grey, inset 2px 2px #dfdfdf;
+        }
+
+        .card-baseball .test-card-emoji {
+            font-size: 4rem;
+            text-align: center;
+            padding: 30px 20px 15px;
+            background: linear-gradient(180deg, #000080 0%, #1084d0 100%);
+            border-bottom: 2px solid #808080;
+        }
+
+        .card-baseball .test-card-content {
+            padding: 20px;
+            background: #c0c0c0;
+        }
+
+        .card-baseball .test-card-title {
+            font-family: 'Black Han Sans', sans-serif;
             font-size: 1.5rem;
-            color: var(--dark);
+            color: #000080;
             margin-bottom: 10px;
         }
 
-        .test-card-desc {
+        .card-baseball .test-card-desc {
+            font-size: 0.9rem;
+            color: #000;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .card-baseball .test-card-tag {
+            background: #000080;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 0;
+            font-size: 0.8rem;
+            border: 1px solid #000;
+        }
+
+        .card-baseball .test-card-button {
+            background: #c0c0c0;
+            color: #000;
+            padding: 12px;
+            font-family: 'Black Han Sans', sans-serif;
+            font-size: 1rem;
+            border: none;
+            box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff;
+            text-align: center;
+        }
+
+        .card-baseball .test-card-button:hover {
+            box-shadow: inset 1px 1px #0a0a0a, inset -1px -1px #fff;
+        }
+
+        /* 동물 - 손그림 스타일 */
+        .card-animal {
+            background: #fff9e6;
+            border: 4px solid #5a4a3a;
+            border-radius: 30px 10px 30px 10px;
+            position: relative;
+        }
+
+        .card-animal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+            pointer-events: none;
+            border-radius: inherit;
+        }
+
+        .card-animal .test-card-emoji {
+            font-size: 3.5rem;
+            text-align: center;
+            padding: 25px 20px 15px;
+            background: linear-gradient(180deg, #ffe4c4 0%, #fff9e6 100%);
+            border-radius: 26px 6px 0 0;
+        }
+
+        .card-animal .test-card-content {
+            padding: 20px;
+            position: relative;
+        }
+
+        .card-animal .test-card-title {
+            font-family: 'Gaegu', cursive;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #5a4a3a;
+            margin-bottom: 8px;
+        }
+
+        .card-animal .test-card-desc {
+            font-family: 'Gaegu', cursive;
+            font-size: 1.05rem;
+            color: #7a6a5a;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .card-animal .test-card-tag {
+            background: #8B7355;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px 5px 15px 5px;
+            font-size: 0.85rem;
+            font-family: 'Gaegu', cursive;
+        }
+
+        .card-animal .test-card-button {
+            background: #5a4a3a;
+            color: #fff9e6;
+            padding: 15px;
+            font-family: 'Gaegu', cursive;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 0 0 26px 6px;
+            text-align: center;
+        }
+
+        /* 하찮음 측정기 - 8비트 레트로 게임 */
+        .card-retro {
+            background: #000;
+            border: 4px solid #00ff00;
+            image-rendering: pixelated;
+        }
+
+        .card-retro .test-card-emoji {
+            font-size: 4rem;
+            text-align: center;
+            padding: 30px 20px 15px;
+            background: #111;
+            border-bottom: 2px dashed #00ff00;
+        }
+
+        .card-retro .test-card-content {
+            padding: 20px;
+            background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+        }
+
+        .card-retro .test-card-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.9rem;
+            color: #00ff00;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            text-shadow: 2px 2px #003300;
+        }
+
+        .card-retro .test-card-desc {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 0.85rem;
+            color: #00cc00;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .card-retro .test-card-tag {
+            background: #00ff00;
+            color: #000;
+            padding: 5px 12px;
+            border-radius: 0;
+            font-size: 0.7rem;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .card-retro .test-card-button {
+            background: #00ff00;
+            color: #000;
+            padding: 15px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            border: none;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .card-retro .test-card-button:hover {
+            background: #00cc00;
+            animation: blink 0.5s infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0.7; }
+        }
+
+        /* 악기 - 음악/록 스타일 */
+        .card-music {
+            background: linear-gradient(135deg, #1e1e2f 0%, #2d2d44 100%);
+            border: 3px solid #ff6b6b;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-music::before {
+            content: '♪ ♫ ♬';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.2rem;
+            color: rgba(255,107,107,0.3);
+        }
+
+        .card-music .test-card-emoji {
+            font-size: 3.5rem;
+            text-align: center;
+            padding: 30px 20px 15px;
+            background: linear-gradient(180deg, rgba(255,107,107,0.2) 0%, transparent 100%);
+        }
+
+        .card-music .test-card-content {
+            padding: 25px;
+        }
+
+        .card-music .test-card-title {
+            font-family: 'Jua', sans-serif;
+            font-size: 1.6rem;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+        }
+
+        .card-music .test-card-desc {
             font-size: 0.95rem;
-            color: #666;
+            color: #aaa;
             line-height: 1.6;
             margin-bottom: 20px;
+        }
+
+        .card-music .test-card-tag {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .card-music .test-card-button {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+            color: white;
+            padding: 15px;
+            font-family: 'Jua', sans-serif;
+            font-size: 1.1rem;
+            border: none;
+            text-align: center;
         }
 
         .test-card-meta {
@@ -103,53 +442,31 @@
             justify-content: space-between;
             align-items: center;
             font-size: 0.85rem;
-            color: #999;
-        }
-
-        .test-card-tag {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-        }
-
-        .test-card-button {
-            display: block;
-            text-align: center;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 15px;
-            font-family: 'Jua', sans-serif;
-            font-size: 1.1rem;
-            border: none;
-            cursor: pointer;
-            transition: opacity 0.3s ease;
-        }
-
-        .test-card-button:hover {
-            opacity: 0.9;
         }
 
         .footer {
             text-align: center;
             padding: 40px 20px;
-            color: white;
-            opacity: 0.8;
-            font-size: 0.9rem;
+            color: #8b7355;
+            font-family: 'Hi Melody', cursive;
+            font-size: 1.1rem;
         }
 
         @media (max-width: 600px) {
             .header h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
 
             .header p {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
 
             .test-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .card-retro .test-card-title {
+                font-size: 0.75rem;
             }
         }
     </style>
@@ -158,78 +475,73 @@
     <div class="container">
         <div class="header">
             <h1>무쓸모 테스트</h1>
-            <p>심심할 때 즐기는 재미있는 테스트 모음</p>
+            <p></p>
         </div>
 
         <div class="test-grid">
-            <a href="life.html" class="test-card">
+            <a href="life.html" class="test-card card-fortune">
                 <div class="test-card-emoji">🔮✨</div>
                 <div class="test-card-content">
                     <h2 class="test-card-title">프리미엄 사주팔자</h2>
                     <p class="test-card-desc">당신의 운명을 읽어드립니다. 별자리와 사주를 기반으로 한 프리미엄 운세 테스트!</p>
                     <div class="test-card-meta">
                         <span class="test-card-tag">운세 테스트</span>
-                        <span>약 3분 소요</span>
                     </div>
                 </div>
-                <div class="test-card-button">테스트 시작하기</div>
+                <div class="test-card-button">운명 확인하기</div>
             </a>
 
-            <a href="baseball.html" class="test-card">
+            <a href="baseball.html" class="test-card card-baseball">
                 <div class="test-card-emoji">⚾</div>
                 <div class="test-card-content">
                     <h2 class="test-card-title">나와 어울리는 KBO 야구팀은?</h2>
-                    <p class="test-card-desc">당신의 성향을 분석하여 가장 어울리는 KBO 야구팀을 찾아드립니다. 진정한 나의 팀을 만나보세요!</p>
+                    <p class="test-card-desc">당신의 성향을 분석하여 가장 어울리는 KBO 야구팀을 찾아드립니다.</p>
                     <div class="test-card-meta">
                         <span class="test-card-tag">성향 테스트</span>
-                        <span>약 2분 소요</span>
                     </div>
                 </div>
-                <div class="test-card-button">테스트 시작하기</div>
+                <div class="test-card-button">[ 테스트 시작 ]</div>
             </a>
 
-            <a href="animal.html" class="test-card">
+            <a href="animal.html" class="test-card card-animal">
                 <div class="test-card-emoji">🐶🐱🦊</div>
                 <div class="test-card-content">
                     <h2 class="test-card-title">나를 닮은 동물 찾기</h2>
-                    <p class="test-card-desc">당신의 성격과 행동 패턴을 분석해 가장 닮은 동물을 찾아드립니다. 어떤 동물이 나올까요?</p>
+                    <p class="test-card-desc">당신의 성격과 행동 패턴을 분석해 가장 닮은 동물을 찾아드려요!</p>
                     <div class="test-card-meta">
                         <span class="test-card-tag">성격 테스트</span>
-                        <span>약 2분 소요</span>
                     </div>
                 </div>
-                <div class="test-card-button">테스트 시작하기</div>
+                <div class="test-card-button">동물 찾으러 가기~</div>
             </a>
 
-            <a href="easy.html" class="test-card">
+            <a href="easy.html" class="test-card card-retro">
                 <div class="test-card-emoji">🎮</div>
                 <div class="test-card-content">
                     <h2 class="test-card-title">하찮음 측정기</h2>
-                    <p class="test-card-desc">당신의 하찮음 레벨을 측정합니다. 과연 나는 얼마나 하찮은 존재일까요? 레트로 게임 스타일로 즐겨보세요!</p>
+                    <p class="test-card-desc">당신의 하찮음 레벨을 측정합니다. 과연 나는 얼마나 하찮은 존재일까요?</p>
                     <div class="test-card-meta">
-                        <span class="test-card-tag">재미 테스트</span>
-                        <span>약 2분 소요</span>
+                        <span class="test-card-tag">FUN</span>
                     </div>
                 </div>
-                <div class="test-card-button">테스트 시작하기</div>
+                <div class="test-card-button">&gt; START &lt;</div>
             </a>
 
-            <a href="instrument.html" class="test-card">
+            <a href="instrument.html" class="test-card card-music">
                 <div class="test-card-emoji">🎸🎹🥁</div>
                 <div class="test-card-content">
                     <h2 class="test-card-title">나에게 어울리는 악기는?</h2>
-                    <p class="test-card-desc">당신의 성향과 스타일에 딱 맞는 악기를 찾아드립니다. 피아노? 기타? 드럼? 나만의 악기를 발견해보세요!</p>
+                    <p class="test-card-desc">당신의 성향과 스타일에 딱 맞는 악기를 찾아드립니다!</p>
                     <div class="test-card-meta">
                         <span class="test-card-tag">성향 테스트</span>
-                        <span>약 2분 소요</span>
                     </div>
                 </div>
-                <div class="test-card-button">테스트 시작하기</div>
+                <div class="test-card-button">악기 찾으러 가기</div>
             </a>
         </div>
 
         <div class="footer">
-            <p>더 많은 테스트가 곧 추가될 예정입니다!</p>
+            <p>더 많은 테스트가 곧 추가될 예정입니다! ٩(๑❛ᴗ❛๑)۶</p>
         </div>
     </div>
 </body>
