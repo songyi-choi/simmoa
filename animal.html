@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나를 닮은 동물 찾기 테스트</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Malgun Gothic', cursive, sans-serif;
+            background: #f0f0f0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border: 3px solid #333;
+            padding: 30px;
+            max-width: 650px;
+            width: 100%;
+            box-shadow: 5px 5px 0px #333;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #333;
+            text-align: center;
+            font-weight: 900;
+            text-shadow: 2px 2px 0px #ffeb3b;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: white;
+            border: 2px solid #333;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                #ffeb3b,
+                #ffeb3b 10px,
+                #ffd600 10px,
+                #ffd600 20px
+            );
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .question {
+            display: none;
+        }
+
+        .question.active {
+            display: block;
+        }
+
+        .question-text {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 15px 20px;
+            background: #fff;
+            border: 3px solid #333;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            font-size: 16px;
+            font-weight: 700;
+            box-shadow: 3px 3px 0px #333;
+        }
+
+        .option:hover {
+            background: #ffeb3b;
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #333;
+        }
+
+        .start-screen, .result-screen {
+            text-align: center;
+        }
+
+        .start-screen h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .start-screen p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        button {
+            background: #ff6b6b;
+            color: white;
+            border: 3px solid #333;
+            padding: 12px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            font-weight: 900;
+            box-shadow: 4px 4px 0px #333;
+            font-family: 'Comic Sans MS', cursive;
+        }
+
+        button:hover {
+            background: #ff5252;
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px #333;
+        }
+
+        .result-screen {
+            display: none;
+        }
+
+        .result-screen.active {
+            display: block;
+        }
+
+        .result-title {
+            font-size: 32px;
+            margin: 20px 0;
+            color: #333;
+            font-weight: 900;
+            background: #ffeb3b;
+            padding: 15px;
+            border: 3px solid #333;
+            display: inline-block;
+        }
+
+        .result-emoji {
+            font-size: 80px;
+            margin: 20px 0;
+        }
+
+        .result-section {
+            text-align: left;
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border: 3px solid #333;
+            box-shadow: 4px 4px 0px #333;
+        }
+
+        .result-section h3 {
+            color: #333;
+            margin-bottom: 12px;
+            font-size: 18px;
+            font-weight: 900;
+            background: #ffeb3b;
+            padding: 5px 10px;
+            display: inline-block;
+            border: 2px solid #333;
+        }
+
+        .result-section p {
+            color: #555;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .mbti-badge {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 10px 25px;
+            font-weight: 900;
+            font-size: 20px;
+            margin-bottom: 15px;
+            border: 3px solid #333;
+            box-shadow: 3px 3px 0px #333;
+        }
+
+        .restart-btn {
+            margin-top: 30px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .warning {
+            color: #ff6b6b;
+            font-weight: 900;
+        }
+
+        .share-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #e3f2fd;
+            border: 3px dashed #333;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .share-btn {
+            background: #4CAF50;
+            padding: 10px 20px;
+            font-size: 14px;
+            border: 3px solid #333;
+            box-shadow: 3px 3px 0px #333;
+        }
+
+        .share-btn:hover {
+            background: #45a049;
+        }
+
+        .share-btn.kakao {
+            background: #FEE500;
+            color: #000;
+        }
+
+        .share-btn.twitter {
+            background: #1DA1F2;
+        }
+
+        .share-btn.facebook {
+            background: #1877F2;
+        }
+
+        .share-btn.copy {
+            background: #9c27b0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 시작 화면 -->
+        <div class="start-screen" id="startScreen">
+            <h1>🐾 나를 닮은 동물 찾기</h1>
+            <p>12개의 질문으로 당신의 진짜 모습을 분석합니다.<br>MBTI, 연애스타일, 성격은 물론<br>솔직한 단점까지 알려드려요!</p>
+            <button onclick="startTest()">시작하기</button>
+        </div>
+
+        <!-- 질문 화면 -->
+        <div class="quiz-screen hidden" id="quizScreen">
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            
+            <div id="questionsContainer"></div>
+        </div>
+
+        <!-- 결과 화면 -->
+        <div class="result-screen" id="resultScreen">
+            <div class="result-emoji" id="resultEmoji"></div>
+            <h1 class="result-title" id="resultTitle"></h1>
+            
+            <div class="result-section">
+                <h3>📊 예상 MBTI</h3>
+                <div class="mbti-badge" id="mbtiResult"></div>
+                <p id="mbtiDesc"></p>
+            </div>
+
+            <div class="result-section">
+                <h3>💕 연애 스타일</h3>
+                <p id="loveStyle"></p>
+            </div>
+
+            <div class="result-section">
+                <h3>✨ 성격 특징</h3>
+                <p id="personality"></p>
+            </div>
+
+            <div class="result-section">
+                <h3 class="warning">⚠️ 솔직히 말해서...</h3>
+                <p id="weakness"></p>
+            </div>
+
+            <div class="share-section">
+                <h3 style="text-align: center; margin-bottom: 10px;">🔗 결과 공유하기</h3>
+                <p style="text-align: center; font-size: 14px; color: #666; margin-bottom: 10px;">친구들도 테스트해보게 공유해보세요!</p>
+                <div class="share-buttons">
+                    <button class="share-btn copy" onclick="copyLink()">📋 링크 복사</button>
+                    <button class="share-btn kakao" onclick="shareKakao()">💬 카톡 공유</button>
+                    <button class="share-btn twitter" onclick="shareTwitter()">🐦 트위터</button>
+                    <button class="share-btn facebook" onclick="shareFacebook()">📘 페북</button>
+                </div>
+            </div>
+
+            <button class="restart-btn" onclick="location.reload()">다시 하기</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "주말 아침, 눈을 떴을 때 제일 먼저 드는 생각은?",
+                options: [
+                    { text: "오늘 뭐 하지? 계획 세워야지!", value: { energy: 2, thinking: 1, organized: 2 } },
+                    { text: "일단 침대에서 좀 더 있자...", value: { energy: -2, thinking: 0, organized: -1 } },
+                    { text: "친구들한테 연락이나 해볼까?", value: { energy: 2, thinking: -1, organized: 0 } },
+                    { text: "조용히 책이나 읽어야겠다", value: { energy: -1, thinking: 1, organized: 1 } }
+                ]
+            },
+            {
+                question: "단톡방에 누군가 고민 상담을 올렸다. 당신의 반응은?",
+                options: [
+                    { text: "바로 해결책을 제시한다", value: { energy: 1, thinking: 2, organized: 1 } },
+                    { text: "공감 이모티콘과 위로 메시지", value: { energy: 0, thinking: -2, organized: 0 } },
+                    { text: "읽씹... 나중에 개인톡으로", value: { energy: -1, thinking: 1, organized: 0 } },
+                    { text: "비슷한 경험 공유하며 같이 공감", value: { energy: 1, thinking: -1, organized: -1 } }
+                ]
+            },
+            {
+                question: "갑자기 친구가 30분 뒤에 만나자고 한다. 당신은?",
+                options: [
+                    { text: "ㅇㅋ! 바로 준비하고 나간다", value: { energy: 2, thinking: -1, organized: -2 } },
+                    { text: "어디서? 뭐 할 건데? 물어본다", value: { energy: 0, thinking: 2, organized: 1 } },
+                    { text: "미안 오늘은 집에 있고 싶어", value: { energy: -2, thinking: 0, organized: 1 } },
+                    { text: "1시간 뒤로 조정 가능? 준비 시간 필요", value: { energy: 0, thinking: 1, organized: 2 } }
+                ]
+            },
+            {
+                question: "새로운 프로젝트나 과제를 받았을 때 당신은?",
+                options: [
+                    { text: "일단 시작! 하면서 생각한다", value: { energy: 1, thinking: -2, organized: -2 } },
+                    { text: "계획부터 꼼꼼하게 세운다", value: { energy: -1, thinking: 2, organized: 2 } },
+                    { text: "다른 사람들은 어떻게 하나 찾아본다", value: { energy: 0, thinking: 1, organized: 0 } },
+                    { text: "일단 미루고 마감 임박하면 몰아서", value: { energy: 1, thinking: -1, organized: -2 } }
+                ]
+            },
+            {
+                question: "파티나 모임에서 당신의 모습은?",
+                options: [
+                    { text: "여기저기 돌아다니며 사람들과 대화", value: { energy: 2, thinking: -1, organized: 0 } },
+                    { text: "친한 사람들과만 깊은 대화", value: { energy: -1, thinking: 1, organized: 1 } },
+                    { text: "분위기 메이커 역할", value: { energy: 2, thinking: -2, organized: -1 } },
+                    { text: "구석에서 조용히 관찰", value: { energy: -2, thinking: 2, organized: 1 } }
+                ]
+            },
+            {
+                question: "친구가 약속 시간에 30분 늦는다고 연락 왔다. 당신은?",
+                options: [
+                    { text: "괜찮아~ 천천히 와! (진심)", value: { energy: 0, thinking: -2, organized: -2 } },
+                    { text: "30분이면 카페 가서 뭐라도 하지", value: { energy: 1, thinking: 1, organized: 1 } },
+                    { text: "아... 짜증나는데 참는다", value: { energy: -1, thinking: 1, organized: 2 } },
+                    { text: "그럼 나도 30분 늦게 갈게 ㅋㅋ", value: { energy: 1, thinking: -1, organized: -2 } }
+                ]
+            },
+            {
+                question: "스트레스 받을 때 당신의 해소법은?",
+                options: [
+                    { text: "친구들 만나서 수다", value: { energy: 2, thinking: -1, organized: 0 } },
+                    { text: "혼자 조용히 영화나 음악", value: { energy: -2, thinking: 0, organized: 1 } },
+                    { text: "운동하거나 밖에 나가서 활동", value: { energy: 1, thinking: 0, organized: 1 } },
+                    { text: "폭식 또는 폭잠", value: { energy: -1, thinking: -2, organized: -2 } }
+                ]
+            },
+            {
+                question: "여행 계획을 세울 때 당신은?",
+                options: [
+                    { text: "숙소, 맛집, 동선 완벽하게 계획", value: { energy: 0, thinking: 2, organized: 2 } },
+                    { text: "대충 숙소만 잡고 즉흥적으로", value: { energy: 1, thinking: -2, organized: -2 } },
+                    { text: "인스타 감성 맛집 위주로 계획", value: { energy: 1, thinking: -1, organized: 0 } },
+                    { text: "다른 사람이 세운 계획 따라가기", value: { energy: -1, thinking: 0, organized: -1 } }
+                ]
+            },
+            {
+                question: "논쟁이 생겼을 때 당신은?",
+                options: [
+                    { text: "논리적으로 내 주장을 펼친다", value: { energy: 1, thinking: 2, organized: 1 } },
+                    { text: "일단 상대방 얘기를 다 들어준다", value: { energy: -1, thinking: -1, organized: 0 } },
+                    { text: "감정이 상해서 말을 못한다", value: { energy: -2, thinking: -2, organized: 0 } },
+                    { text: "적당히 타협점을 찾는다", value: { energy: 0, thinking: 1, organized: 1 } }
+                ]
+            },
+            {
+                question: "방 정리는 언제 하시나요?",
+                options: [
+                    { text: "더러워지기 전에 미리미리", value: { energy: 0, thinking: 1, organized: 2 } },
+                    { text: "더러워지면 그때 한 번에", value: { energy: 0, thinking: 0, organized: -1 } },
+                    { text: "손님 오기 전날 급하게", value: { energy: 1, thinking: -1, organized: -2 } },
+                    { text: "정리...가 뭐죠?", value: { energy: -1, thinking: -2, organized: -2 } }
+                ]
+            },
+            {
+                question: "좋아하는 사람이 생겼을 때 당신은?",
+                options: [
+                    { text: "적극적으로 대시한다", value: { energy: 2, thinking: -1, organized: 0 } },
+                    { text: "친해지기 위해 계획적으로 접근", value: { energy: 0, thinking: 2, organized: 2 } },
+                    { text: "말은 못하고 눈치만 보인다", value: { energy: -2, thinking: 0, organized: 1 } },
+                    { text: "친구들한테 떠벌리고 다님", value: { energy: 2, thinking: -2, organized: -1 } }
+                ]
+            },
+            {
+                question: "인생에서 가장 중요한 것은?",
+                options: [
+                    { text: "자유와 재미", value: { energy: 2, thinking: -1, organized: -2 } },
+                    { text: "안정과 계획", value: { energy: -1, thinking: 2, organized: 2 } },
+                    { text: "사랑하는 사람들", value: { energy: 0, thinking: -2, organized: 0 } },
+                    { text: "성공과 성취", value: { energy: 1, thinking: 2, organized: 1 } }
+                ]
+            }
+        ];
+
+        // 형용사 매핑 (에너지 점수 기반)
+        const adj1Map = [
+            { min: -24, max: -15, word: "조용한" },
+            { min: -14, max: -8, word: "느긋한" },
+            { min: -7, max: -3, word: "신중한" },
+            { min: -2, max: 2, word: "균형잡힌" },
+            { min: 3, max: 7, word: "활발한" },
+            { min: 8, max: 14, word: "에너지 넘치는" },
+            { min: 15, max: 20, word: "열정적인" },
+            { min: 21, max: 24, word: "폭발적인" }
+        ];
+
+        // 형용사2 매핑 (thinking 점수 기반)
+        const adj2Map = [
+            { min: -24, max: -15, word: "감성적인" },
+            { min: -14, max: -8, word: "즉흥적인" },
+            { min: -7, max: -3, word: "자유로운" },
+            { min: -2, max: 2, word: "중도적인" },
+            { min: 3, max: 7, word: "이성적인" },
+            { min: 8, max: 14, word: "계획적인" },
+            { min: 15, max: 20, word: "분석적인" },
+            { min: 21, max: 24, word: "완벽주의적인" }
+        ];
+
+        // 동물 매핑 (organized 점수 기반)
+        const animalMap = [
+            { min: -24, max: -18, word: "고양이", emoji: "🐱" },
+            { min: -17, max: -12, word: "여우", emoji: "🦊" },
+            { min: -11, max: -7, word: "다람쥐", emoji: "🐿️" },
+            { min: -6, max: -3, word: "토끼", emoji: "🐰" },
+            { min: -2, max: 2, word: "강아지", emoji: "🐶" },
+            { min: 3, max: 6, word: "돌고래", emoji: "🐬" },
+            { min: 7, max: 11, word: "부엉이", emoji: "🦉" },
+            { min: 12, max: 17, word: "늑대", emoji: "🐺" },
+            { min: 18, max: 22, word: "사자", emoji: "🦁" },
+            { min: 23, max: 24, word: "코알라", emoji: "🐨" }
+        ];
+
+        let currentQuestion = 0;
+        let scores = { energy: 0, thinking: 0, organized: 0 };
+
+        function startTest() {
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('quizScreen').classList.remove('hidden');
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = `question ${index === currentQuestion ? 'active' : ''}`;
+                
+                questionDiv.innerHTML = `
+                    <div class="question-text">Q${index + 1}. ${q.question}</div>
+                    <div class="options">
+                        ${q.options.map((opt, optIndex) => `
+                            <div class="option" onclick="selectOption(${index}, ${optIndex})">
+                                ${opt.text}
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                container.appendChild(questionDiv);
+            });
+
+            updateProgress();
+        }
+
+        function selectOption(questionIndex, optionIndex) {
+            const selected = questions[questionIndex].options[optionIndex].value;
+            scores.energy += selected.energy;
+            scores.thinking += selected.thinking;
+            scores.organized += selected.organized;
+
+            currentQuestion++;
+
+            if (currentQuestion < questions.length) {
+                renderQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+        }
+
+        function getWord(score, map) {
+            for (let item of map) {
+                if (score >= item.min && score <= item.max) {
+                    return item;
+                }
+            }
+            return map[Math.floor(map.length / 2)]; // 기본값
+        }
+
+        function generateResult(adj1, adj2, animal) {
+            // MBTI 추정
+            let mbti = "";
+            mbti += scores.energy > 0 ? "E" : "I";
+            mbti += scores.thinking < 0 ? "N" : "S";
+            mbti += scores.thinking > 0 ? "T" : "F";
+            mbti += scores.organized > 0 ? "J" : "P";
+
+            // 결과 생성 (동물별로 다른 내용)
+            const results = {
+                "강아지": {
+                    mbti_desc: "당신은 사교적이고 충성심 강한 성격이에요. 사람들과 함께 있을 때 가장 행복하고, 주변 사람들을 잘 챙기는 따뜻한 마음의 소유자입니다.",
+                    love: "연애할 때 엄청 헌신적이고 애정표현도 많이 해요. 상대방한테 완전 올인하는 스타일이라 사랑받는 느낌을 확실하게 줍니다. 연락도 자주 하고 만나고 싶어하는 애교쟁이. 다만 너무 집착하거나 의존적일 수 있어요.",
+                    personality: "밝고 긍정적인 에너지가 넘치고, 새로운 사람 만나는 걸 좋아해요. 어디서든 금방 친해지는 능력이 있고, 분위기 메이커 역할을 잘합니다. 감정이 풍부하고 공감 능력이 뛰어나며, 친구들의 고민을 들어주는 걸 좋아해요.",
+                    weakness: "솔직히 좀 오지랖이 넓어요. 안 물어봐도 참견하고, 혼자 있는 시간 못 견디고 심심하면 바로 연락 돌림. 감정 기복도 좀 있어서 기분 나쁘면 티 확 남. 그리고 약속 시간 지키는 거... 좀 루즈한 편. 너무 착해서 이용당하기도 쉽고, 거절을 잘 못해서 본인만 힘들 때가 많아요."
+                },
+                "고양이": {
+                    mbti_desc: "독립적이고 자유로운 영혼의 소유자. 혼자만의 시간을 소중히 여기며, 자기만의 세계관이 확실한 사람입니다.",
+                    love: "츤데레의 정석. 좋아해도 티 안 내고, 관심 없는 척하다가 갑자기 애교 부림. 연락 안 하다가도 보고 싶으면 갑자기 나타나는 스타일. 집착은 싫어하고 서로 독립적인 관계를 선호해요. 애정표현은 적지만 진심은 깊은 타입.",
+                    personality: "마이웨이 정신이 투철하고, 남 눈치 안 봐요. 하고 싶은 거 하고, 하기 싫으면 안 함. 겉으론 쿨해 보여도 속으론 엄청 예민하고 섬세해요. 친해지기 전까진 거리감 있지만, 일단 친해지면 은근 애교 많고 장난끼 있어요.",
+                    weakness: "기분파라 컨디션 안 좋으면 완전 까칠해짐. 연락 귀찮으면 씹고, 만나기 싫으면 핑계 대고 안 나옴. 자기 기준이 높아서 남들이 보기엔 오해받기 쉬워요. 감정 표현 서툴러서 차가워 보인다는 말 자주 들음. 집순이/집돌이 끝판왕이라 밖에 나가는 거 진짜 싫어해요."
+                },
+                "토끼": {
+                    mbti_desc: "순수하고 귀여운 매력의 소유자. 호기심이 많고 새로운 것에 대한 탐구심이 강해요.",
+                    love: "연애하면 완전 순둥이 모드. 상대방한테 잘해주고 싶어서 이것저것 다 챙겨줌. 근데 약간 겁이 많아서 먼저 고백은 못하고 눈치만 주는 스타일. 애정표현은 수줍지만 행동으로 보여줘요. 상처받으면 오래 끌고, 질투도 은근히 많이 함.",
+                    personality: "겉으론 조용해 보여도 친한 사람들 앞에선 장난도 잘 치고 말도 많아요. 귀엽다는 소리 자주 들어서 본인도 그거 알고 이용할 줄 알아요 ㅋㅋ 센스 있고 눈치 빠른 편이라 분위기 파악 잘하고, 사람들이 원하는 걸 잘 캐치해요.",
+                    weakness: "우유부단의 끝판왕. 메뉴 고르는 것도 30분 걸림. 결정 장애 심해서 주변 사람들 답답하게 만들어요. 남 눈치 너무 봐서 본인 의견은 잘 안 내고, 싫은 소리 못해서 속으로 삭힘. 겁도 많아서 귀신, 벌레 이런 거 완전 못 봄. 의존적인 경향이 있어서 혼자 결정하는 거 어려워해요."
+                },
+                "여우": {
+                    mbti_desc: "영리하고 전략적인 사고의 소유자. 상황 파악이 빠르고 적응력이 뛰어나요.",
+                    love: "연애 고수. 밀당의 신이라 상대방을 내 손안에 두는 법을 알아요. 좋아해도 너무 티 안 내고, 적절한 선에서 관심 주다가 빼는 스타일. 근데 진심으로 좋아하면 은근 순수해짐. 머리로 사랑하는 타입이라 감정보다 이성이 앞설 때가 많아요.",
+                    personality: "눈치 100단. 분위기 파악 잘하고, 사람 다루는 법을 알아요. 사교성 좋아서 어디 가든 적응 잘하고, 말 잘해서 설득력도 있어요. 계산적이라는 소리 들을 수 있지만, 실은 효율적인 거예요. 센스 있고 재치 있어서 같이 있으면 재밌어요.",
+                    weakness: "좀 많이 계산적임. 손해 보는 거 진짜 싫어해서 이익 따져가며 움직여요. 사람도 약간 골라서 만나는 편이고, 쓸모없다 싶으면 관계 정리도 쿨함. 거짓말도 잘하고 ㅋㅋ 본인한테 유리하게 상황 해석하는 능력 있음. 진심 보여주는 거 어려워해서 벽 있다는 소리 자주 들어요."
+                },
+                "햄스터": {
+                    mbti_desc: "귀엽고 부지런한 성격. 작은 것에서 행복을 찾고, 자기만의 공간을 소중히 여겨요.",
+                    love: "연애하면 완전 헌신형. 챙겨주는 거 좋아하고, 작은 거라도 선물하는 거 좋아해요. 상대방 취향 다 기억하고, 깜짝 이벤트 준비하는 타입. 근데 좀 집착할 수 있고, 불안해하면 연락 계속 확인하는 스타일. 귀엽게 삐지고 애교 부리는 거 장기.",
+                    personality: "부지런하고 알뜰살뜰해요. 모으는 거 좋아해서 취미도 많고, 방 꾸미는 것도 좋아함. 소소한 일상의 행복을 즐길 줄 알고, SNS에 기록 남기는 거 좋아해요. 귀여운 거 보면 못 참고, 충동구매 잘함. 친구들한테 챙기는 스타일.",
+                    weakness: "완전 집순이/집돌이. 밖에 나가는 거 귀찮아하고, 집이 제일 좋아요. 약간 소심해서 큰 모임보다 소수 모임 선호하고, 낯 가리는 편. 걱정도 많아서 이것저것 다 신경 쓰다가 스트레스 받아요. 물건 모으는 습관 때문에 방 좀 지저분할 수 있음 ㅋㅋ"
+                },
+                "판다": {
+                    mbti_desc: "느긋하고 평화로운 성격. 갈등을 피하고 모두가 행복하기를 바라는 마음씨 좋은 사람.",
+                    love: "연애할 때도 여유롭고 느긋해요. 상대방한테 부담 안 주고, 각자 할 거 하다가 만나는 스타일. 싸우는 거 싫어해서 양보 잘하고, 뭐든 괜찮다고 함. 근데 그게 쌓이면 한 번에 폭발할 수 있어요. 애정표현은 적지만 옆에 있어주는 거로 사랑 표현.",
+                    personality: "느긋하고 여유로워요. 서두르는 거 싫어하고, 마이페이스로 살아가요. 잔잔하고 평화로운 걸 좋아하고, 큰 욕심 없이 현재에 만족하며 사는 편. 스트레스 잘 안 받고, 낙천적인 성격. 먹는 거 좋아하고, 잠 자는 거도 좋아함.",
+                    weakness: "게으름의 화신. 미루기의 달인이라 마감 전날에 올나잇으로 끝냄. 동기부여 안 되면 아무것도 안 하고, 귀찮으면 대충대충 함. 약속도 잘 까먹고, 연락도 늦게 함. 너무 느긋해서 답답하다는 소리 자주 들어요. 다이어트? 내일부터 시작...의 연속."
+                },
+                "늑대": {
+                    mbti_desc: "카리스마 있고 리더십이 강한 성격. 독립적이지만 동료애도 강한 사람이에요.",
+                    love: "연애하면 은근 로맨틱함. 겉으론 쿨해 보여도 좋아하는 사람한테는 다정해요. 리드하는 걸 좋아하고, 보호본능 강해서 챙겨주는 스타일. 근데 질투심 많고 독점욕도 있어요. 진지하게 연애하는 편이라 가벼운 만남은 별로 안 좋아함.",
+                    personality: "독립적이고 자기 주관이 확실해요. 리더십 있어서 팀플 때 리더 맡는 경우 많고, 책임감도 강함. 목표 지향적이라 하고 싶은 거 있으면 끝까지 해냄. 의리 있고 동료애 강해서 내 사람은 끝까지 챙겨요. 카리스마 있어서 후배들한테 인기 많음.",
+                    weakness: "완전 고집불통. 자기 생각이 맞다고 확신하면 남 말 안 들어요. 자존심 세서 사과 잘 안 하고, 약한 모습 보이는 거 싫어함. 경쟁심 강해서 지는 거 못 참고, 인정받고 싶어하는 욕구 강해요. 감정 표현 서툴러서 차갑다는 오해 받기도 함."
+                },
+                "사자": {
+                    mbti_desc: "당당하고 자신감 넘치는 성격. 타고난 리더이자 승부사 기질이 있어요.",
+                    love: "연애할 때도 주도권 잡는 걸 좋아해요. 먼저 대시하고, 적극적으로 어필하는 스타일. 좋아하는 사람한테는 아낌없이 베풀고, 특별한 사람 만들어주는 능력 있음. 근데 자존심 세서 무시당하는 거 절대 못 참아요. 관심 없으면 바로 정리하는 쿨함도 있어요.",
+                    personality: "자신감 넘치고 당당해요. 어디 가든 존재감 확실하고, 주목받는 거 좋아함. 목표 의식 강하고 성공 지향적이라 하는 일마다 인정받으려고 노력해요. 리더십 강하고 추진력 있어서 팀을 이끄는 능력 탁월. 베푸는 거 좋아해서 후배들한테 쏘는 편.",
+                    weakness: "자존심이 하늘을 찌름. 자기가 최고라고 생각해서 교만해 보일 수 있어요. 인정 욕구 강해서 칭찬 안 해주면 삐짐. 오버하는 경향 있고, 허세 부릴 때도 있음. 자기밖에 몰라서 이기적이라는 소리 들을 수 있고, 지는 거 진짜 못 참아서 승부욕 쩔어요."
+                },
+                "부엉이": {
+                    mbti_desc: "지혜롭고 신중한 성격. 관찰력이 뛰어나고 분석적인 사고를 가진 사람이에요.",
+                    love: "연애는 신중하게 접근해요. 상대방을 오래 관찰하고, 확신이 서면 그때 다가가는 스타일. 감정적이기보다 이성적으로 판단하고, 계획적으로 연애해요. 깊이 있는 대화 좋아하고, 지적인 교감 중요시. 밤에 더 감성적이고 로맨틱해지는 타입.",
+                    personality: "똑똑하고 분석적이에요. 관찰력 뛰어나서 사람 파악 잘하고, 상황 판단도 정확함. 혼자 있는 시간 좋아하고, 밤에 더 집중력 높아짐. 지적 호기심 많아서 공부하는 거 좋아하고, 전문성 있는 분야 파고드는 거 좋아해요. 조용하지만 할 말은 하는 스타일.",
+                    weakness: "완벽주의 성향이 강해서 스스로한테도 남한테도 기준이 높아요. 비판적인 면이 있어서 까칠해 보일 수 있고, 오지랖 부리는 사람 싫어함. 밤샘 잘해서 생활패턴 개판일 수 있고, 혼자 생각에 빠져서 연락 안 받을 때 많음. 융통성 없고 고지식하다는 소리 들어요."
+                },
+                "돌고래": {
+                    mbti_desc: "사교적이고 긍정적인 에너지를 가진 사람. 창의적이고 재능이 많아요.",
+                    love: "연애할 때 완전 로맨틱하고 재밌어요. 깜짝 이벤트 잘하고, 데이트 코스도 특별하게 잘 짜요. 애정표현 풍부하고 스킨십도 좋아하는 편. 대화 잘 통하는 사람 좋아하고, 같이 노는 게 재밌어야 함. 자유로운 연애 스타일이라 너무 묶는 건 싫어해요.",
+                    personality: "밝고 긍정적이에요. 사람들과 어울리는 거 좋아하고, 분위기 띄우는 능력 있음. 창의적이고 예술적 감각 있어서 취미도 다양하고, 특별한 경험 좋아해요. 공감 능력 좋아서 상담 잘 들어주고, 사람들한테 인기 많아요. 활동적이고 여행 좋아함.",
+                    weakness: "집중력이 좀 부족해요. 한 가지에 오래 몰두 못하고 금방 질려함. 계획 없이 즉흥적으로 행동하는 경우 많고, 충동구매도 잘해요. 너무 낙천적이라 위기의식 부족하고, 돈 관리 못함. 약속 시간도 잘 안 지키고, 변덕스러워서 갑자기 마음 바뀔 때 많아요."
+                },
+                "코알라": {
+                    mbti_desc: "온화하고 평화로운 성격. 느긋하고 스트레스 없이 살아가는 사람이에요.",
+                    love: "연애할 때 완전 순둥이. 상대방한테 맞춰주고 양보 잘해요. 싸우는 거 싫어해서 본인이 참는 경우 많고, 평화로운 관계 지향. 애정표현은 적은 편이지만 꾸준히 곁에 있어주는 타입. 스킨십 좋아하고, 같이 있으면 편안한 느낌 줌.",
+                    personality: "온화하고 착해요. 남 해코지 안 하고, 배려심 많은 편. 느긋하고 여유로워서 같이 있으면 편안함. 잔잔한 일상 좋아하고, 복잡한 거 싫어해요. 동물이나 자연 좋아하고, 힐링 되는 거 즐김. 화내는 일 거의 없고, 착한 사람이라는 소리 자주 들어요.",
+                    weakness: "진짜 게으름. 움직이는 거 자체를 싫어해서 하루 종일 누워있을 수 있어요. 의욕이 없고 동기부여 안 되면 아무것도 안 함. 우유부단해서 결정도 못 내리고, 남한테 떠넘기는 경우 많음. 주도성 없어서 답답하다는 소리 듣고, 너무 착해서 이용당하기도 쉬워요."
+                },
+                "다람쥐": {
+                    mbti_desc: "부지런하고 재빠른 성격. 에너지 넘치고 호기심도 많은 사람이에요.",
+                    love: "연애하면 관심 폭탄. 연락 자주 하고 궁금한 거 많아서 질문도 많이 해요. 데이트도 자주 하고 싶어하고, 같이 이것저것 하는 거 좋아함. 애교 많고 귀엽게 구는 스타일. 근데 좀 산만하고 집중력 부족해서 한눈팔 때도 있어요. 질투심은 있는데 표현 못하고 혼자 삭임.",
+                    personality: "엄청 부지런해요. 계획 세우는 거 좋아하고, 효율적으로 움직이는 걸 추구. 여러 가지 일 동시에 하는 멀티태스킹 잘하고, 정보 수집하는 거 좋아해요. 새로운 거에 관심 많고 호기심 많아서 이것저것 다 해보는 편. 재빠르고 눈치 빨라요.",
+                    weakness: "완전 산만함. 한 가지에 집중 못하고 이것저것 손대다가 다 중도 포기. 계획만 세우고 실행 안 하는 경우도 많아요. 오지랖 넓어서 필요 없는 데 끼어들고, 수다스러워서 비밀 못 지킴 ㅋㅋ 너무 빨리 움직여서 실수도 잦고, 조급해서 기다리는 거 못 참아요."
+                }
+            };
+
+            return {
+                mbti: mbti,
+                ...results[animal]
+            };
+        }
+
+        function showResult() {
+            // 점수로 형용사와 동물 결정
+            const adj1 = getWord(scores.energy, adj1Map).word;
+            const adj2 = getWord(scores.thinking, adj2Map).word;
+            const animalData = getWord(scores.organized, animalMap);
+            const animal = animalData.word;
+            const emoji = animalData.emoji;
+
+            const resultKey = `${adj1} ${adj2} ${animal}`;
+            const result = generateResult(adj1, adj2, animal);
+
+            document.getElementById('quizScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.add('active');
+            document.getElementById('resultEmoji').textContent = emoji;
+            document.getElementById('resultTitle').textContent = resultKey;
+            document.getElementById('mbtiResult').textContent = result.mbti;
+            document.getElementById('mbtiDesc').textContent = result.mbti_desc;
+            document.getElementById('loveStyle').textContent = result.love;
+            document.getElementById('personality').textContent = result.personality;
+            document.getElementById('weakness').textContent = result.weakness;
+        }
+
+        // 공유 기능
+        function copyLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('링크가 복사되었습니다! 친구들에게 공유해보세요 🎉');
+            }).catch(() => {
+                alert('링크 복사에 실패했습니다 😢');
+            });
+        }
+
+        function shareKakao() {
+            const resultText = document.getElementById('resultTitle').textContent;
+            const url = window.location.href;
+            alert('카카오톡 공유는 카카오 개발자 등록이 필요합니다.\n링크를 복사해서 공유해주세요!\n\n나는 ' + resultText + '!');
+        }
+
+        function shareTwitter() {
+            const resultText = document.getElementById('resultTitle').textContent;
+            const url = window.location.href;
+            const text = `나는 ${resultText}! 🐾\n당신은 어떤 동물일까요?`;
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+        }
+
+        function shareFacebook() {
+            const url = window.location.href;
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+        }
+    </script>
+</body>
+</html>

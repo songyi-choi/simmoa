@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>하찮음 측정기 🎮</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Press Start 2P', cursive;
+            background: #1a1a2e;
+            color: #eee;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 픽셀 배경 애니메이션 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px);
+            animation: pixelMove 20s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes pixelMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .container {
+            max-width: 700px;
+            width: 90%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .game-window {
+            background: #16213e;
+            border: 6px solid #0f3460;
+            box-shadow: 
+                0 0 0 2px #533483,
+                0 8px 0 #0a0a0a,
+                0 8px 30px rgba(0,0,0,0.5),
+                inset 0 2px 0 rgba(255,255,255,0.1);
+            padding: 30px;
+            position: relative;
+        }
+
+        .game-window::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            background: linear-gradient(45deg, #ff6b9d 0%, #c44569 25%, #f67280 50%, #ff6b9d 75%, #c44569 100%);
+            z-index: -1;
+            opacity: 0.3;
+            animation: borderGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .title-bar {
+            background: #0f3460;
+            margin: -30px -30px 20px -30px;
+            padding: 15px 20px;
+            border-bottom: 4px solid #533483;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .title-text {
+            font-size: 16px;
+            color: #ffd93d;
+            text-shadow: 2px 2px 0 #000;
+            animation: titleBlink 2s ease-in-out infinite;
+        }
+
+        @keyframes titleBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .control-btn {
+            width: 16px;
+            height: 16px;
+            background: #ff6b9d;
+            border: 2px solid #000;
+            cursor: pointer;
+            image-rendering: pixelated;
+        }
+
+        h1 {
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 10px;
+            color: #ffd93d;
+            text-shadow: 
+                3px 3px 0 #000,
+                -1px -1px 0 #ff6b9d;
+            line-height: 1.6;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 12px;
+            color: #a8dadc;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .start-screen, .question-screen, .result-screen {
+            display: none;
+        }
+
+        .start-screen.active, .question-screen.active, .result-screen.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .pixel-character {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            background: linear-gradient(45deg, #ff6b9d, #c44569);
+            border: 4px solid #000;
+            position: relative;
+            animation: bounce 1s ease-in-out infinite;
+            image-rendering: pixelated;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        .pixel-character::before {
+            content: '👾';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 60px;
+        }
+
+        .btn {
+            background: linear-gradient(180deg, #ff6b9d 0%, #c44569 100%);
+            color: #fff;
+            border: 4px solid #000;
+            padding: 15px 30px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+            box-shadow: 
+                4px 4px 0 #000,
+                0 6px 20px rgba(255, 107, 157, 0.4);
+            transition: all 0.1s;
+            position: relative;
+            text-shadow: 1px 1px 0 #000;
+        }
+
+        .btn:hover {
+            background: linear-gradient(180deg, #ff8db3 0%, #d45579 100%);
+            transform: translate(2px, 2px);
+            box-shadow: 
+                2px 2px 0 #000,
+                0 4px 15px rgba(255, 107, 157, 0.6);
+        }
+
+        .btn:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0 0 0 #000;
+        }
+
+        .progress-bar {
+            background: #0a0a0a;
+            border: 3px solid #0f3460;
+            height: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #6bcf7f 0%, #4ca1af 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.1) 10px,
+                rgba(255,255,255,0.1) 20px
+            );
+            animation: progressMove 1s linear infinite;
+        }
+
+        @keyframes progressMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(20px); }
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            color: #ffd93d;
+            text-shadow: 1px 1px 0 #000;
+            z-index: 2;
+        }
+
+        .question-box {
+            background: #0a0a0a;
+            border: 3px solid #533483;
+            padding: 20px;
+            margin-bottom: 25px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .question-box::before {
+            content: '▶';
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            color: #ffd93d;
+            font-size: 12px;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .question-text {
+            font-size: 14px;
+            line-height: 1.8;
+            text-align: center;
+            color: #eee;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: linear-gradient(180deg, #16213e 0%, #0f3460 100%);
+            border: 3px solid #533483;
+            padding: 15px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            color: #eee;
+            line-height: 1.6;
+            position: relative;
+            box-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+        }
+
+        .option-btn:hover {
+            background: linear-gradient(180deg, #1f2e4d 0%, #16406f 100%);
+            border-color: #ff6b9d;
+            transform: translateX(5px);
+            box-shadow: 5px 5px 0 rgba(255, 107, 157, 0.3);
+        }
+
+        .option-btn::before {
+            content: '○';
+            margin-right: 10px;
+            color: #ffd93d;
+        }
+
+        .option-btn:hover::before {
+            content: '●';
+        }
+
+        .result-screen {
+            text-align: center;
+        }
+
+        .result-emoji {
+            font-size: 100px;
+            margin: 20px 0;
+            animation: resultPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes resultPop {
+            0% { transform: scale(0) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(180deg); }
+            100% { transform: scale(1) rotate(360deg); }
+        }
+
+        .result-title {
+            font-size: 22px;
+            color: #ffd93d;
+            margin: 20px 0;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        .result-description {
+            font-size: 12px;
+            line-height: 2;
+            margin: 20px 0;
+            color: #a8dadc;
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border: 2px solid #0f3460;
+        }
+
+        .score-display {
+            font-size: 48px;
+            color: #ff6b9d;
+            margin: 20px 0;
+            text-shadow: 
+                3px 3px 0 #000,
+                0 0 20px rgba(255, 107, 157, 0.8);
+            animation: scoreGlow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes scoreGlow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .stats-box {
+            background: #0a0a0a;
+            border: 3px solid #533483;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-size: 11px;
+            color: #a8dadc;
+        }
+
+        .stat-bar {
+            width: 60%;
+            height: 20px;
+            background: #16213e;
+            border: 2px solid #0f3460;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b9d, #ffd93d);
+            transition: width 1s ease;
+        }
+
+        @media (max-width: 768px) {
+            .game-window {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .subtitle {
+                font-size: 10px;
+            }
+            
+            .btn {
+                font-size: 13px;
+                padding: 12px 20px;
+            }
+            
+            .option-btn {
+                font-size: 10px;
+            }
+            
+            .question-text {
+                font-size: 12px;
+            }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ffd93d;
+            animation: particleFall 3s linear infinite;
+            image-rendering: pixelated;
+        }
+
+        @keyframes particleFall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <div class="game-window">
+            <div class="title-bar">
+                <div class="title-text">HACHANJEUM.EXE</div>
+                <div class="window-controls">
+                    <div class="control-btn"></div>
+                    <div class="control-btn"></div>
+                    <div class="control-btn"></div>
+                </div>
+            </div>
+
+            <!-- 시작 화면 -->
+            <div class="start-screen active">
+                <h1>하찮음<br>측정기</h1>
+                <div class="subtitle">ver 1.0</div>
+                <div class="pixel-character"></div>
+                <div class="subtitle">당신의 하찮음 수치를<br>정확하게 측정합니다</div>
+                <button class="btn" onclick="startTest()">START GAME</button>
+            </div>
+
+            <!-- 질문 화면 -->
+            <div class="question-screen">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar"></div>
+                    <div class="progress-text" id="progressText">0/10</div>
+                </div>
+                
+                <div class="question-box">
+                    <div class="question-text" id="questionText"></div>
+                </div>
+                
+                <div class="options" id="options"></div>
+            </div>
+
+            <!-- 결과 화면 -->
+            <div class="result-screen">
+                <h1>측정 완료!</h1>
+                <div class="result-emoji" id="resultEmoji"></div>
+                <div class="score-display" id="scoreDisplay"></div>
+                <div class="result-title" id="resultTitle"></div>
+                <div class="result-description" id="resultDescription"></div>
+                
+                <div class="stats-box">
+                    <div class="stat-item">
+                        <span>존재감</span>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" id="stat1"></div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <span>영향력</span>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" id="stat2"></div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <span>중요도</span>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" id="stat3"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn" onclick="location.reload()">다시 측정하기</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                q: "아침에 일어났을 때 당신의 첫 생각은?",
+                options: [
+                    { text: "오늘도 열심히 살아야지!", score: 1 },
+                    { text: "5분만 더...", score: 3 },
+                    { text: "왜 깨어난 거지?", score: 5 },
+                    { text: "내가 누구지?", score: 7 }
+                ]
+            },
+            {
+                q: "단체 사진을 찍을 때 당신의 위치는?",
+                options: [
+                    { text: "정중앙! 카메라 응시!", score: 1 },
+                    { text: "적당히 앞쪽", score: 3 },
+                    { text: "구석 어딘가...", score: 6 },
+                    { text: "사진 찍는 줄도 몰랐음", score: 8 }
+                ]
+            },
+            {
+                q: "회의 중 당신의 발언 빈도는?",
+                options: [
+                    { text: "적극적으로 의견 제시", score: 1 },
+                    { text: "필요할 때만 발언", score: 3 },
+                    { text: "고개만 끄덕끄덕", score: 6 },
+                    { text: "회의에 있었나요?", score: 9 }
+                ]
+            },
+            {
+                q: "SNS에서 당신의 존재감은?",
+                options: [
+                    { text: "일일 업로드 인플루언서", score: 1 },
+                    { text: "가끔 올리는 일반인", score: 4 },
+                    { text: "좋아요만 누르는 유령", score: 7 },
+                    { text: "계정이 뭐였더라", score: 10 }
+                ]
+            },
+            {
+                q: "길거리에서 지인을 마주쳤다!",
+                options: [
+                    { text: "반갑게 인사한다", score: 2 },
+                    { text: "눈 마주치면 인사", score: 4 },
+                    { text: "못 본 척 지나간다", score: 7 },
+                    { text: "투명인간 모드 발동", score: 9 }
+                ]
+            },
+            {
+                q: "당신의 생일 파티 규모는?",
+                options: [
+                    { text: "성대한 파티!", score: 1 },
+                    { text: "친한 친구들과", score: 3 },
+                    { text: "가족끼리 조촐히", score: 6 },
+                    { text: "혼자 케이크 하나", score: 8 }
+                ]
+            },
+            {
+                q: "우주에서 당신의 크기를 비유하면?",
+                options: [
+                    { text: "작은 별", score: 2 },
+                    { text: "운석 조각", score: 4 },
+                    { text: "우주 먼지", score: 7 },
+                    { text: "양자 단위 이하", score: 10 }
+                ]
+            },
+            {
+                q: "단톡방에서 당신의 역할은?",
+                options: [
+                    { text: "대화 주도자", score: 1 },
+                    { text: "적극 참여자", score: 3 },
+                    { text: "이모티콘 반응봇", score: 6 },
+                    { text: "읽씹의 달인", score: 9 }
+                ]
+            },
+            {
+                q: "하루 동안 당신이 없어지면?",
+                options: [
+                    { text: "다들 큰일날 거야", score: 1 },
+                    { text: "몇몇은 알아챌 거야", score: 4 },
+                    { text: "저녁때쯤 알아차릴까?", score: 7 },
+                    { text: "아무도 모를 듯", score: 10 }
+                ]
+            },
+            {
+                q: "마지막 질문! 이 테스트를 하는 이유는?",
+                options: [
+                    { text: "재미로!", score: 2 },
+                    { text: "심심해서", score: 4 },
+                    { text: "자존감 체크...", score: 6 },
+                    { text: "하찮음을 확인하려고", score: 9 }
+                ]
+            }
+        ];
+
+        const results = [
+            {
+                range: [10, 16],
+                emoji: "🦁",
+                title: "아프리카 사자",
+                description: "당신은 초원의 왕! 어디서든 존재감이 넘치고 주변을 압도하는 카리스마를 가졌어요. 하찮음? 그게 뭐죠?",
+                stats: [95, 98, 96]
+            },
+            {
+                range: [17, 23],
+                emoji: "🐘",
+                title: "아시아 코끼리",
+                description: "묵직하고 든든한 존재감의 소유자! 조용하지만 무시할 수 없는 힘을 가지고 있어요. 당신이 움직이면 땅이 흔들려요.",
+                stats: [88, 85, 90]
+            },
+            {
+                range: [24, 30],
+                emoji: "🦅",
+                title: "황금 독수리",
+                description: "하늘을 지배하는 맹금류! 높은 곳에서 세상을 내려다보는 당신. 하찮음과는 거리가 멀어요.",
+                stats: [82, 88, 85]
+            },
+            {
+                range: [31, 37],
+                emoji: "🐺",
+                title: "회색 늑대",
+                description: "무리의 리더! 카리스마 넘치고 주변에 영향력을 발휘하는 존재예요. 울부짖음 한 번에 분위기 장악!",
+                stats: [78, 80, 76]
+            },
+            {
+                range: [38, 44],
+                emoji: "🐕",
+                title: "골든 리트리버",
+                description: "친근하고 사랑받는 존재! 하찮지 않아요. 주변 사람들에게 꼭 필요한 따뜻한 존재랍니다.",
+                stats: [70, 72, 75]
+            },
+            {
+                range: [45, 51],
+                emoji: "🦊",
+                title: "붉은 여우",
+                description: "영리하고 재치있는 존재! 작지만 똑똑해서 무시할 수 없어요. 꾀를 부리며 살아가는 중!",
+                stats: [65, 68, 63]
+            },
+            {
+                range: [52, 58],
+                emoji: "🐈",
+                title: "집고양이",
+                description: "자유로운 영혼! 때로는 보이고 때로는 안 보이지만, 그게 또 매력이에요. 당신만의 방식대로 사는 중!",
+                stats: [58, 55, 60]
+            },
+            {
+                range: [59, 65],
+                emoji: "🐇",
+                title: "토끼",
+                description: "귀엽고 깡충깡충! 눈에 띄지 않으려 해도 은근 눈에 띄는 존재. 쫄깃한 매력이 있어요!",
+                stats: [52, 48, 55]
+            },
+            {
+                range: [66, 72],
+                emoji: "🐹",
+                title: "햄스터",
+                description: "작지만 귀여운 존재! 쳇바퀴를 열심히 돌리고 있지만... 가끔은 그 쳇바퀴가 헛돈다는 느낌?",
+                stats: [45, 42, 48]
+            },
+            {
+                range: [73, 78],
+                emoji: "🐛",
+                title: "애벌레",
+                description: "아직 번데기 전 단계! 하찮아 보여도 언젠가는 나비가 될 수 있어요... 아마도? 희망을 가져요!",
+                stats: [38, 35, 40]
+            },
+            {
+                range: [79, 84],
+                emoji: "🐜",
+                title: "일개미",
+                description: "부지런하지만 개인은 잘 안 보이는... 군집 속 하나일 뿐이지만 열심히 살고 있어요!",
+                stats: [32, 28, 35]
+            },
+            {
+                range: [85, 89],
+                emoji: "🦟",
+                title: "모기",
+                description: "존재감은 있는데... 반갑지 않은 존재감? 하지만 적어도 무시는 못 하죠! 웅웅~",
+                stats: [25, 30, 22]
+            },
+            {
+                range: [90, 93],
+                emoji: "🦠",
+                title: "미생물",
+                description: "현미경으로나 보이는 수준... 하지만 당신도 생명체예요! 세균도 세상을 바꿀 수 있답니다!",
+                stats: [18, 15, 20]
+            },
+            {
+                range: [94, 97],
+                emoji: "💨",
+                title: "공기 분자",
+                description: "거의 투명 인간 수준... 숨 쉴 때만 당신의 존재를 느낄 수 있어요. 하지만 생명에 꼭 필요하죠!",
+                stats: [10, 8, 12]
+            },
+            {
+                range: [98, 100],
+                emoji: "⚛️",
+                title: "양자",
+                description: "축하합니다! 최고 수준의 하찮음을 달성했어요. 관측하지 않으면 존재하는지도 모르는 수준. 슈뢰딩거의 당신...",
+                stats: [3, 2, 5]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let totalScore = 0;
+
+        function startTest() {
+            document.querySelector('.start-screen').classList.remove('active');
+            document.querySelector('.question-screen').classList.add('active');
+            showQuestion();
+            createParticles();
+        }
+
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById('questionText').textContent = question.q;
+            
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = option.text;
+                btn.onclick = () => selectAnswer(option.score);
+                optionsContainer.appendChild(btn);
+            });
+            
+            updateProgress();
+        }
+
+        function selectAnswer(score) {
+            totalScore += score;
+            currentQuestion++;
+            
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `${currentQuestion + 1}/10`;
+        }
+
+        function showResult() {
+            document.querySelector('.question-screen').classList.remove('active');
+            document.querySelector('.result-screen').classList.add('active');
+            
+            const result = results.find(r => totalScore >= r.range[0] && totalScore <= r.range[1]);
+            
+            document.getElementById('resultEmoji').textContent = result.emoji;
+            document.getElementById('scoreDisplay').textContent = totalScore + '점';
+            document.getElementById('resultTitle').textContent = result.title;
+            document.getElementById('resultDescription').textContent = result.description;
+            
+            setTimeout(() => {
+                document.getElementById('stat1').style.width = result.stats[0] + '%';
+                document.getElementById('stat2').style.width = result.stats[1] + '%';
+                document.getElementById('stat3').style.width = result.stats[2] + '%';
+            }, 500);
+        }
+
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 3 + 's';
+                    particle.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    
+                    const colors = ['#ffd93d', '#ff6b9d', '#6bcf7f', '#a8dadc'];
+                    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    particlesContainer.appendChild(particle);
+                    
+                    setTimeout(() => particle.remove(), 5000);
+                }, i * 200);
+            }
+        }
+
+        // 주기적으로 파티클 생성
+        setInterval(createParticles, 5000);
+    </script>
+</body>
+</html>

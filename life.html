@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프리미엄 사주팔자 - 당신의 운명을 읽다</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 20px;
+        }
+
+        .header h1 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 3.5em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #a78bfa 0%, #ec4899 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .header .subtitle {
+            font-size: 1.3em;
+            color: #94a3b8;
+            font-weight: 300;
+            letter-spacing: 3px;
+        }
+
+        .form-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 50px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 12px;
+            color: #e2e8f0;
+            font-weight: 500;
+            font-size: 0.95em;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #a78bfa;
+            box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #64748b;
+        }
+
+        .form-group select option {
+            background: #1e293b;
+            color: #fff;
+        }
+
+        .datetime-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+            border: none;
+            border-radius: 16px;
+            color: white;
+            font-size: 1.3em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 10px 30px rgba(139, 92, 246, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            letter-spacing: 1px;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 15px 40px rgba(139, 92, 246, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 30px;
+            border: 3px solid rgba(167, 139, 250, 0.2);
+            border-top: 3px solid #a78bfa;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1.2em;
+            color: #94a3b8;
+            font-weight: 300;
+        }
+
+        .result {
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 50px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .result-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .result-header h2 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .result-header .date {
+            color: #94a3b8;
+            font-size: 1.1em;
+            font-weight: 300;
+        }
+
+        .saju-pillars {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .pillar {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .pillar-label {
+            color: #a78bfa;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .pillar-value {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 2em;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 30px;
+            background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);
+            border-radius: 2px;
+        }
+
+        .section-content {
+            color: #cbd5e1;
+            line-height: 2;
+            font-size: 1.05em;
+            font-weight: 300;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .ohaeng-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .ohaeng-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .ohaeng-label {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .ohaeng-stars {
+            font-size: 1.5em;
+            color: #fbbf24;
+        }
+
+        .fortune-score {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .score-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .score-label {
+            color: #94a3b8;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .score-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .score-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8b5cf6 0%, #ec4899 100%);
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .score-value {
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(236, 72, 153, 0.15) 100%);
+            border-left: 4px solid #a78bfa;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .yearly-prediction {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .month-item {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .month-item:last-child {
+            border-bottom: none;
+        }
+
+        .month-label {
+            color: #a78bfa;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2em;
+            }
+            
+            .form-card {
+                padding: 30px 20px;
+            }
+            
+            .saju-pillars {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .ohaeng-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .datetime-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🔮 사주팔자</h1>
+            <p class="subtitle">천명을 읽고 운명을 개척하다</p>
+        </div>
+
+        <div class="form-card">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>이름</label>
+                    <input type="text" id="name" placeholder="성함을 입력하세요">
+                </div>
+
+                <div class="form-group">
+                    <label>성별</label>
+                    <select id="gender">
+                        <option value="">선택하세요</option>
+                        <option value="남성">남성</option>
+                        <option value="여성">여성</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>생년월일</label>
+                    <div class="datetime-grid">
+                        <input type="number" id="year" placeholder="년 (예: 1990)" min="1900" max="2025">
+                        <input type="number" id="month" placeholder="월 (1-12)" min="1" max="12">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>일시</label>
+                    <div class="datetime-grid">
+                        <input type="number" id="day" placeholder="일 (1-31)" min="1" max="31">
+                        <select id="hour">
+                            <option value="">시간</option>
+                            <option value="자시">자시 (23:30-01:29)</option>
+                            <option value="축시">축시 (01:30-03:29)</option>
+                            <option value="인시">인시 (03:30-05:29)</option>
+                            <option value="묘시">묘시 (05:30-07:29)</option>
+                            <option value="진시">진시 (07:30-09:29)</option>
+                            <option value="사시">사시 (09:30-11:29)</option>
+                            <option value="오시">오시 (11:30-13:29)</option>
+                            <option value="미시">미시 (13:30-15:29)</option>
+                            <option value="신시">신시 (15:30-17:29)</option>
+                            <option value="유시">유시 (17:30-19:29)</option>
+                            <option value="술시">술시 (19:30-21:29)</option>
+                            <option value="해시">해시 (21:30-23:29)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>양력/음력</label>
+                <select id="calendar">
+                    <option value="">선택하세요</option>
+                    <option value="양력">양력</option>
+                    <option value="음력">음력</option>
+                </select>
+            </div>
+
+            <button type="button" class="submit-btn" onclick="analyzeSaju()">운명 분석 시작하기</button>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p class="loading-text">천기를 읽고 있습니다...</p>
+        </div>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/korean-lunar-calendar@0.3.6/dist/korean-lunar-calendar.min.js"></script>
+    <script>
+        // 별 생성
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+        createStars();
+
+        // ============ 만세력 핵심 데이터 ============
+        const 천간 = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
+        const 지지 = ['자', '축', '인', '묘', '진', '사', '오', '미', '신', '유', '술', '해'];
+
+        // 절기 데이터 (각 월의 절입 시간 - 대략적 평균값, 실제로는 매년 다름)
+        // 절기: 입춘(1), 경칩(2), 청명(3), 입하(4), 망종(5), 소서(6), 입추(7), 백로(8), 한로(9), 입동(10), 대설(11), 소한(12)
+        const 절기월 = {
+            1: { name: '입춘', day: 4 },   // 인월
+            2: { name: '경칩', day: 6 },   // 묘월
+            3: { name: '청명', day: 5 },   // 진월
+            4: { name: '입하', day: 6 },   // 사월
+            5: { name: '망종', day: 6 },   // 오월
+            6: { name: '소서', day: 7 },   // 미월
+            7: { name: '입추', day: 8 },   // 신월
+            8: { name: '백로', day: 8 },   // 유월
+            9: { name: '한로', day: 8 },   // 술월
+            10: { name: '입동', day: 7 },  // 해월
+            11: { name: '대설', day: 7 },  // 자월
+            12: { name: '소한', day: 6 }   // 축월
+        };
+
+        // 월지 순서 (인월=1월부터)
+        const 월지순서 = ['인', '묘', '진', '사', '오', '미', '신', '유', '술', '해', '자', '축'];
+
+        // 오호둔갑법 - 연간에 따른 월간 시작
+        // 갑기년 -> 병인월, 을경년 -> 무인월, 병신년 -> 경인월, 정임년 -> 임인월, 무계년 -> 갑인월
+        const 월간시작 = {
+            '갑': 2, '기': 2,  // 병(2)부터
+            '을': 4, '경': 4,  // 무(4)부터
+            '병': 6, '신': 6,  // 경(6)부터
+            '정': 8, '임': 8,  // 임(8)부터
+            '무': 0, '계': 0   // 갑(0)부터
+        };
+
+        // 오호둔갑법 - 일간에 따른 시간 시작
+        // 갑기일 -> 갑자시, 을경일 -> 병자시, 병신일 -> 무자시, 정임일 -> 경자시, 무계일 -> 임자시
+        const 시간시작 = {
+            '갑': 0, '기': 0,  // 갑(0)부터
+            '을': 2, '경': 2,  // 병(2)부터
+            '병': 4, '신': 4,  // 무(4)부터
+            '정': 6, '임': 6,  // 경(6)부터
+            '무': 8, '계': 8   // 임(8)부터
+        };
+
+        // 줄리안데이 계산 (그레고리력 -> 줄리안 일수)
+        function getJulianDay(year, month, day) {
+            if (month <= 2) {
+                year -= 1;
+                month += 12;
+            }
+            const A = Math.floor(year / 100);
+            const B = 2 - A + Math.floor(A / 4);
+            return Math.floor(365.25 * (year + 4716)) + Math.floor(30.6001 * (month + 1)) + day + B - 1524.5;
+        }
+
+        // 일진 계산 (줄리안데이 기반)
+        // 기준일: 1900년 1월 31일 = 갑자일 (줄리안데이: 2415051)
+        function getDayGanZhi(year, month, day) {
+            const baseJD = 2415051; // 1900년 1월 31일 (갑자일)
+            const currentJD = getJulianDay(year, month, day);
+            const diff = Math.floor(currentJD - baseJD);
+            const ganIndex = ((diff % 10) + 10) % 10;
+            const zhiIndex = ((diff % 12) + 12) % 12;
+            return { gan: 천간[ganIndex], zhi: 지지[zhiIndex], ganIndex, zhiIndex };
+        }
+
+        // 절기력 기준 연월 계산
+        function getSajuYearMonth(solarYear, solarMonth, solarDay) {
+            let sajuYear = solarYear;
+            let sajuMonth = solarMonth;
+
+            // 입춘 전이면 전년도
+            if (solarMonth === 1 || (solarMonth === 2 && solarDay < 절기월[1].day)) {
+                sajuYear = solarYear - 1;
+            }
+
+            // 해당 월의 절입일 전이면 전월
+            const 절입일 = 절기월[solarMonth]?.day || 6;
+            if (solarDay < 절입일) {
+                sajuMonth = solarMonth - 1;
+                if (sajuMonth === 0) sajuMonth = 12;
+                // 1월 절입 전이면 전년 12월
+                if (solarMonth === 1) {
+                    sajuYear = solarYear - 1;
+                }
+            }
+
+            return { sajuYear, sajuMonth };
+        }
+
+        // 연주 계산
+        function getYearGanZhi(sajuYear) {
+            const ganIndex = (sajuYear - 4) % 10;
+            const zhiIndex = (sajuYear - 4) % 12;
+            return { gan: 천간[ganIndex], zhi: 지지[zhiIndex], ganIndex, zhiIndex };
+        }
+
+        // 월주 계산 (오호둔갑법 적용)
+        function getMonthGanZhi(yearGan, sajuMonth) {
+            // 월지는 인월(1월)=인, 묘월(2월)=묘 ...
+            const zhiIndex = (sajuMonth + 1) % 12; // 1월=인(2), 2월=묘(3)...
+            const actualZhiIndex = (sajuMonth + 1) % 12;
+
+            // 월간은 오호둔갑법으로 계산
+            const startGan = 월간시작[yearGan];
+            const ganIndex = (startGan + (sajuMonth - 1)) % 10;
+
+            return { gan: 천간[ganIndex], zhi: 월지순서[sajuMonth - 1], ganIndex, zhiIndex: actualZhiIndex };
+        }
+
+        // 시주 계산 (오호둔갑법 적용)
+        function getHourGanZhi(dayGan, hourZhiIndex) {
+            const startGan = 시간시작[dayGan];
+            const ganIndex = (startGan + hourZhiIndex) % 10;
+            return { gan: 천간[ganIndex], zhi: 지지[hourZhiIndex], ganIndex, zhiIndex: hourZhiIndex };
+        }
+
+        // 음력을 양력으로 변환
+        function lunarToSolar(year, month, day) {
+            try {
+                const calendar = new KoreanLunarCalendar();
+                calendar.setLunarDate(year, month, day, false);
+                return {
+                    year: calendar.getSolarYear(),
+                    month: calendar.getSolarMonth(),
+                    day: calendar.getSolarDay()
+                };
+            } catch (e) {
+                // 라이브러리 에러 시 원본 반환
+                return { year, month, day };
+            }
+        }
+
+        // 전체 사주 계산
+        function calculateSaju(year, month, day, hourName, calendarType) {
+            let solarYear = year, solarMonth = month, solarDay = day;
+
+            // 음력이면 양력으로 변환
+            if (calendarType === '음력') {
+                const converted = lunarToSolar(year, month, day);
+                solarYear = converted.year;
+                solarMonth = converted.month;
+                solarDay = converted.day;
+            }
+
+            // 절기력 기준 연월
+            const { sajuYear, sajuMonth } = getSajuYearMonth(solarYear, solarMonth, solarDay);
+
+            // 연주
+            const yearPillar = getYearGanZhi(sajuYear);
+
+            // 월주
+            const monthPillar = getMonthGanZhi(yearPillar.gan, sajuMonth);
+
+            // 일주
+            const dayPillar = getDayGanZhi(solarYear, solarMonth, solarDay);
+
+            // 시주
+            const hourMap = {
+                '자시': 0, '축시': 1, '인시': 2, '묘시': 3, '진시': 4, '사시': 5,
+                '오시': 6, '미시': 7, '신시': 8, '유시': 9, '술시': 10, '해시': 11
+            };
+            const hourZhiIndex = hourMap[hourName];
+            const hourPillar = getHourGanZhi(dayPillar.gan, hourZhiIndex);
+
+            return {
+                year: yearPillar,
+                month: monthPillar,
+                day: dayPillar,
+                hour: hourPillar,
+                solarDate: { year: solarYear, month: solarMonth, day: solarDay },
+                sajuDate: { year: sajuYear, month: sajuMonth }
+            };
+        }
+
+        function analyzeSaju() {
+            const name = document.getElementById('name').value.trim();
+            const gender = document.getElementById('gender').value;
+            const year = document.getElementById('year').value;
+            const month = document.getElementById('month').value;
+            const day = document.getElementById('day').value;
+            const hour = document.getElementById('hour').value;
+            const calendar = document.getElementById('calendar').value;
+
+            if (!name || !gender || !year || !month || !day || !hour || !calendar) {
+                alert('모든 정보를 입력해주세요.');
+                return;
+            }
+
+            if (year < 1900 || year > 2025 || month < 1 || month > 12 || day < 1 || day > 31) {
+                alert('생년월일을 올바르게 입력해주세요.');
+                return;
+            }
+
+            document.getElementById('result').classList.remove('show');
+            document.getElementById('loading').classList.add('show');
+
+            setTimeout(() => {
+                const result = generateDetailedFortune(name, gender, parseInt(year), parseInt(month), parseInt(day), hour, calendar);
+                document.getElementById('loading').classList.remove('show');
+                document.getElementById('result').innerHTML = result;
+                document.getElementById('result').classList.add('show');
+                document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 2000);
+        }
+
+        function generateDetailedFortune(name, gender, year, month, day, hour, calendar) {
+            // 정확한 사주 계산
+            const saju = calculateSaju(year, month, day, hour, calendar);
+
+            const yearGan = saju.year.gan;
+            const yearJi = saju.year.zhi;
+            const monthGan = saju.month.gan;
+            const monthJi = saju.month.zhi;
+            const dayGan = saju.day.gan;
+            const dayJi = saju.day.zhi;
+            const hourGan = saju.hour.gan;
+            const hourJi = saju.hour.zhi;
+
+            const ohaeng = {
+                '갑': '목', '을': '목', '병': '화', '정': '화', '무': '토',
+                '기': '토', '경': '금', '신': '금', '임': '수', '계': '수',
+                '자': '수', '축': '토', '인': '목', '묘': '목', '진': '토',
+                '사': '화', '오': '화', '미': '토', '신': '금', '유': '금',
+                '술': '토', '해': '수'
+            };
+
+            const sajuChars = [yearGan, yearJi, monthGan, monthJi, dayGan, dayJi, hourGan, hourJi];
+            const elements = {};
+            sajuChars.forEach(char => {
+                const elem = ohaeng[char];
+                elements[elem] = (elements[elem] || 0) + 1;
+            });
+
+            const maxElement = Object.keys(elements).reduce((a, b) => elements[a] > elements[b] ? a : b);
+            
+            // 운세 점수 계산
+            const fortuneScores = {
+                wealth: 60 + Math.floor(Math.random() * 30),
+                career: 55 + Math.floor(Math.random() * 35),
+                health: 65 + Math.floor(Math.random() * 25),
+                love: 50 + Math.floor(Math.random() * 40),
+                study: 60 + Math.floor(Math.random() * 30)
+            };
+
+            let html = `
+                <div class="result-card">
+                    <div class="result-header">
+                        <h2>${name}님의 사주명리</h2>
+                        <p class="date">${year}년 ${month}월 ${day}일 ${hour} · ${calendar}</p>
+                    </div>
+
+                    <div class="saju-pillars">
+                        <div class="pillar">
+                            <div class="pillar-label">年柱 (연주)</div>
+                            <div class="pillar-value">${yearGan}${yearJi}</div>
+                        </div>
+                        <div class="pillar">
+                            <div class="pillar-label">月柱 (월주)</div>
+                            <div class="pillar-value">${monthGan}${monthJi}</div>
+                        </div>
+                        <div class="pillar">
+                            <div class="pillar-label">日柱 (일주)</div>
+                            <div class="pillar-value">${dayGan}${dayJi}</div>
+                        </div>
+                        <div class="pillar">
+                            <div class="pillar-label">時柱 (시주)</div>
+                            <div class="pillar-value">${hourGan}${hourJi}</div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3 class="section-title">오행 분석</h3>
+                        <div class="ohaeng-grid">
+                            <div class="ohaeng-item">
+                                <div class="ohaeng-label">木 (목)</div>
+                                <div class="ohaeng-stars">${'⭐'.repeat(elements['목'] || 0)}</div>
+                            </div>
+                            <div class="ohaeng-item">
+                                <div class="ohaeng-label">火 (화)</div>
+                                <div class="ohaeng-stars">${'⭐'.repeat(elements['화'] || 0)}</div>
+                            </div>
+                            <div class="ohaeng-item">
+                                <div class="ohaeng-label">土 (토)</div>
+                                <div class="ohaeng-stars">${'⭐'.repeat(elements['토'] || 0)}</div>
+                            </div>
+                            <div class="ohaeng-item">
+                                <div class="ohaeng-label">金 (금)</div>
+                                <div class="ohaeng-stars">${'⭐'.repeat(elements['금'] || 0)}</div>
+                            </div>
+                            <div class="ohaeng-item">
+                                <div class="ohaeng-label">水 (수)</div>
+                                <div class="ohaeng-stars">${'⭐'.repeat(elements['수'] || 0)}</div>
+                            </div>
+                        </div>
+                        <div class="section-content">
+                            <p>귀하의 사주는 <strong>${maxElement}(${{'목':'木','화':'火','토':'土','금':'金','수':'水'}[maxElement]})</strong> 기운이 가장 강합니다. ${getElementAnalysis(maxElement)}</p>
+                            <p>${getElementBalance(elements)}</p>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3 class="section-title">2026년 운세 전망</h3>
+                        <div class="fortune-score">
+                            <div class="score-item">
+                                <div class="score-label">재물운</div>
+                                <div class="score-bar"><div class="score-fill" style="width: ${fortuneScores.wealth}%"></div></div>
+                                <div class="score-value">${fortuneScores.wealth}점</div>
+                            </div>
+                            <div class="score-item">
+                                <div class="score-label">사업/직장운</div>
+                                <div class="score-bar"><div class="score-fill" style="width: ${fortuneScores.career}%"></div></div>
+                                <div class="score-value">${fortuneScores.career}점</div>
+                            </div>
+                            <div class="score-item">
+                                <div class="score-label">건강운</div>
+                                <div class="score-bar"><div class="score-fill" style="width: ${fortuneScores.health}%"></div></div>
+                                <div class="score-value">${fortuneScores.health}점</div>
+                            </div>
+                            <div class="score-item">
+                                <div class="score-label">애정운</div>
+                                <div class="score-bar"><div class="score-fill" style="width: ${fortuneScores.love}%"></div></div>
+                                <div class="score-value">${fortuneScores.love}점</div>
+                            </div>
+                        </div>
+                        ${getYearlyPrediction(elements, fortuneScores, gender)}
+                    </div>
+
+                    <div class="section">
+                        <h3 class="section-title">성격과 타고난 재능</h3>
+                        <div class="section-content">
+                            ${getPersonalityAnalysis(dayGan, elements, gender)}
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3 class="section-title">재물운 · 금전운</h3>
+                        <div class="section-content">
+                            ${getWealthFortune(elements, dayGan, fortuneScores.wealth)}
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3 class="section-title">직업운 · 사업운</h3>
+                        <div class="section-content">
+                            ${getCareerFortune(elements, dayGan, fortuneScores.career)}
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3 class="section-title">건강운</h3>
+                        <div class="section-content">
+                            ${getHealthFortune(maxElement, elements)}
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3 class="section-title">애정운 · 결혼운</h3>
+                        <div class="section-content">
+                            ${getLoveFortune(elements, gender, dayGan, fortuneScores.love)}
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3 class="section-title">2026년 월별 운세</h3>
+                        ${getMonthlyFortune(elements, maxElement)}
+                    </div>
+
+                    <div class="highlight-box">
+                        <h3 style="margin-bottom: 15px; font-size: 1.3em;">💎 인생 조언</h3>
+                        <div class="section-content">
+                            ${getLifeAdvice(name, elements, dayGan, gender)}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            return html;
+        }
+
+        function getElementAnalysis(element) {
+            const analyses = {
+                '목': '창의력과 성장 가능성이 풍부한 사주입니다. 새로운 것을 개척하고 발전시키는 능력이 뛰어나며, 끊임없이 배우고 성장하려는 의지가 강합니다. 유연한 사고방식으로 변화에 잘 적응합니다.',
+                '화': '열정과 에너지가 넘치는 사주입니다. 밝고 적극적인 성격으로 주변 사람들에게 활력을 불어넣습니다. 리더십이 있으며 창의적인 아이디어로 주목받는 재능이 있습니다.',
+                '토': '안정감과 신뢰감을 주는 사주입니다. 포용력이 크고 책임감이 강하며, 꾸준함과 인내심으로 목표를 달성합니다. 중재자 역할을 잘 하며 조직에서 중심적 역할을 합니다.',
+                '금': '원칙과 정의를 중시하는 사주입니다. 강한 의지력과 결단력으로 어려운 상황도 극복합니다. 분석적이고 논리적인 사고로 문제 해결 능력이 뛰어납니다.',
+                '수': '지혜롭고 통찰력이 깊은 사주입니다. 상황에 따라 유연하게 대처하며, 직관력이 뛰어나 본질을 꿰뚫어 봅니다. 학문이나 예술 분야에서 재능을 발휘할 수 있습니다.'
+            };
+            return analyses[element];
+        }
+
+        function getElementBalance(elements) {
+            const counts = Object.values(elements);
+            const max = Math.max(...counts);
+            const min = Math.min(...counts);
+            
+            if (max - min <= 1) {
+                return '오행의 균형이 매우 잘 잡혀 있어 조화로운 삶을 살 가능성이 높습니다. 어느 한쪽으로 치우치지 않아 안정적이면서도 다재다능한 면모를 보입니다.';
+            } else if (max - min === 2) {
+                return '오행이 전반적으로 균형있게 분포되어 있습니다. 특정 분야에서 강점을 보이면서도 다른 영역에서도 무난한 성과를 낼 수 있습니다.';
+            } else {
+                const weak = Object.keys(elements).find(k => elements[k] === min);
+                return `부족한 오행을 보완하면 더욱 좋은 운을 만들 수 있습니다. 특히 ${weak} 기운을 보충하는 것이 도움이 됩니다. 색상, 방향, 직업 선택 등에서 이를 고려하세요.`;
+            }
+        }
+
+        function getPersonalityAnalysis(dayGan, elements, gender) {
+            const base = {
+                '갑': `${gender === '남성' ? '큰 나무' : '아름다운 나무'}처럼 당당하고 정직한 성품의 소유자입니다. 리더십이 강하며 책임감이 뛰어나 주변 사람들의 신뢰를 받습니다. 원칙을 중시하고 정의로운 일에 앞장서는 성향이 있습니다. 때로는 융통성이 부족해 보일 수 있으나, 이는 강직한 신념에서 비롯됩니다.`,
+                '을': `유연한 풀처럼 부드럽고 섬세한 성격입니다. 뛰어난 적응력으로 어떤 환경에서도 잘 어울리며, 타인의 감정을 잘 이해합니다. ${gender === '남성' ? '겉으로는 부드러워 보여도 속은 강한 의지' : '여성스러운 매력과 지혜'}를 겸비했습니다. 예술적 감각이 뛰어나며 심미안이 발달했습니다.`,
+                '병': `태양처럼 밝고 열정적인 성격의 소유자입니다. 긍정적인 에너지로 주변을 밝게 하며, 창의력이 풍부합니다. 솔직하고 직설적인 화법으로 때로 오해를 받을 수 있으나, 순수한 마음에서 비롯됩니다. 리더십이 있으며 무대에 서는 것을 두려워하지 않습니다.`,
+                '정': `촛불처럼 따뜻하고 섬세한 마음을 가졌습니다. ${gender === '여성' ? '여성스러운 우아함과' : '섬세한 감수성과'} 예술적 재능을 타고났습니다. 배려심이 깊고 타인의 아픔을 공감하는 능력이 뛰어납니다. 감정이 풍부하여 예술, 상담, 교육 분야에서 재능을 발휘합니다.`,
+                '무': `높은 산처럼 묵직하고 안정적인 성품입니다. 포용력이 크고 신뢰할 수 있는 사람으로, 주변에서 의지가 되는 존재입니다. 책임감이 강하고 맡은 일을 끝까지 해내는 끈기가 있습니다. 보수적인 면이 있으나 이는 신중함의 표현입니다.`,
+                '기': `기름진 땅처럼 실속 있고 꼼꼼한 성격입니다. 계획적이고 체계적으로 일을 진행하며, 디테일을 놓치지 않습니다. ${gender === '여성' ? '살림 능력이 뛰어나고' : '경제 관념이 뚜렷하며'} 재테크에 관심이 많습니다. 인내심이 강하고 작은 것도 소중히 여깁니다.`,
+                '경': `칼처럼 예리하고 강한 의지를 가졌습니다. 정의감이 강하고 원칙을 중시하며, 옳고 그름을 분명히 합니다. 결단력이 있어 빠른 판단과 실행력을 보입니다. ${gender === '남성' ? '남성다운 카리스마' : '강인한 여성상'}를 대표하며, 법조계나 군인, 경영자로 성공할 가능성이 높습니다.`,
+                '신': `귀금속처럼 세련되고 우아한 성품입니다. 예리한 감각과 분석력을 타고났으며, 미적 감각이 뛰어납니다. 완벽주의 성향이 있어 자신과 타인에게 엄격할 수 있습니다. ${gender === '여성' ? '품위있는 여성미' : '세련된 남성미'}를 풍기며, 품질과 가치를 중시합니다.`,
+                '임': `큰 강처럼 넓고 깊은 지혜를 가졌습니다. 유연하고 융통성 있는 사고방식으로 어려운 상황도 슬기롭게 헤쳐나갑니다. 자유로운 영혼으로 구속받는 것을 싫어하며, 모험심이 강합니다. 통찰력이 뛰어나 본질을 꿰뚫어 보는 능력이 있습니다.`,
+                '계': `빗물이나 이슬처럼 순수하고 신비로운 성품입니다. 깊은 사색과 정신세계를 중시하며, 직관력이 매우 발달했습니다. ${gender === '여성' ? '신비로운 매력' : '지적인 카리스마'}를 풍기며, 철학, 종교, 예술 분야에 관심이 많습니다. 감수성이 예민하여 타인의 숨겨진 감정도 잘 읽습니다.`
+            };
+            
+            let analysis = `<p>${base[dayGan]}</p>`;
+            
+            if (elements['목'] >= 2) {
+                analysis += `<p>목 기운이 강해 창의성과 추진력이 뛰어납니다. 새로운 프로젝트를 시작하거나 혁신적인 아이디어를 실현하는 데 재능이 있습니다.</p>`;
+            }
+            if (elements['화'] >= 2) {
+                analysis += `<p>화 기운이 강해 열정과 표현력이 풍부합니다. 대중 앞에서 자신을 표현하는 일이나 커뮤니케이션 능력을 요하는 분야에서 빛을 발합니다.</p>`;
+            }
+            if (elements['수'] >= 2) {
+                analysis += `<p>수 기운이 강해 지혜롭고 전략적 사고가 뛰어납니다. 복잡한 문제를 해결하거나 장기적인 계획을 세우는 능력이 탁월합니다.</p>`;
+            }
+            
+            return analysis;
+        }
+
+        function getWealthFortune(elements, dayGan, score) {
+            let fortune = '';
+            
+            if (score >= 80) {
+                fortune += `<p><strong>재물운이 매우 좋습니다!</strong> 2026년은 금전적으로 풍요로운 한 해가 될 것입니다. 투자나 사업 확장을 고려하기 좋은 시기입니다.</p>`;
+            } else if (score >= 65) {
+                fortune += `<p><strong>재물운이 좋은 편입니다.</strong> 꾸준한 노력과 계획적인 재테크로 자산을 증식시킬 수 있습니다.</p>`;
+            } else {
+                fortune += `<p><strong>재물운이 평범한 수준입니다.</strong> 무리한 투자보다는 안정적인 저축과 계획적인 소비가 필요합니다.</p>`;
+            }
+
+            if (elements['금'] >= 2) {
+                fortune += `<p>금 기운이 강해 재물을 모으고 관리하는 능력이 뛰어납니다. 부동산 투자나 금융 상품에 관심을 가져보세요. 특히 3월, 6월, 9월에 좋은 재물 운이 따릅니다.</p>`;
+            }
+            
+            if (elements['토'] >= 2) {
+                fortune += `<p>토 기운이 강해 안정적인 재산 형성이 가능합니다. 부동산이나 실물 자산에 투자하면 좋은 결과를 얻을 수 있습니다. 토지나 건물 관련 사업도 길합니다.</p>`;
+            }
+
+            if (dayGan === '갑' || dayGan === '을') {
+                fortune += `<p>일간이 목이므로 성장성 있는 분야에 투자하면 좋습니다. 스타트업이나 IT, 바이오 분야 등 미래 가치가 있는 곳에 관심을 두세요.</p>`;
+            }
+
+            fortune += `<p><strong>재물 증식 팁:</strong> ${score >= 70 ? '현재의 호황기를 잘 활용하되 과욕은 금물입니다. 수입의 30%는 반드시 저축하세요.' : '작은 돈이라도 꾸준히 모으는 습관이 중요합니다. 복리의 마법을 활용하세요.'} 2026년 하반기에 큰 지출이 예상되므로 상반기에 여유자금을 확보해 두는 것이 좋습니다.</p>`;
+
+            return fortune;
+        }
+
+        function getCareerFortune(elements, dayGan, score) {
+            let fortune = '';
+
+            if (score >= 80) {
+                fortune += `<p><strong>직업운이 최상입니다!</strong> 2026년은 경력에서 큰 도약을 이룰 수 있는 해입니다. 승진, 이직, 창업 등 중요한 결정을 내리기 좋은 시기입니다.</p>`;
+            } else if (score >= 65) {
+                fortune += `<p><strong>직업운이 좋습니다.</strong> 성실하게 임하면 인정받고 좋은 기회가 찾아올 것입니다.</p>`;
+            } else {
+                fortune += `<p><strong>직업운이 평이합니다.</strong> 현재 위치에서 실력을 쌓는 것에 집중하세요. 조급해하지 말고 때를 기다리는 것도 지혜입니다.</p>`;
+            }
+
+            const careers = {
+                '목': '교육, 출판, 언론, IT, 환경 관련 업종',
+                '화': '방송, 연예, 마케팅, 디자인, 요식업',
+                '토': '부동산, 건설, 농업, 제조업, 금융업',
+                '금': '법조계, 경영, 회계, 의료, 귀금속업',
+                '수': '학문, 연구, 컨설팅, 물류, 수산업'
+            };
+
+            const maxElement = Object.keys(elements).reduce((a, b) => elements[a] > elements[b] ? a : b);
+            fortune += `<p><strong>적성에 맞는 직업:</strong> ${careers[maxElement]} 등이 유리합니다. 이 분야에서 특별한 재능을 발휘할 수 있습니다.</p>`;
+
+            if (elements['화'] >= 2 && elements['목'] >= 2) {
+                fortune += `<p>창의성과 열정을 요하는 분야에서 큰 성공을 거둘 수 있습니다. 자신만의 브랜드를 만들거나 1인 기업을 시작해도 좋습니다. 4월과 7월에 중요한 사업 기회가 올 수 있으니 준비하세요.</p>`;
+            }
+
+            if (score >= 75) {
+                fortune += `<p>2026년 상반기(특히 2-4월)에 승진이나 중요한 프로젝트 기회가 올 수 있습니다. 평소 준비해온 것을 선보일 때입니다.</p>`;
+            }
+
+            fortune += `<p><strong>경력 발전 조언:</strong> 지속적인 자기계발이 핵심입니다. 새로운 기술이나 외국어를 배우면 커리어에 큰 도움이 됩니다. 특히 ${score >= 70 ? '리더십과 기획력을 키우세요.' : '전문성 강화에 집중하세요.'}</p>`;
+
+            return fortune;
+        }
+
+        function getHealthFortune(maxElement, elements) {
+            const health = {
+                '목': {
+                    organ: '간, 담낭, 눈',
+                    advice: '스트레스 관리가 중요합니다. 눈의 피로를 풀어주고, 숲이나 공원에서 산책하며 목 기운을 보충하세요. 신맛이 나는 음식(레몬, 매실 등)이 도움됩니다.',
+                    exercise: '요가, 스트레칭, 등산'
+                },
+                '화': {
+                    organ: '심장, 소장, 혈관',
+                    advice: '과도한 흥분이나 스트레스를 피하세요. 충분한 수면과 휴식이 필수입니다. 쓴맛 나는 음식(녹차, 여주 등)이 도움됩니다.',
+                    exercise: '수영, 명상, 가벼운 조깅'
+                },
+                '토': {
+                    organ: '비장, 위장',
+                    advice: '규칙적인 식사가 매우 중요합니다. 과식을 피하고 소화가 잘 되는 음식을 섭취하세요. 단맛이 나는 자연식품(고구마, 대추 등)이 좋습니다.',
+                    exercise: '산책, 가벼운 체조, 필라테스'
+                },
+                '금': {
+                    organ: '폐, 대장, 피부',
+                    advice: '호흡기 건강에 유의하고, 공기 좋은 곳에서 심호흡하세요. 미세먼지가 많은 날은 외출을 자제합니다. 매운맛 음식(무, 도라지, 생강 등)이 도움됩니다.',
+                    exercise: '등산, 호흡 운동, 수영'
+                },
+                '수': {
+                    organ: '신장, 방광, 귀',
+                    advice: '충분한 수분 섭취가 중요합니다. 하체를 따뜻하게 유지하고, 과로를 피하세요. 짠맛이 적당히 있는 음식(미역, 다시마 등)이 좋습니다.',
+                    exercise: '수영, 아쿠아로빅, 걷기'
+                }
+            };
+
+            const h = health[maxElement];
+            let fortune = `<p><strong>주의해야 할 부위:</strong> ${h.organ}에 특별히 관심을 가져야 합니다.</p>`;
+            fortune += `<p>${h.advice}</p>`;
+            fortune += `<p><strong>추천 운동:</strong> ${h.exercise} 등이 체질에 맞습니다. 일주일에 최소 3회, 30분 이상 규칙적으로 운동하세요.</p>`;
+
+            const totalElements = Object.values(elements).reduce((a, b) => a + b, 0);
+            if (totalElements > 7) {
+                fortune += `<p>전반적인 건강운은 양호한 편입니다. 다만 과로나 과식을 피하고 규칙적인 생활 리듬을 유지하는 것이 중요합니다.</p>`;
+            }
+
+            fortune += `<p><strong>2026년 건강 관리 포인트:</strong> 1월-3월은 면역력 강화에 집중하고, 4월-6월은 체력 관리, 7월-9월은 더위 먹지 않도록 주의, 10월-12월은 관절과 호흡기 관리에 신경쓰세요. 정기 건강검진을 소홀히 하지 마시고, 특히 ${maxElement === '목' ? '간 기능' : maxElement === '화' ? '심혈관' : maxElement === '토' ? '소화기' : maxElement === '금' ? '호흡기' : '신장'} 검사를 받아보시길 권합니다.</p>`;
+
+            return fortune;
+        }
+
+        function getLoveFortune(elements, gender, dayGan, score) {
+            let fortune = '';
+
+            if (score >= 80) {
+                fortune += `<p><strong>애정운이 매우 좋습니다!</strong> ${gender === '남성' ? '이상형의 여성' : '좋은 남성'}을 만날 확률이 높은 시기입니다. 기존 관계가 있다면 더욱 깊어지고 발전할 것입니다.</p>`;
+            } else if (score >= 65) {
+                fortune += `<p><strong>애정운이 좋은 편입니다.</strong> 적극적으로 다가가면 좋은 결과가 있을 것입니다.</p>`;
+            } else {
+                fortune += `<p><strong>애정운이 평범합니다.</strong> 조급해하지 말고 자연스러운 만남을 기다리세요.</p>`;
+            }
+
+            const loveAdvice = {
+                '갑': `정직하고 진실된 마음으로 다가가세요. ${gender === '남성' ? '여성' : '남성'}은 당신의 곧은 성품에 매력을 느낍니다.`,
+                '을': `부드럽고 섬세한 배려가 당신의 강점입니다. 상대방의 말을 경청하고 공감해주세요.`,
+                '병': `밝고 긍정적인 에너지로 상대를 즐겁게 해주세요. 다만 너무 직설적인 표현은 자제하세요.`,
+                '정': `따뜻한 마음과 세심한 배려로 상대방을 감동시키세요. 감성적인 대화가 관계 발전에 도움됩니다.`,
+                '무': `믿음직한 모습이 매력 포인트입니다. 약속을 지키고 책임감 있는 모습을 보여주세요.`,
+                '기': `꼼꼼하고 실속있는 면모를 어필하세요. 안정적인 미래를 함께 그릴 수 있음을 보여주세요.`,
+                '경': `강인한 카리스마가 매력입니다. 다만 지나친 원칙주의는 피하고 유연함도 보여주세요.`,
+                '신': `세련되고 우아한 당신의 매력을 발산하세요. 품위있는 데이트 장소와 선물 선택에 센스를 보이세요.`,
+                '임': `지적인 대화와 폭넓은 교양으로 상대를 매료시키세요. 자유로운 영혼이지만 진지함도 보여주세요.`,
+                '계': `신비롭고 깊이있는 당신만의 매력이 있습니다. 진솔한 대화로 마음을 열어가세요.`
+            };
+
+            fortune += `<p>${loveAdvice[dayGan]}</p>`;
+
+            if (elements['수'] >= 2 || elements['목'] >= 2) {
+                fortune += `<p><strong>좋은 만남의 시기:</strong> 2026년 3월, 5월, 8월, 11월에 특별한 인연을 만날 가능성이 높습니다. 친구의 소개나 취미 활동, 온라인을 통한 만남에 열린 마음으로 임하세요.</p>`;
+            }
+
+            if (score >= 70) {
+                fortune += `<p>기존 관계가 있다면 결혼이나 동거 등 관계의 진전을 고려할 수 있는 시기입니다. 상대방과 미래에 대해 진지하게 이야기 나눠보세요. 특히 하반기(9-11월)가 중요한 결정을 내리기 좋은 때입니다.</p>`;
+            }
+
+            fortune += `<p><strong>연애 발전 비결:</strong> ${gender === '남성' ? '경청하는 자세와 작은 배려' : '솔직한 감정 표현과 자신감'}이 관계 발전의 열쇠입니다. 상대방의 관심사에 진심으로 관심을 가지고, 함께하는 시간의 질을 높이세요. 갈등이 생기면 즉시 해결하려 하기보다 서로 생각할 시간을 가진 후 차분히 대화하는 것이 좋습니다.</p>`;
+
+            return fortune;
+        }
+
+        function getYearlyPrediction(elements, scores, gender) {
+            const maxElement = Object.keys(elements).reduce((a, b) => elements[a] > elements[b] ? a : b);
+            
+            let prediction = '<div class="yearly-prediction">';
+            prediction += '<h4 style="margin-bottom: 20px; font-size: 1.2em;">2026년 주요 운세</h4>';
+            
+            prediction += `<p style="margin-bottom: 15px;">2026년은 ${maxElement === '목' ? '새로운 시작과 성장' : maxElement === '화' ? '열정과 변화' : maxElement === '토' ? '안정과 기반 다지기' : maxElement === '금' ? '결단과 추진' : '지혜와 통찰'}의 해입니다.</p>`;
+
+            if (scores.career >= 75) {
+                prediction += `<p style="margin-bottom: 15px;"><strong>📈 직업:</strong> 상반기에 중요한 기회가 찾아옵니다. 2월-4월 사이에 승진이나 이직, 새로운 프로젝트 제안이 있을 수 있습니다. 평소 준비해온 능력을 마음껏 발휘할 때입니다. 7월-8월에도 추가적인 좋은 소식이 있을 것입니다.</p>`;
+            }
+
+            if (scores.wealth >= 70) {
+                prediction += `<p style="margin-bottom: 15px;"><strong>💰 재물:</strong> 3월, 6월, 9월, 12월에 재물운이 특히 좋습니다. 부동산 투자를 고려한다면 상반기가 적기입니다. 다만 8월에는 예상치 못한 지출이 있을 수 있으니 비상금을 준비해두세요.</p>`;
+            }
+
+            if (scores.love >= 75) {
+                prediction += `<p style="margin-bottom: 15px;"><strong>💕 애정:</strong> ${gender === '남성' ? '3월, 5월, 8월' : '4월, 6월, 9월'}에 좋은 만남이나 관계 발전의 기회가 있습니다. ${gender === '남성' ? '여성' : '남성'}과의 소통에 적극적으로 임하세요. 11월에는 중요한 결정을 내릴 수 있는 시기입니다.</p>`;
+            }
+
+            prediction += `<p style="margin-bottom: 15px;"><strong>🏥 건강:</strong> 전반적으로 무난하나, 환절기인 3월과 9월-10월에 감기나 소화기 질환에 주의하세요. 규칙적인 운동과 충분한 수면이 건강 유지의 핵심입니다.</p>`;
+
+            prediction += `<p><strong>⚠️ 주의사항:</strong> 5월과 8월은 감정 기복이 심할 수 있으니 중요한 결정은 신중하게 내리세요. 10월에는 인간관계에서 오해가 생길 수 있으니 명확한 의사소통을 하세요.</p>`;
+            
+            prediction += '</div>';
+            return prediction;
+        }
+
+        function getMonthlyFortune(elements, maxElement) {
+            const months = [
+                { month: '1월', fortune: '새해를 맞아 계획을 세우기 좋은 달입니다. 목표를 구체화하고 실천 방안을 마련하세요.', luck: '★★★☆☆' },
+                { month: '2월', fortune: '대인관계가 활발해집니다. 네트워킹 행사나 모임에 적극 참여하면 좋은 인연을 만날 수 있습니다.', luck: '★★★★☆' },
+                { month: '3월', fortune: '새로운 시작의 기운이 강합니다. 이직, 창업, 중요한 계약 등을 고려하기 좋은 시기입니다.', luck: '★★★★★' },
+                { month: '4월', fortune: '감정 기복이 있을 수 있습니다. 중요한 결정은 한 템포 늦추고 신중하게 판단하세요.', luck: '★★★☆☆' },
+                { month: '5월', fortune: '재물운이 상승합니다. 투자나 재테크에 관심을 가져보세요. 다만 무리한 투자는 금물입니다.', luck: '★★★★☆' },
+                { month: '6월', fortune: '건강 관리에 신경쓸 필요가 있습니다. 과로를 피하고 충분한 휴식을 취하세요.', luck: '★★★☆☆' },
+                { month: '7월', fortune: '직장에서 인정받을 일이 생깁니다. 열심히 해온 노력의 결실을 맺는 시기입니다.', luck: '★★★★★' },
+                { month: '8월', fortune: '예상치 못한 지출이 있을 수 있습니다. 미리 예산을 짜고 계획적으로 소비하세요.', luck: '★★☆☆☆' },
+                { month: '9월', fortune: '학업이나 자기계발에 좋은 달입니다. 새로운 공부를 시작하거나 자격증에 도전해보세요.', luck: '★★★★☆' },
+                { month: '10월', fortune: '인간관계에서 오해가 생길 수 있습니다. 명확한 의사소통과 경청이 필요합니다.', luck: '★★★☆☆' },
+                { month: '11월', fortune: '애정운이 상승합니다. 좋은 만남이나 관계 발전의 기회가 있으니 적극적으로 임하세요.', luck: '★★★★★' },
+                { month: '12월', fortune: '한 해를 마무리하며 성찰의 시간을 가지세요. 내년 계획을 세우기 좋은 때입니다.', luck: '★★★★☆' }
+            ];
+
+            let html = '<div class="yearly-prediction">';
+            months.forEach(m => {
+                html += `
+                    <div class="month-item">
+                        <div class="month-label">${m.month} ${m.luck}</div>
+                        <div style="color: #cbd5e1; margin-top: 5px;">${m.fortune}</div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            return html;
+        }
+
+        function getLifeAdvice(name, elements, dayGan, gender) {
+            const maxElement = Object.keys(elements).reduce((a, b) => elements[a] > elements[b] ? a : b);
+            
+            let advice = `<p>${name}님, 귀하의 사주는 ${maxElement} 기운을 중심으로 조화를 이루고 있습니다. 타고난 재능과 노력이 만나면 반드시 성공할 수 있는 명조입니다.</p>`;
+
+            advice += `<p><strong>인생의 전환점:</strong> 30대 초반, 40대 중반, 50대 후반이 중요한 전환기가 될 것입니다. 이 시기에 큰 결정을 내리거나 새로운 도전을 할 가능성이 높습니다.</p>`;
+
+            advice += `<p><strong>성공의 비결:</strong> ${
+                maxElement === '목' ? '끊임없는 학습과 성장 마인드를 유지하세요. 변화를 두려워하지 말고 새로운 것에 도전하는 용기가 성공의 열쇠입니다.' :
+                maxElement === '화' ? '열정을 잃지 마세요. 다만 지나친 충동은 경계하고, 열정과 이성의 균형을 맞추는 것이 중요합니다.' :
+                maxElement === '토' ? '꾸준함이 가장 큰 무기입니다. 조급해하지 말고 차근차근 기반을 다지면 반드시 성공할 것입니다.' :
+                maxElement === '금' ? '원칙과 융통성의 균형을 맞추세요. 때로는 유연함이 더 큰 성공을 가져다줍니다.' :
+                '직관을 믿되 논리도 함께 활용하세요. 감성과 이성의 조화가 최고의 결과를 만들어냅니다.'
+            }</p>`;
+
+            advice += `<p><strong>평생 명심할 덕목:</strong> 겸손함을 잃지 마세요. 높은 곳에 오를수록 더욱 겸손해져야 합니다. 주변 사람들에 대한 감사를 잊지 말고, 나눔을 실천하면 더 큰 복이 돌아올 것입니다.</p>`;
+
+            advice += `<p><strong>행운의 방향과 색상:</strong> ${
+                maxElement === '목' ? '동쪽 방향, 청록색과 초록색' :
+                maxElement === '화' ? '남쪽 방향, 빨강색과 보라색' :
+                maxElement === '토' ? '중앙, 황색과 갈색' :
+                maxElement === '금' ? '서쪽 방향, 흰색과 금색' :
+                '북쪽 방향, 검정색과 남색'
+            }이 귀하에게 행운을 가져다 줍니다. 중요한 일을 할 때 이를 참고하세요.</p>`;
+
+            advice += `<p>마지막으로, 사주는 하늘이 준 청사진일 뿐 최종적인 인생은 귀하의 선택과 노력으로 만들어집니다. 긍정적인 마음가짐과 끊임없는 노력으로 더 나은 미래를 개척하시길 바랍니다. 🌟</p>`;
+
+            return advice;
+        }
+    </script>
+</body>
+</html>
