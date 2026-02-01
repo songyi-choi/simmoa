@@ -348,6 +348,7 @@
             }
         }
     </style>
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Ez6sb4a" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
@@ -781,6 +782,11 @@
         }
 
         window.addEventListener('load', () => {
+            // Kakao SDK 초기화
+            if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
+                Kakao.init('bf0fd5739aebee3aa7cd7e8ec516f118');
+            }
+
             const urlParams = new URLSearchParams(window.location.search);
             const resultParam = urlParams.get('result');
             if (resultParam && instruments[resultParam]) {
