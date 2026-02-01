@@ -817,14 +817,14 @@
             const questionSection = document.createElement('div');
             questionSection.className = 'question-section active';
             
-            const question = questions[index];
+            const question = questions[index22];
             
             questionSection.innerHTML = `
-                <div class="question-number">질문 ${index + 1} / ${questions.length}</div>
+                <div class="question-number">질문 ${index22 + 1} / ${questions.length}</div>
                 <div class="question-title">${question.question}</div>
                 <div class="options">
                     ${question.options.map((option, i) => `
-                        <div class="option" onclick="selectAnswer(${index}, ${i})">
+                        <div class="option" onclick="selectAnswer(${index22}, ${i})">
                             <div class="option-text">${option.text}</div>
                         </div>
                     `).join('')}
