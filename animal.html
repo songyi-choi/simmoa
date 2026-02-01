@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>나를 닮은 동물 찾기 테스트</title>
+    <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,60 +13,107 @@
         }
 
         body {
-            font-family: 'Comic Sans MS', 'Malgun Gothic', cursive, sans-serif;
-            background: #f0f0f0;
+            font-family: 'Gaegu', cursive;
+            background: #fef6e4;
+            background-image:
+                radial-gradient(circle at 20% 80%, rgba(255, 200, 200, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(200, 230, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 240, 200, 0.3) 0%, transparent 50%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            position: relative;
+        }
+
+        /* 손그림 낙서 장식 */
+        body::before {
+            content: '✿ ♡ ☆ ✧ ♪';
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            opacity: 0.3;
+            letter-spacing: 15px;
+        }
+
+        body::after {
+            content: '~ ★ ❀ ♫ ✦';
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 24px;
+            opacity: 0.3;
+            letter-spacing: 15px;
         }
 
         .container {
-            background: white;
-            border: 3px solid #333;
-            padding: 30px;
+            background: #fffef9;
+            border: 3px solid #5c4a3d;
+            border-radius: 30px 10px 30px 10px;
+            padding: 35px;
             max-width: 650px;
             width: 100%;
-            box-shadow: 5px 5px 0px #333;
+            box-shadow:
+                8px 8px 0px rgba(92, 74, 61, 0.2),
+                -2px -2px 0px rgba(255, 255, 255, 0.8);
+            position: relative;
+        }
+
+        /* 종이 질감 효과 */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            border-radius: 30px 10px 30px 10px;
         }
 
         h1 {
-            font-size: 28px;
+            font-size: 32px;
             margin-bottom: 10px;
-            color: #333;
+            color: #5c4a3d;
             text-align: center;
-            font-weight: 900;
-            text-shadow: 2px 2px 0px #ffeb3b;
+            font-weight: 700;
+            position: relative;
+        }
+
+        h1::after {
+            content: '~';
+            position: absolute;
+            right: -20px;
+            top: 0;
+            color: #ffb6c1;
         }
 
         .subtitle {
             text-align: center;
-            color: #666;
+            color: #8b7355;
             margin-bottom: 30px;
-            font-size: 14px;
+            font-size: 18px;
         }
 
         .progress-bar {
             width: 100%;
-            height: 20px;
-            background: white;
-            border: 2px solid #333;
+            height: 24px;
+            background: #fff5e6;
+            border: 3px solid #5c4a3d;
+            border-radius: 15px;
             margin-bottom: 30px;
             overflow: hidden;
         }
 
         .progress {
             height: 100%;
-            background: repeating-linear-gradient(
-                45deg,
-                #ffeb3b,
-                #ffeb3b 10px,
-                #ffd600 10px,
-                #ffd600 20px
-            );
+            background: linear-gradient(90deg, #ffd1dc, #ffb6c1, #ff9ecd);
             width: 0%;
             transition: width 0.3s ease;
+            border-radius: 12px;
         }
 
         .question {
@@ -74,37 +122,59 @@
 
         .question.active {
             display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .question-text {
-            font-size: 20px;
-            font-weight: 600;
+            font-size: 24px;
+            font-weight: 700;
             margin-bottom: 25px;
-            color: #333;
-            line-height: 1.5;
+            color: #5c4a3d;
+            line-height: 1.6;
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(to right, transparent, #fff5e6, transparent);
+            border-radius: 10px;
         }
 
         .options {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 15px;
         }
 
         .option {
-            padding: 15px 20px;
-            background: #fff;
-            border: 3px solid #333;
+            padding: 18px 24px;
+            background: #fffef9;
+            border: 3px solid #5c4a3d;
+            border-radius: 20px 8px 20px 8px;
             cursor: pointer;
-            transition: all 0.1s ease;
-            font-size: 16px;
+            transition: all 0.2s ease;
+            font-size: 18px;
             font-weight: 700;
-            box-shadow: 3px 3px 0px #333;
+            color: #5c4a3d;
+            position: relative;
+        }
+
+        .option::before {
+            content: '○';
+            margin-right: 10px;
+            color: #ffb6c1;
         }
 
         .option:hover {
-            background: #ffeb3b;
-            transform: translate(2px, 2px);
-            box-shadow: 1px 1px 0px #333;
+            background: linear-gradient(135deg, #ffd1dc 0%, #ffe4e9 100%);
+            transform: translateX(8px);
+            border-color: #ff9ecd;
+        }
+
+        .option:hover::before {
+            content: '●';
         }
 
         .start-screen, .result-screen {
@@ -112,34 +182,47 @@
         }
 
         .start-screen h1 {
-            font-size: 32px;
+            font-size: 36px;
             margin-bottom: 20px;
+            color: #5c4a3d;
         }
 
         .start-screen p {
-            font-size: 16px;
-            color: #666;
+            font-size: 20px;
+            color: #8b7355;
             margin-bottom: 30px;
-            line-height: 1.6;
+            line-height: 1.8;
+        }
+
+        .emoji-decoration {
+            font-size: 60px;
+            margin: 20px 0;
+            animation: bounce 2s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         button {
-            background: #ff6b6b;
-            color: white;
-            border: 3px solid #333;
-            padding: 12px 30px;
-            font-size: 18px;
+            background: linear-gradient(135deg, #ffb6c1 0%, #ffd1dc 100%);
+            color: #5c4a3d;
+            border: 3px solid #5c4a3d;
+            border-radius: 25px 10px 25px 10px;
+            padding: 15px 40px;
+            font-size: 22px;
             cursor: pointer;
-            transition: all 0.1s ease;
-            font-weight: 900;
-            box-shadow: 4px 4px 0px #333;
-            font-family: 'Comic Sans MS', cursive;
+            transition: all 0.2s ease;
+            font-weight: 700;
+            font-family: 'Gaegu', cursive;
+            box-shadow: 4px 4px 0px rgba(92, 74, 61, 0.3);
         }
 
         button:hover {
-            background: #ff5252;
+            background: linear-gradient(135deg, #ffd1dc 0%, #ffe4e9 100%);
             transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0px #333;
+            box-shadow: 2px 2px 0px rgba(92, 74, 61, 0.3);
         }
 
         .result-screen {
@@ -148,60 +231,120 @@
 
         .result-screen.active {
             display: block;
+            animation: fadeIn 0.5s ease;
         }
 
         .result-title {
-            font-size: 32px;
-            margin: 20px 0;
-            color: #333;
-            font-weight: 900;
-            background: #ffeb3b;
-            padding: 15px;
-            border: 3px solid #333;
+            font-size: 28px;
+            margin: 15px 0;
+            color: #5c4a3d;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffe4e9 0%, #ffd1dc 100%);
+            padding: 15px 25px;
+            border: 3px solid #5c4a3d;
+            border-radius: 20px 8px 20px 8px;
             display: inline-block;
         }
 
         .result-emoji {
-            font-size: 80px;
+            font-size: 100px;
             margin: 20px 0;
+            animation: bounce 2s ease infinite;
         }
 
         .result-section {
             text-align: left;
             margin: 20px 0;
-            padding: 20px;
-            background: white;
-            border: 3px solid #333;
-            box-shadow: 4px 4px 0px #333;
+            padding: 25px;
+            background: #fffef9;
+            border: 3px solid #5c4a3d;
+            border-radius: 20px 8px 20px 8px;
+            box-shadow: 5px 5px 0px rgba(92, 74, 61, 0.15);
         }
 
         .result-section h3 {
-            color: #333;
-            margin-bottom: 12px;
-            font-size: 18px;
-            font-weight: 900;
-            background: #ffeb3b;
-            padding: 5px 10px;
+            color: #5c4a3d;
+            margin-bottom: 15px;
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ffd1dc, transparent);
+            padding: 8px 15px;
+            border-radius: 10px;
             display: inline-block;
-            border: 2px solid #333;
         }
 
         .result-section p {
-            color: #555;
-            line-height: 1.7;
-            font-size: 15px;
+            color: #6b5344;
+            line-height: 1.9;
+            font-size: 17px;
         }
 
         .mbti-badge {
             display: inline-block;
-            background: #ff6b6b;
-            color: white;
-            padding: 10px 25px;
-            font-weight: 900;
-            font-size: 20px;
+            background: linear-gradient(135deg, #b8e6ff 0%, #d4f0ff 100%);
+            color: #4a6b7c;
+            padding: 12px 30px;
+            font-weight: 700;
+            font-size: 24px;
             margin-bottom: 15px;
-            border: 3px solid #333;
-            box-shadow: 3px 3px 0px #333;
+            border: 3px solid #5c4a3d;
+            border-radius: 20px;
+        }
+
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 209, 220, 0.2);
+            border-radius: 20px;
+        }
+
+        #radarChart {
+            max-width: 100%;
+        }
+
+        .stats-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+        }
+
+        .stat-bar {
+            flex: 1;
+            height: 16px;
+            background: #fff5e6;
+            border: 2px solid #5c4a3d;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .stat-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ffb6c1, #ffd1dc);
+            transition: width 0.5s ease;
+            border-radius: 8px;
+        }
+
+        .stat-label {
+            min-width: 70px;
+            font-weight: 700;
+            color: #5c4a3d;
+        }
+
+        .stat-value {
+            min-width: 35px;
+            text-align: right;
+            font-weight: 700;
+            color: #ff9ecd;
         }
 
         .restart-btn {
@@ -219,46 +362,77 @@
 
         .share-section {
             margin-top: 30px;
-            padding: 20px;
-            background: #e3f2fd;
-            border: 3px dashed #333;
+            padding: 25px;
+            background: linear-gradient(135deg, #e8f5ff 0%, #f0f9ff 100%);
+            border: 3px dashed #5c4a3d;
+            border-radius: 20px;
         }
 
         .share-buttons {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             justify-content: center;
             flex-wrap: wrap;
             margin-top: 15px;
         }
 
         .share-btn {
-            background: #4CAF50;
-            padding: 10px 20px;
-            font-size: 14px;
-            border: 3px solid #333;
-            box-shadow: 3px 3px 0px #333;
+            background: linear-gradient(135deg, #a8e6cf 0%, #88d8b0 100%);
+            padding: 12px 20px;
+            font-size: 16px;
+            border: 3px solid #5c4a3d;
+            border-radius: 15px 5px 15px 5px;
+            box-shadow: 3px 3px 0px rgba(92, 74, 61, 0.2);
+            color: #5c4a3d;
         }
 
         .share-btn:hover {
-            background: #45a049;
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px rgba(92, 74, 61, 0.2);
         }
 
         .share-btn.kakao {
-            background: #FEE500;
-            color: #000;
+            background: linear-gradient(135deg, #FEE500 0%, #ffeb3b 100%);
+            color: #3c1e1e;
         }
 
         .share-btn.twitter {
-            background: #1DA1F2;
+            background: linear-gradient(135deg, #1DA1F2 0%, #4fc3f7 100%);
+            color: white;
         }
 
         .share-btn.facebook {
-            background: #1877F2;
+            background: linear-gradient(135deg, #1877F2 0%, #42a5f5 100%);
+            color: white;
         }
 
         .share-btn.copy {
-            background: #9c27b0;
+            background: linear-gradient(135deg, #ce93d8 0%, #e1bee7 100%);
+            color: #5c4a3d;
+        }
+
+        .warning {
+            color: #e57373 !important;
+            background: linear-gradient(90deg, #ffebee, transparent) !important;
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 26px;
+            }
+            .question-text {
+                font-size: 20px;
+            }
+            .option {
+                font-size: 16px;
+                padding: 14px 18px;
+            }
+            .stats-list {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -289,6 +463,14 @@
                 <h3>📊 예상 MBTI</h3>
                 <div class="mbti-badge" id="mbtiResult"></div>
                 <p id="mbtiDesc"></p>
+            </div>
+
+            <div class="result-section">
+                <h3>🎯 성격 능력치</h3>
+                <div class="chart-container">
+                    <canvas id="radarChart" width="280" height="280"></canvas>
+                </div>
+                <div class="stats-list" id="statsList"></div>
             </div>
 
             <div class="result-section">
@@ -548,6 +730,105 @@
             return map[Math.floor(map.length / 2)]; // 기본값
         }
 
+        // 동물별 능력치 데이터 (사교성, 독립성, 계획성, 창의성, 공감능력, 적응력)
+        const animalStats = {
+            "강아지": { 사교성: 95, 독립성: 30, 계획성: 50, 창의성: 60, 공감능력: 90, 적응력: 85 },
+            "고양이": { 사교성: 40, 독립성: 95, 계획성: 60, 창의성: 75, 공감능력: 50, 적응력: 70 },
+            "토끼": { 사교성: 65, 독립성: 45, 계획성: 55, 창의성: 70, 공감능력: 85, 적응력: 60 },
+            "여우": { 사교성: 75, 독립성: 70, 계획성: 85, 창의성: 90, 공감능력: 55, 적응력: 95 },
+            "햄스터": { 사교성: 55, 독립성: 60, 계획성: 80, 창의성: 65, 공감능력: 70, 적응력: 50 },
+            "판다": { 사교성: 50, 독립성: 75, 계획성: 25, 창의성: 45, 공감능력: 80, 적응력: 65 },
+            "늑대": { 사교성: 60, 독립성: 85, 계획성: 75, 창의성: 70, 공감능력: 65, 적응력: 80 },
+            "사자": { 사교성: 70, 독립성: 80, 계획성: 70, 창의성: 60, 공감능력: 55, 적응력: 75 },
+            "코알라": { 사교성: 45, 독립성: 90, 계획성: 20, 창의성: 55, 공감능력: 75, 적응력: 40 }
+        };
+
+        // 레이더 차트 그리기
+        function drawRadarChart(animal) {
+            const canvas = document.getElementById('radarChart');
+            const ctx = canvas.getContext('2d');
+            const stats = animalStats[animal] || animalStats["강아지"];
+            const labels = Object.keys(stats);
+            const values = Object.values(stats);
+
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = Math.min(centerX, centerY) - 40;
+            const angleStep = (Math.PI * 2) / labels.length;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 배경 육각형 그리드 그리기 (손그림 스타일)
+            ctx.strokeStyle = '#e8d5c4';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 3]); // 점선 효과
+            for (let level = 1; level <= 5; level++) {
+                ctx.beginPath();
+                const levelRadius = (radius * level) / 5;
+                for (let i = 0; i <= labels.length; i++) {
+                    const angle = (i * angleStep) - Math.PI / 2;
+                    const x = centerX + Math.cos(angle) * levelRadius;
+                    const y = centerY + Math.sin(angle) * levelRadius;
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+            }
+            ctx.setLineDash([]);
+
+            // 축 그리기
+            ctx.strokeStyle = '#d4c4b0';
+            ctx.lineWidth = 2;
+            for (let i = 0; i < labels.length; i++) {
+                const angle = (i * angleStep) - Math.PI / 2;
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(centerX + Math.cos(angle) * radius, centerY + Math.sin(angle) * radius);
+                ctx.stroke();
+            }
+
+            // 데이터 영역 그리기 (파스텔톤)
+            ctx.beginPath();
+            ctx.fillStyle = 'rgba(255, 182, 193, 0.5)';
+            ctx.strokeStyle = '#ffb6c1';
+            ctx.lineWidth = 4;
+            for (let i = 0; i <= labels.length; i++) {
+                const idx = i % labels.length;
+                const angle = (idx * angleStep) - Math.PI / 2;
+                const value = values[idx] / 100;
+                const x = centerX + Math.cos(angle) * radius * value;
+                const y = centerY + Math.sin(angle) * radius * value;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.fill();
+            ctx.stroke();
+
+            // 라벨 그리기 (손글씨 폰트)
+            ctx.fillStyle = '#5c4a3d';
+            ctx.font = 'bold 14px Gaegu, cursive';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            for (let i = 0; i < labels.length; i++) {
+                const angle = (i * angleStep) - Math.PI / 2;
+                const x = centerX + Math.cos(angle) * (radius + 28);
+                const y = centerY + Math.sin(angle) * (radius + 28);
+                ctx.fillText(labels[i], x, y);
+            }
+
+            // 능력치 리스트 표시
+            const statsList = document.getElementById('statsList');
+            statsList.innerHTML = labels.map(label => `
+                <div class="stat-item">
+                    <span class="stat-label">${label}</span>
+                    <div class="stat-bar">
+                        <div class="stat-fill" style="width: ${stats[label]}%"></div>
+                    </div>
+                    <span class="stat-value">${stats[label]}</span>
+                </div>
+            `).join('');
+        }
+
         function generateResult(adj1, adj2, animal) {
             // MBTI 추정
             let mbti = "";
@@ -658,6 +939,9 @@
             document.getElementById('loveStyle').textContent = result.love;
             document.getElementById('personality').textContent = result.personality;
             document.getElementById('weakness').textContent = result.weakness;
+
+            // 레이더 차트 그리기
+            setTimeout(() => drawRadarChart(animal), 100);
         }
 
         // 공유 기능
