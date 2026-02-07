@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>점심메뉴 추천기</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple SD Gothic Neo', sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 50px 40px;
+            max-width: 480px;
+            width: 100%;
+            border: 1px solid #e0e0e0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #222;
+            margin-bottom: 8px;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #999;
+            margin-bottom: 40px;
+            font-size: 0.9em;
+            font-weight: 400;
+        }
+
+        .category-section {
+            margin-bottom: 30px;
+        }
+
+        .category-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+            display: block;
+            font-size: 0.95em;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .category-btn {
+            padding: 14px;
+            border: 1.5px solid #ddd;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95em;
+            font-weight: 500;
+            color: #666;
+        }
+
+        .category-btn:hover {
+            border-color: #333;
+            background: #fafafa;
+        }
+
+        .category-btn.active {
+            background: #222;
+            color: white;
+            border-color: #222;
+        }
+
+        .recommend-btn {
+            width: 100%;
+            padding: 16px;
+            background: #222;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 24px;
+        }
+
+        .recommend-btn:hover {
+            background: #000;
+        }
+
+        .recommend-btn:active {
+            transform: scale(0.98);
+        }
+
+        .result-section {
+            background: white;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            margin-bottom: 20px;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .result-section.hidden {
+            display: none;
+        }
+
+        .menu-result {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 8px;
+            animation: fadeInScale 0.4s ease-out;
+        }
+
+        .menu-category {
+            color: #999;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .share-section {
+            display: flex;
+            gap: 10px;
+        }
+
+        .share-btn {
+            flex: 1;
+            padding: 13px;
+            border: 1.5px solid #ddd;
+            background: white;
+            color: #555;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9em;
+        }
+
+        .share-btn:hover {
+            background: #fafafa;
+            border-color: #333;
+            color: #333;
+        }
+
+        .share-btn.hidden {
+            display: none;
+        }
+
+        .placeholder {
+            color: #aaa;
+            font-size: 1.1em;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #222;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 1000;
+            font-size: 0.9em;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍽️ 점심메뉴 추천기</h1>
+        <p class="subtitle">카테고리를 선택하고 메뉴를 추천받으세요!</p>
+
+        <div class="category-section">
+            <label class="category-label">카테고리 선택</label>
+            <div class="category-grid">
+                <button class="category-btn active" data-category="한식">🍚 한식</button>
+                <button class="category-btn" data-category="중식">🥟 중식</button>
+                <button class="category-btn" data-category="일식">🍱 일식</button>
+                <button class="category-btn" data-category="양식">🍝 양식</button>
+                <button class="category-btn" data-category="분식">🍜 분식</button>
+                <button class="category-btn" data-category="기타">🌮 기타</button>
+            </div>
+        </div>
+
+        <button class="recommend-btn" onclick="recommendMenu()">🎲 메뉴 추천받기</button>
+
+        <div class="result-section hidden" id="resultSection">
+            <div class="menu-category" id="menuCategory"></div>
+            <div class="menu-result" id="menuResult"></div>
+        </div>
+
+        <div class="share-section">
+            <button class="share-btn hidden" id="copyBtn" onclick="copyToClipboard()">📋 복사하기</button>
+            <button class="share-btn hidden" id="shareBtn" onclick="shareMenu()">📤 공유하기</button>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const menuData = {
+            '한식': ['김치찌개', '된장찌개', '비빔밥', '불고기', '삼겹살', '갈비탕', '육개장', '제육볶음', '순두부찌개', '김치볶음밥', '닭갈비', '삼계탕'],
+            '중식': ['짜장면', '짬뽕', '탕수육', '볶음밥', '깐풍기', '유산슬', '팔보채', '라조기', '군만두', '짬짜면', '마라탕', '양장피'],
+            '일식': ['초밥', '라멘', '돈카츠', '우동', '규동', '카레', '회덮밥', '연어덮밥', '가츠동', '오야코동', '덴동', '소바'],
+            '양식': ['파스타', '피자', '햄버거', '스테이크', '샌드위치', '리조또', '샐러드', '오므라이스', '필라프', '그라탕', '스테이크 덮밥', '치킨'],
+            '분식': ['떡볶이', '김밥', '라면', '순대', '튀김', '어묵', '쫄면', '냉면', '칼국수', '만두', '비빔국수', '잔치국수'],
+            '기타': ['쌀국수', '타코', '케밥', '샤브샤브', '훠궈', '월남쌈', '팟타이', '카레', '치킨', '족발', '보쌈', '찜닭']
+        };
+
+        let selectedCategory = '한식';
+        let currentMenu = '';
+
+        // 카테고리 버튼 클릭
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                selectedCategory = this.dataset.category;
+            });
+        });
+
+        function recommendMenu() {
+            const menus = menuData[selectedCategory];
+            const randomMenu = menus[Math.floor(Math.random() * menus.length)];
+            currentMenu = randomMenu;
+
+            document.getElementById('menuCategory').textContent = selectedCategory;
+            document.getElementById('menuResult').textContent = randomMenu;
+            document.getElementById('resultSection').classList.remove('hidden');
+            document.getElementById('copyBtn').classList.remove('hidden');
+            document.getElementById('shareBtn').classList.remove('hidden');
+        }
+
+        function copyToClipboard() {
+            const text = `오늘의 점심 추천: ${currentMenu} (${selectedCategory})`;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('클립보드에 복사되었습니다! 📋');
+            }).catch(() => {
+                showToast('복사에 실패했습니다.');
+            });
+        }
+
+        async function shareMenu() {
+            const text = `오늘의 점심 추천: ${currentMenu} (${selectedCategory})`;
+            
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: '점심메뉴 추천',
+                        text: text
+                    });
+                    showToast('공유되었습니다! 📤');
+                } catch (err) {
+                    if (err.name !== 'AbortError') {
+                        copyToClipboard();
+                    }
+                }
+            } else {
+                copyToClipboard();
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

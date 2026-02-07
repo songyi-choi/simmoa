@@ -253,9 +253,6 @@
             background: #1DA1F2;
         }
 
-        .share-btn.facebook {
-            background: #1877F2;
-        }
 
         .share-btn.copy {
             background: #9c27b0;
@@ -313,7 +310,7 @@
                     <button class="share-btn copy" onclick="copyLink()">📋 링크 복사</button>
                     <button class="share-btn kakao" onclick="shareKakao()">💬 카톡 공유</button>
                     <button class="share-btn twitter" onclick="shareTwitter()">🐦 트위터</button>
-                    <button class="share-btn facebook" onclick="shareFacebook()">📘 페북</button>
+
                 </div>
             </div>
 
@@ -742,10 +739,6 @@
             window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
         }
 
-        function shareFacebook() {
-            const url = window.location.href;
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
-        }
     </script>
 </body>
 </html>

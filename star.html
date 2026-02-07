@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>별자리 궁합 - 두 사람의 운명적 만남</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 별 애니메이션 */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+            animation: shoot 3s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes shoot {
+            0% {
+                opacity: 1;
+                transform: translateX(0) translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-300px) translateY(300px);
+            }
+        }
+
+        .container {
+            background: rgba(20, 20, 40, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 
+                        inset 0 0 60px rgba(138, 101, 255, 0.1);
+            max-width: 900px;
+            width: 100%;
+            padding: 50px;
+            position: relative;
+            border: 1px solid rgba(138, 101, 255, 0.3);
+            z-index: 2;
+        }
+
+        .cosmic-glow {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(138, 101, 255, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        h1 {
+            text-align: center;
+            background: linear-gradient(135deg, #8A65FF 0%, #E0B0FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            position: relative;
+            text-shadow: 0 0 30px rgba(138, 101, 255, 0.5);
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #B8A8E0;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+            letter-spacing: 1px;
+        }
+
+        .start-screen, .result-screen {
+            position: relative;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+        }
+
+        .gender-section {
+            background: linear-gradient(135deg, rgba(255, 182, 193, 0.15) 0%, rgba(255, 192, 203, 0.15) 100%);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 182, 193, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .gender-section.male {
+            background: linear-gradient(135deg, rgba(135, 206, 250, 0.15) 0%, rgba(173, 216, 230, 0.15) 100%);
+            border: 1px solid rgba(135, 206, 250, 0.3);
+        }
+
+        .gender-label {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #E0B0FF;
+        }
+
+        .gender-icon {
+            font-size: 1.6em;
+        }
+
+        .date-input-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .date-label {
+            color: #B8A8E0;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+            display: block;
+        }
+
+        input[type="date"] {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            font-size: 1.1em;
+            border: 2px solid rgba(138, 101, 255, 0.3);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #E0B0FF;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(0.7);
+            cursor: pointer;
+        }
+
+        input[type="date"]:hover {
+            border-color: #8A65FF;
+            background: rgba(138, 101, 255, 0.1);
+        }
+
+        input[type="date"]:focus {
+            outline: none;
+            border-color: #8A65FF;
+            box-shadow: 0 0 0 3px rgba(138, 101, 255, 0.2);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 18px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #8A65FF 0%, #E0B0FF 100%);
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            box-shadow: 0 5px 25px rgba(138, 101, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 35px rgba(138, 101, 255, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .result-screen {
+            display: none;
+        }
+
+        .compatibility-score {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .score-circle {
+            width: 220px;
+            height: 220px;
+            margin: 0 auto 20px;
+            position: relative;
+            filter: drop-shadow(0 0 20px rgba(138, 101, 255, 0.6));
+        }
+
+        .score-number {
+            font-size: 4.5em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #8A65FF 0%, #E0B0FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(138, 101, 255, 0.8);
+        }
+
+        .score-text {
+            font-size: 1.4em;
+            color: #B8A8E0;
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+
+        .couple-names {
+            text-align: center;
+            font-size: 2em;
+            color: #E0B0FF;
+            margin-bottom: 30px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .heart-icon {
+            color: #FF69B4;
+            margin: 0 15px;
+            animation: heartbeat 1.5s infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.8));
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.15); }
+        }
+
+        .compatibility-details {
+            margin: 30px 0;
+        }
+
+        .detail-category {
+            background: rgba(138, 101, 255, 0.08);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(138, 101, 255, 0.2);
+        }
+
+        .detail-category h3 {
+            background: linear-gradient(135deg, #8A65FF 0%, #E0B0FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            text-align: center;
+        }
+
+        #radarChart {
+            display: block;
+            margin: 0 auto;
+            filter: drop-shadow(0 0 20px rgba(138, 101, 255, 0.3));
+        }
+
+        .advice-section {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.12) 0%, rgba(255, 223, 0, 0.12) 100%);
+            padding: 28px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .advice-section h3 {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .advice-section p {
+            line-height: 1.9;
+            color: #D8C8F0;
+            margin-bottom: 10px;
+        }
+
+        .warning-section {
+            background: linear-gradient(135deg, rgba(255, 99, 132, 0.12) 0%, rgba(255, 105, 180, 0.12) 100%);
+            padding: 28px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border: 1px solid rgba(255, 99, 132, 0.3);
+        }
+
+        .warning-section h3 {
+            background: linear-gradient(135deg, #FF6384 0%, #FF69B4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .warning-section p {
+            line-height: 1.9;
+            color: #D8C8F0;
+            margin-bottom: 10px;
+        }
+
+        .share-btn {
+            background: linear-gradient(135deg, #00D9FF 0%, #00B4D8 100%);
+            margin-top: 10px;
+            box-shadow: 0 5px 25px rgba(0, 217, 255, 0.4);
+        }
+
+        .share-btn:hover {
+            box-shadow: 0 10px 35px rgba(0, 217, 255, 0.6);
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, #6B7280 0%, #4B5563 100%);
+            box-shadow: 0 5px 25px rgba(107, 114, 128, 0.4);
+        }
+
+        .reset-btn:hover {
+            box-shadow: 0 10px 35px rgba(107, 114, 128, 0.6);
+        }
+
+        .zodiac-display {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 16px;
+            background: rgba(138, 101, 255, 0.15);
+            border-radius: 20px;
+            color: #E0B0FF;
+            font-size: 0.95em;
+            border: 1px solid rgba(138, 101, 255, 0.3);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2.2em;
+            }
+
+            .score-number {
+                font-size: 3.5em;
+            }
+
+            .couple-names {
+                font-size: 1.5em;
+            }
+
+            .date-input-group {
+                flex-direction: column;
+            }
+
+            input[type="date"] {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 별 애니메이션 생성 -->
+    <div class="stars-container" id="starsContainer"></div>
+
+    <div class="container">
+        <div class="cosmic-glow"></div>
+        
+        <!-- 시작 화면 -->
+        <div class="start-screen" id="startScreen">
+            <h1>✨ 별자리 궁합 ✨</h1>
+            <p class="subtitle">두 사람의 생년월일로 알아보는 운명적 만남</p>
+
+            <div class="input-group">
+                <div class="gender-section male">
+                    <div class="gender-label">
+                        <span class="gender-icon">♂️</span> 남성의 생년월일
+                    </div>
+                    <label class="date-label">생년월일을 선택해주세요</label>
+                    <input type="date" id="maleBirthdate" max="2024-12-31">
+                    <div class="zodiac-display" id="maleZodiacDisplay" style="display: none;"></div>
+                </div>
+
+                <div class="gender-section">
+                    <div class="gender-label">
+                        <span class="gender-icon">♀️</span> 여성의 생년월일
+                    </div>
+                    <label class="date-label">생년월일을 선택해주세요</label>
+                    <input type="date" id="femaleBirthdate" max="2024-12-31">
+                    <div class="zodiac-display" id="femaleZodiacDisplay" style="display: none;"></div>
+                </div>
+            </div>
+
+            <button class="btn" onclick="calculateCompatibility()"><span style="position: relative; z-index: 1;">💫 궁합 알아보기</span></button>
+        </div>
+
+        <!-- 결과 화면 -->
+        <div class="result-screen" id="resultScreen">
+            <h1>✨ 궁합 결과 ✨</h1>
+            
+            <div class="couple-names" id="coupleNames"></div>
+
+            <div class="compatibility-score">
+                <div class="score-circle">
+                    <canvas id="scoreCanvas" width="220" height="220"></canvas>
+                </div>
+                <div class="score-number" id="scoreNumber">0%</div>
+                <div class="score-text" id="scoreText"></div>
+            </div>
+
+            <div class="compatibility-details">
+                <div class="detail-category">
+                    <h3>🌟 세부 궁합 분석 🌟</h3>
+                    <div id="detailChart"></div>
+                </div>
+
+                <div class="advice-section">
+                    <h3>💕 추천하는 연애 스타일</h3>
+                    <p id="adviceText"></p>
+                </div>
+
+                <div class="warning-section">
+                    <h3>⚠️ 주의해야 할 점</h3>
+                    <p id="warningText"></p>
+                </div>
+
+                <div class="detail-category" style="margin-top: 20px;">
+                    <h3>🔮 관계의 특징</h3>
+                    <div id="relationshipInsights" style="color: #D8C8F0; line-height: 1.8;"></div>
+                </div>
+            </div>
+
+            <button class="btn share-btn" onclick="shareResult()"><span style="position: relative; z-index: 1;">📤 결과 공유하기</span></button>
+            <button class="btn reset-btn" onclick="resetForm()"><span style="position: relative; z-index: 1;">🔄 다시 알아보기</span></button>
+        </div>
+    </div>
+
+    <script>
+        // 별 생성
+        function createStars() {
+            const container = document.getElementById('starsContainer');
+            const starCount = 200;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.opacity = Math.random() * 0.7 + 0.3;
+                container.appendChild(star);
+            }
+            
+            // 유성 추가
+            for (let i = 0; i < 3; i++) {
+                const shootingStar = document.createElement('div');
+                shootingStar.className = 'shooting-star';
+                shootingStar.style.left = Math.random() * 100 + '%';
+                shootingStar.style.top = Math.random() * 50 + '%';
+                shootingStar.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(shootingStar);
+            }
+        }
+        
+        createStars();
+
+        // 생년월일로 별자리 계산
+        function getZodiacFromDate(dateString) {
+            if (!dateString) return null;
+            
+            const date = new Date(dateString);
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            
+            if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return 'aries';
+            if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return 'taurus';
+            if ((month === 5 && day >= 21) || (month === 6 && day <= 21)) return 'gemini';
+            if ((month === 6 && day >= 22) || (month === 7 && day <= 22)) return 'cancer';
+            if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return 'leo';
+            if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return 'virgo';
+            if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return 'libra';
+            if ((month === 10 && day >= 23) || (month === 11 && day <= 22)) return 'scorpio';
+            if ((month === 11 && day >= 23) || (month === 12 && day <= 21)) return 'sagittarius';
+            if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return 'capricorn';
+            if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return 'aquarius';
+            if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) return 'pisces';
+            
+            return null;
+        }
+
+        // 생년월일 입력시 별자리 표시
+        document.getElementById('maleBirthdate').addEventListener('change', function(e) {
+            const zodiac = getZodiacFromDate(e.target.value);
+            const display = document.getElementById('maleZodiacDisplay');
+            if (zodiac) {
+                const data = zodiacData[zodiac];
+                display.textContent = `${data.emoji} ${data.name}`;
+                display.style.display = 'inline-block';
+            }
+        });
+
+        document.getElementById('femaleBirthdate').addEventListener('change', function(e) {
+            const zodiac = getZodiacFromDate(e.target.value);
+            const display = document.getElementById('femaleZodiacDisplay');
+            if (zodiac) {
+                const data = zodiacData[zodiac];
+                display.textContent = `${data.emoji} ${data.name}`;
+                display.style.display = 'inline-block';
+            }
+        });
+        // 별자리 데이터 (서양 점성술 기반)
+        const zodiacData = {
+            aries: { name: '양자리', element: 'fire', traits: ['열정적', '리더십', '직진'], emoji: '♈' },
+            taurus: { name: '황소자리', element: 'earth', traits: ['안정적', '신중함', '끈기'], emoji: '♉' },
+            gemini: { name: '쌍둥이자리', element: 'air', traits: ['사교적', '호기심', '변화'], emoji: '♊' },
+            cancer: { name: '게자리', element: 'water', traits: ['감성적', '보호본능', '가정적'], emoji: '♋' },
+            leo: { name: '사자자리', element: 'fire', traits: ['자신감', '관대함', '창의적'], emoji: '♌' },
+            virgo: { name: '처녀자리', element: 'earth', traits: ['분석적', '완벽주의', '실용적'], emoji: '♍' },
+            libra: { name: '천칭자리', element: 'air', traits: ['균형', '조화', '사교적'], emoji: '♎' },
+            scorpio: { name: '전갈자리', element: 'water', traits: ['강렬함', '신비로움', '집중력'], emoji: '♏' },
+            sagittarius: { name: '사수자리', element: 'fire', traits: ['자유로움', '낙천적', '모험'], emoji: '♐' },
+            capricorn: { name: '염소자리', element: 'earth', traits: ['책임감', '야망', '인내'], emoji: '♑' },
+            aquarius: { name: '물병자리', element: 'air', traits: ['독창적', '이상주의', '인도주의'], emoji: '♒' },
+            pisces: { name: '물고기자리', element: 'water', traits: ['직관적', '공감능력', '예술적'], emoji: '♓' }
+        };
+
+        // 궁합 데이터 (점성술 원소 이론 기반) - 6개 카테고리로 확장
+        const compatibilityMatrix = {
+            'aries-aries': { score: 85, love: 90, communication: 80, trust: 85, passion: 95, values: 88, longterm: 82 },
+            'aries-taurus': { score: 65, love: 70, communication: 60, trust: 75, passion: 60, values: 62, longterm: 68 },
+            'aries-gemini': { score: 88, love: 85, communication: 95, trust: 80, passion: 90, values: 85, longterm: 85 },
+            'aries-cancer': { score: 60, love: 65, communication: 55, trust: 70, passion: 55, values: 58, longterm: 62 },
+            'aries-leo': { score: 95, love: 95, communication: 90, trust: 95, passion: 100, values: 92, longterm: 93 },
+            'aries-virgo': { score: 55, love: 60, communication: 50, trust: 65, passion: 50, values: 52, longterm: 58 },
+            'aries-libra': { score: 75, love: 80, communication: 85, trust: 70, passion: 70, values: 73, longterm: 77 },
+            'aries-scorpio': { score: 70, love: 75, communication: 65, trust: 75, passion: 85, values: 68, longterm: 72 },
+            'aries-sagittarius': { score: 93, love: 90, communication: 95, trust: 90, passion: 95, values: 90, longterm: 91 },
+            'aries-capricorn': { score: 58, love: 60, communication: 55, trust: 70, passion: 55, values: 60, longterm: 62 },
+            'aries-aquarius': { score: 82, love: 80, communication: 90, trust: 75, passion: 85, values: 80, longterm: 80 },
+            'aries-pisces': { score: 63, love: 70, communication: 60, trust: 65, passion: 60, values: 62, longterm: 65 },
+            
+            'taurus-taurus': { score: 80, love: 85, communication: 75, trust: 90, passion: 75, values: 85, longterm: 88 },
+            'taurus-gemini': { score: 60, love: 65, communication: 70, trust: 55, passion: 50, values: 58, longterm: 62 },
+            'taurus-cancer': { score: 92, love: 95, communication: 85, trust: 95, passion: 90, values: 93, longterm: 94 },
+            'taurus-leo': { score: 68, love: 70, communication: 65, trust: 75, passion: 70, values: 68, longterm: 70 },
+            'taurus-virgo': { score: 95, love: 90, communication: 95, trust: 100, passion: 90, values: 97, longterm: 96 },
+            'taurus-libra': { score: 78, love: 80, communication: 75, trust: 80, passion: 75, values: 78, longterm: 80 },
+            'taurus-scorpio': { score: 88, love: 90, communication: 80, trust: 90, passion: 95, values: 85, longterm: 88 },
+            'taurus-sagittarius': { score: 55, love: 60, communication: 55, trust: 60, passion: 50, values: 52, longterm: 58 },
+            'taurus-capricorn': { score: 97, love: 95, communication: 95, trust: 100, passion: 95, values: 98, longterm: 97 },
+            'taurus-aquarius': { score: 58, love: 60, communication: 60, trust: 60, passion: 55, values: 55, longterm: 60 },
+            'taurus-pisces': { score: 85, love: 90, communication: 80, trust: 85, passion: 85, values: 83, longterm: 87 },
+
+            'gemini-gemini': { score: 83, love: 80, communication: 95, trust: 75, passion: 85, values: 82, longterm: 80 },
+            'gemini-cancer': { score: 65, love: 70, communication: 65, trust: 65, passion: 60, values: 63, longterm: 67 },
+            'gemini-leo': { score: 88, love: 85, communication: 95, trust: 80, passion: 90, values: 86, longterm: 85 },
+            'gemini-virgo': { score: 68, love: 70, communication: 75, trust: 65, passion: 65, values: 68, longterm: 70 },
+            'gemini-libra': { score: 93, love: 90, communication: 100, trust: 85, passion: 90, values: 92, longterm: 90 },
+            'gemini-scorpio': { score: 60, love: 65, communication: 60, trust: 60, passion: 70, values: 58, longterm: 62 },
+            'gemini-sagittarius': { score: 90, love: 85, communication: 100, trust: 80, passion: 95, values: 88, longterm: 87 },
+            'gemini-capricorn': { score: 55, love: 60, communication: 55, trust: 60, passion: 50, values: 52, longterm: 58 },
+            'gemini-aquarius': { score: 95, love: 90, communication: 100, trust: 90, passion: 95, values: 93, longterm: 92 },
+            'gemini-pisces': { score: 63, love: 70, communication: 65, trust: 60, passion: 60, values: 62, longterm: 65 },
+
+            'cancer-cancer': { score: 85, love: 95, communication: 80, trust: 85, passion: 80, values: 88, longterm: 90 },
+            'cancer-leo': { score: 70, love: 75, communication: 70, trust: 70, passion: 70, values: 68, longterm: 72 },
+            'cancer-virgo': { score: 90, love: 90, communication: 90, trust: 95, passion: 85, values: 90, longterm: 92 },
+            'cancer-libra': { score: 68, love: 70, communication: 75, trust: 65, passion: 65, values: 68, longterm: 70 },
+            'cancer-scorpio': { score: 97, love: 100, communication: 90, trust: 95, passion: 100, values: 95, longterm: 96 },
+            'cancer-sagittarius': { score: 58, love: 60, communication: 60, trust: 60, passion: 55, values: 55, longterm: 60 },
+            'cancer-capricorn': { score: 88, love: 85, communication: 85, trust: 95, passion: 90, values: 90, longterm: 91 },
+            'cancer-aquarius': { score: 55, love: 60, communication: 55, trust: 60, passion: 50, values: 52, longterm: 58 },
+            'cancer-pisces': { score: 98, love: 100, communication: 95, trust: 95, passion: 100, values: 97, longterm: 97 },
+
+            'leo-leo': { score: 80, love: 90, communication: 75, trust: 75, passion: 95, values: 82, longterm: 78 },
+            'leo-virgo': { score: 63, love: 65, communication: 65, trust: 70, passion: 60, values: 62, longterm: 65 },
+            'leo-libra': { score: 88, love: 90, communication: 90, trust: 80, passion: 90, values: 86, longterm: 85 },
+            'leo-scorpio': { score: 73, love: 75, communication: 70, trust: 75, passion: 85, values: 72, longterm: 75 },
+            'leo-sagittarius': { score: 97, love: 95, communication: 95, trust: 95, passion: 100, values: 95, longterm: 95 },
+            'leo-capricorn': { score: 60, love: 65, communication: 60, trust: 65, passion: 60, values: 58, longterm: 62 },
+            'leo-aquarius': { score: 75, love: 75, communication: 85, trust: 70, passion: 75, values: 73, longterm: 77 },
+            'leo-pisces': { score: 68, love: 70, communication: 70, trust: 70, passion: 70, values: 67, longterm: 70 },
+
+            'virgo-virgo': { score: 82, love: 80, communication: 90, trust: 90, passion: 75, values: 85, longterm: 88 },
+            'virgo-libra': { score: 73, love: 75, communication: 80, trust: 70, passion: 70, values: 72, longterm: 75 },
+            'virgo-scorpio': { score: 88, love: 85, communication: 85, trust: 95, passion: 90, values: 88, longterm: 90 },
+            'virgo-sagittarius': { score: 58, love: 60, communication: 60, trust: 60, passion: 55, values: 55, longterm: 60 },
+            'virgo-capricorn': { score: 95, love: 90, communication: 95, trust: 100, passion: 95, values: 97, longterm: 96 },
+            'virgo-aquarius': { score: 63, love: 65, communication: 70, trust: 60, passion: 60, values: 62, longterm: 65 },
+            'virgo-pisces': { score: 85, love: 90, communication: 80, trust: 85, passion: 85, values: 83, longterm: 87 },
+
+            'libra-libra': { score: 85, love: 90, communication: 90, trust: 80, passion: 80, values: 85, longterm: 83 },
+            'libra-scorpio': { score: 70, love: 75, communication: 70, trust: 70, passion: 80, values: 68, longterm: 72 },
+            'libra-sagittarius': { score: 88, love: 85, communication: 95, trust: 80, passion: 90, values: 86, longterm: 85 },
+            'libra-capricorn': { score: 65, love: 70, communication: 65, trust: 70, passion: 65, values: 63, longterm: 67 },
+            'libra-aquarius': { score: 93, love: 90, communication: 100, trust: 85, passion: 90, values: 92, longterm: 90 },
+            'libra-pisces': { score: 75, love: 80, communication: 75, trust: 75, passion: 75, values: 73, longterm: 77 },
+
+            'scorpio-scorpio': { score: 88, love: 95, communication: 80, trust: 85, passion: 100, values: 87, longterm: 89 },
+            'scorpio-sagittarius': { score: 68, love: 70, communication: 70, trust: 70, passion: 75, values: 67, longterm: 70 },
+            'scorpio-capricorn': { score: 92, love: 90, communication: 90, trust: 95, passion: 95, values: 92, longterm: 93 },
+            'scorpio-aquarius': { score: 63, love: 65, communication: 65, trust: 65, passion: 70, values: 62, longterm: 65 },
+            'scorpio-pisces': { score: 97, love: 100, communication: 90, trust: 95, passion: 100, values: 95, longterm: 96 },
+
+            'sagittarius-sagittarius': { score: 85, love: 85, communication: 95, trust: 80, passion: 90, values: 85, longterm: 82 },
+            'sagittarius-capricorn': { score: 60, love: 65, communication: 60, trust: 65, passion: 60, values: 58, longterm: 62 },
+            'sagittarius-aquarius': { score: 90, love: 85, communication: 100, trust: 85, passion: 90, values: 88, longterm: 87 },
+            'sagittarius-pisces': { score: 68, love: 70, communication: 70, trust: 70, passion: 70, values: 67, longterm: 70 },
+
+            'capricorn-capricorn': { score: 85, love: 85, communication: 85, trust: 95, passion: 85, values: 90, longterm: 92 },
+            'capricorn-aquarius': { score: 68, love: 70, communication: 70, trust: 70, passion: 70, values: 67, longterm: 70 },
+            'capricorn-pisces': { score: 88, love: 90, communication: 85, trust: 90, passion: 85, values: 88, longterm: 90 },
+
+            'aquarius-aquarius': { score: 83, love: 80, communication: 95, trust: 80, passion: 85, values: 85, longterm: 80 },
+            'aquarius-pisces': { score: 70, love: 75, communication: 70, trust: 70, passion: 70, values: 68, longterm: 72 },
+
+            'pisces-pisces': { score: 88, love: 95, communication: 85, trust: 85, passion: 90, values: 88, longterm: 90 }
+        };
+
+        function getCompatibilityKey(zodiac1, zodiac2) {
+            const key1 = `${zodiac1}-${zodiac2}`;
+            const key2 = `${zodiac2}-${zodiac1}`;
+            return compatibilityMatrix[key1] || compatibilityMatrix[key2];
+        }
+
+        function calculateCompatibility() {
+            const maleBirthdate = document.getElementById('maleBirthdate').value;
+            const femaleBirthdate = document.getElementById('femaleBirthdate').value;
+
+            if (!maleBirthdate || !femaleBirthdate) {
+                alert('두 사람의 생년월일을 모두 입력해주세요!');
+                return;
+            }
+
+            const male = getZodiacFromDate(maleBirthdate);
+            const female = getZodiacFromDate(femaleBirthdate);
+
+            if (!male || !female) {
+                alert('올바른 날짜를 입력해주세요!');
+                return;
+            }
+
+            const maleData = zodiacData[male];
+            const femaleData = zodiacData[female];
+            const compatibility = getCompatibilityKey(male, female);
+
+            // 화면 전환
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'block';
+
+            // 커플 이름 표시
+            document.getElementById('coupleNames').innerHTML = 
+                `${maleData.emoji} ${maleData.name} <span class="heart-icon">❤️</span> ${femaleData.name} ${femaleData.emoji}`;
+
+            // 점수 애니메이션
+            animateScore(compatibility.score);
+            drawScoreCircle(compatibility.score);
+
+            // 세부 차트
+            displayDetailChart(compatibility);
+
+            // 조언 및 경고 텍스트
+            displayAdviceAndWarning(male, female, maleData, femaleData, compatibility);
+        }
+
+        function animateScore(targetScore) {
+            let currentScore = 0;
+            const increment = targetScore / 50;
+            const scoreElement = document.getElementById('scoreNumber');
+            const scoreTextElement = document.getElementById('scoreText');
+
+            const interval = setInterval(() => {
+                currentScore += increment;
+                if (currentScore >= targetScore) {
+                    currentScore = targetScore;
+                    clearInterval(interval);
+                }
+                scoreElement.textContent = Math.round(currentScore) + '%';
+            }, 20);
+
+            // 점수에 따른 텍스트
+            if (targetScore >= 90) {
+                scoreTextElement.textContent = '천생연분! 완벽한 조화 💯';
+            } else if (targetScore >= 80) {
+                scoreTextElement.textContent = '아주 좋은 궁합이에요! 💕';
+            } else if (targetScore >= 70) {
+                scoreTextElement.textContent = '좋은 커플이 될 수 있어요! 💗';
+            } else if (targetScore >= 60) {
+                scoreTextElement.textContent = '노력하면 좋은 관계를 만들 수 있어요 ✨';
+            } else {
+                scoreTextElement.textContent = '서로를 이해하는 노력이 필요해요 💪';
+            }
+        }
+
+        function drawScoreCircle(score) {
+            const canvas = document.getElementById('scoreCanvas');
+            const ctx = canvas.getContext('2d');
+            const centerX = 110;
+            const centerY = 110;
+            const radius = 95;
+            const startAngle = -Math.PI / 2;
+            const endAngle = startAngle + (2 * Math.PI * score / 100);
+
+            // 배경 원
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+            ctx.strokeStyle = 'rgba(138, 101, 255, 0.15)';
+            ctx.lineWidth = 18;
+            ctx.stroke();
+
+            // 점수 원 (그라데이션)
+            const gradient = ctx.createLinearGradient(0, 0, 220, 220);
+            gradient.addColorStop(0, '#8A65FF');
+            gradient.addColorStop(1, '#E0B0FF');
+
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 18;
+            ctx.lineCap = 'round';
+            ctx.stroke();
+
+            // 글로우 효과
+            ctx.shadowBlur = 20;
+            ctx.shadowColor = 'rgba(138, 101, 255, 0.8)';
+            ctx.stroke();
+        }
+
+        function displayDetailChart(compatibility) {
+            const chartContainer = document.getElementById('detailChart');
+            
+            // 6개 카테고리 데이터
+            const categories = [
+                { name: '사랑과 애정', value: compatibility.love, icon: '💖' },
+                { name: '의사소통', value: compatibility.communication, icon: '💬' },
+                { name: '신뢰', value: compatibility.trust, icon: '🤝' },
+                { name: '열정', value: compatibility.passion, icon: '🔥' },
+                { name: '가치관', value: compatibility.values, icon: '⭐' },
+                { name: '장기전망', value: compatibility.longterm, icon: '🌱' }
+            ];
+
+            // 캔버스 생성
+            chartContainer.innerHTML = `
+                <canvas id="radarChart" width="400" height="400" style="max-width: 100%; height: auto;"></canvas>
+                <div id="categoryLegend" style="margin-top: 25px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;"></div>
+            `;
+
+            // 레이더 차트 그리기
+            setTimeout(() => {
+                drawHexagonRadarChart(categories);
+                displayLegend(categories);
+            }, 100);
+        }
+
+        function drawHexagonRadarChart(categories) {
+            const canvas = document.getElementById('radarChart');
+            const ctx = canvas.getContext('2d');
+            const centerX = 200;
+            const centerY = 200;
+            const maxRadius = 150;
+            const levels = 5; // 5단계 (20, 40, 60, 80, 100)
+
+            // 캔버스 초기화
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 배경 육각형 그리기 (격자)
+            for (let level = 1; level <= levels; level++) {
+                const radius = (maxRadius / levels) * level;
+                ctx.beginPath();
+                for (let i = 0; i < 6; i++) {
+                    const angle = (Math.PI / 3) * i - Math.PI / 2;
+                    const x = centerX + radius * Math.cos(angle);
+                    const y = centerY + radius * Math.sin(angle);
+                    if (i === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                ctx.closePath();
+                ctx.strokeStyle = 'rgba(138, 101, 255, 0.15)';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+
+            // 축 그리기
+            ctx.strokeStyle = 'rgba(138, 101, 255, 0.2)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < 6; i++) {
+                const angle = (Math.PI / 3) * i - Math.PI / 2;
+                const x = centerX + maxRadius * Math.cos(angle);
+                const y = centerY + maxRadius * Math.sin(angle);
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+            }
+
+            // 데이터 포인트 계산 및 그리기
+            const dataPoints = categories.map((cat, i) => {
+                const angle = (Math.PI / 3) * i - Math.PI / 2;
+                const radius = (cat.value / 100) * maxRadius;
+                return {
+                    x: centerX + radius * Math.cos(angle),
+                    y: centerY + radius * Math.sin(angle)
+                };
+            });
+
+            // 데이터 영역 채우기 (그라데이션)
+            const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, maxRadius);
+            gradient.addColorStop(0, 'rgba(138, 101, 255, 0.4)');
+            gradient.addColorStop(1, 'rgba(224, 176, 255, 0.2)');
+
+            ctx.beginPath();
+            dataPoints.forEach((point, i) => {
+                if (i === 0) {
+                    ctx.moveTo(point.x, point.y);
+                } else {
+                    ctx.lineTo(point.x, point.y);
+                }
+            });
+            ctx.closePath();
+            ctx.fillStyle = gradient;
+            ctx.fill();
+
+            // 데이터 외곽선 그리기
+            ctx.beginPath();
+            dataPoints.forEach((point, i) => {
+                if (i === 0) {
+                    ctx.moveTo(point.x, point.y);
+                } else {
+                    ctx.lineTo(point.x, point.y);
+                }
+            });
+            ctx.closePath();
+            ctx.strokeStyle = '#8A65FF';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            // 데이터 포인트 그리기
+            dataPoints.forEach((point, i) => {
+                // 외곽 원 (글로우)
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, 8, 0, 2 * Math.PI);
+                ctx.fillStyle = 'rgba(138, 101, 255, 0.3)';
+                ctx.fill();
+
+                // 내부 원
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, 5, 0, 2 * Math.PI);
+                ctx.fillStyle = '#E0B0FF';
+                ctx.fill();
+                ctx.strokeStyle = '#8A65FF';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            });
+
+            // 라벨 그리기
+            ctx.font = 'bold 14px "Segoe UI"';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            categories.forEach((cat, i) => {
+                const angle = (Math.PI / 3) * i - Math.PI / 2;
+                const labelRadius = maxRadius + 35;
+                const x = centerX + labelRadius * Math.cos(angle);
+                const y = centerY + labelRadius * Math.sin(angle);
+                
+                // 아이콘
+                ctx.font = '20px "Segoe UI"';
+                ctx.fillStyle = '#E0B0FF';
+                ctx.fillText(cat.icon, x, y - 15);
+                
+                // 이름
+                ctx.font = 'bold 13px "Segoe UI"';
+                ctx.fillStyle = '#B8A8E0';
+                ctx.fillText(cat.name, x, y + 5);
+                
+                // 값
+                ctx.font = 'bold 12px "Segoe UI"';
+                ctx.fillStyle = '#8A65FF';
+                ctx.fillText(cat.value + '%', x, y + 20);
+            });
+        }
+
+        function displayLegend(categories) {
+            const legendContainer = document.getElementById('categoryLegend');
+            legendContainer.innerHTML = categories.map(cat => `
+                <div style="background: rgba(138, 101, 255, 0.08); padding: 12px 15px; border-radius: 10px; border: 1px solid rgba(138, 101, 255, 0.2); display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 1.3em;">${cat.icon}</span>
+                    <div style="flex: 1;">
+                        <div style="color: #B8A8E0; font-size: 0.9em; margin-bottom: 3px;">${cat.name}</div>
+                        <div style="font-size: 1.1em; font-weight: bold; color: #8A65FF;">${cat.value}%</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function displayAdviceAndWarning(male, female, maleData, femaleData, compatibility) {
+            const adviceElement = document.getElementById('adviceText');
+            const warningElement = document.getElementById('warningText');
+            const insightsElement = document.getElementById('relationshipInsights');
+
+            // 원소 기반 조언
+            const maleElement = maleData.element;
+            const femaleElement = femaleData.element;
+
+            let advice = '';
+            let warning = '';
+            let insights = '';
+
+            // 상세 인사이트 생성
+            insights = generateDetailedInsights(male, female, maleData, femaleData, compatibility);
+
+            // 같은 원소
+            if (maleElement === femaleElement) {
+                advice = `같은 ${getElementName(maleElement)} 원소를 가진 두 사람은 서로를 깊이 이해할 수 있어요. 비슷한 가치관과 에너지를 공유하며, 자연스럽게 호흡이 잘 맞는 관계를 만들 수 있습니다. 서로의 강점을 격려하고 함께 성장하는 연애를 추천해요.`;
+                warning = `너무 비슷한 성향 때문에 가끔 지루함을 느낄 수 있어요. 때로는 새로운 경험과 도전을 함께하며 관계에 활력을 불어넣어 보세요. 또한 같은 약점을 공유할 수 있으니 서로 보완하려는 노력이 필요합니다.`;
+            }
+            // 불-공기 (조화)
+            else if ((maleElement === 'fire' && femaleElement === 'air') || 
+                     (maleElement === 'air' && femaleElement === 'fire')) {
+                advice = `불과 공기의 만남! 서로를 자극하고 성장시키는 환상적인 조합이에요. 활발한 대화와 새로운 모험을 함께 즐기는 연애 스타일이 잘 맞습니다. 자유로운 분위기 속에서 서로의 창의성을 격려해주세요.`;
+                warning = `둘 다 활동적이고 변화를 좋아하기 때문에 안정감이 부족할 수 있어요. 때로는 차분히 앉아 깊은 대화를 나누고, 장기적인 계획을 함께 세워보는 시간이 필요합니다.`;
+            }
+            // 물-흙 (조화)
+            else if ((maleElement === 'water' && femaleElement === 'earth') || 
+                     (maleElement === 'earth' && femaleElement === 'water')) {
+                advice = `물과 흙의 만남! 감성과 안정성이 조화를 이루는 편안한 관계예요. 서로의 감정을 세심하게 배려하고, 안정적인 미래를 함께 계획하는 연애가 잘 어울립니다. 집에서 함께 시간을 보내며 깊은 유대감을 쌓아가세요.`;
+                warning = `너무 안전지향적이 되어 관계가 무뎌질 수 있어요. 가끔은 일상에서 벗어나 새로운 경험을 시도해보세요. 감정 표현에서 속도 차이가 있을 수 있으니 서로의 방식을 존중해주세요.`;
+            }
+            // 불-물 (도전)
+            else if ((maleElement === 'fire' && femaleElement === 'water') || 
+                     (maleElement === 'water' && femaleElement === 'fire')) {
+                advice = `열정과 감성의 만남! 서로 다른 에너지가 매력적인 긴장감을 만들어요. 불의 열정을 물의 감성이 부드럽게 다독이고, 물의 깊이를 불이 따뜻하게 데워줄 수 있습니다. 서로의 차이를 존중하며 배우는 자세로 연애하세요.`;
+                warning = `감정 표현 방식의 차이로 오해가 생길 수 있어요. 직설적인 표현과 간접적인 암시 사이에서 혼란을 겪을 수 있으니, 명확한 소통을 연습하세요. 감정 기복에 주의하고 상대의 기분을 세심하게 살펴주세요.`;
+            }
+            // 공기-흙 (도전)
+            else if ((maleElement === 'air' && femaleElement === 'earth') || 
+                     (maleElement === 'earth' && femaleElement === 'air')) {
+                advice = `이성과 현실의 만남! 공기의 창의성과 흙의 실용성이 만나 균형잡힌 관계를 만들 수 있어요. 함께 구체적인 계획을 세우되, 유연성을 잃지 않는 연애를 추천합니다. 서로의 장점을 인정하고 배우려는 자세가 중요해요.`;
+                warning = `속도와 우선순위의 차이로 갈등이 생길 수 있어요. 한쪽은 빠른 변화를 원하고 다른 쪽은 신중함을 선호할 수 있으니, 타협점을 찾는 연습이 필요합니다. 상대의 페이스를 존중해주세요.`;
+            }
+            // 불-흙 (도전)
+            else if ((maleElement === 'fire' && femaleElement === 'earth') || 
+                     (maleElement === 'earth' && femaleElement === 'fire')) {
+                advice = `열정과 안정의 만남! 불의 추진력과 흙의 인내심이 합쳐지면 큰 일을 이룰 수 있어요. 함께 목표를 세우고 차근차근 이뤄가는 연애가 잘 맞습니다. 서로의 강점을 활용해 실질적인 결과를 만들어가세요.`;
+                warning = `행동 방식의 차이로 답답함을 느낄 수 있어요. 한쪽은 빠른 결정을, 다른 쪽은 신중한 검토를 원할 수 있습니다. 급하지 않게 상대의 속도를 이해하고, 중간 지점을 찾아가는 노력이 필요합니다.`;
+            }
+            // 물-공기 (도전)
+            else {
+                advice = `감성과 이성의 만남! 물의 직관과 공기의 논리가 만나 풍부한 대화를 나눌 수 있어요. 감정과 생각을 균형있게 나누며, 서로에게서 새로운 관점을 배우는 연애를 추천합니다. 깊은 대화와 지적 교감을 즐기세요.`;
+                warning = `감정 처리 방식의 차이로 소통에 어려움을 겪을 수 있어요. 감정적 접근과 논리적 분석 사이에서 괴리감을 느낄 수 있으니, 상대의 방식을 판단하지 말고 이해하려 노력하세요. 감정과 이성 모두 중요하다는 걸 기억하세요.`;
+            }
+
+            adviceElement.textContent = advice;
+            warningElement.textContent = warning;
+            insightsElement.innerHTML = insights;
+        }
+
+        function generateDetailedInsights(male, female, maleData, femaleData, compatibility) {
+            let insights = '<div style="display: grid; gap: 15px;">';
+            
+            // 사랑 점수 분석
+            if (compatibility.love >= 90) {
+                insights += `<div>💖 <strong>사랑과 애정:</strong> 두 사람은 서로에게 깊은 애정을 느끼며, 감정적 유대감이 매우 강합니다. 자연스럽게 서로를 이해하고 배려하는 관계를 만들 수 있어요.</div>`;
+            } else if (compatibility.love >= 70) {
+                insights += `<div>💖 <strong>사랑과 애정:</strong> 서로에게 진심 어린 애정을 가지고 있으며, 시간이 지날수록 더욱 깊어지는 사랑을 경험할 수 있습니다.</div>`;
+            } else {
+                insights += `<div>💖 <strong>사랑과 애정:</strong> 감정 표현에 있어 서로 다른 방식을 가지고 있을 수 있어요. 상대의 사랑 언어를 이해하려는 노력이 필요합니다.</div>`;
+            }
+
+            // 의사소통 분석
+            if (compatibility.communication >= 90) {
+                insights += `<div>💬 <strong>의사소통:</strong> 대화가 막힘없이 흐르고, 서로의 생각을 쉽게 이해할 수 있어요. 의견 차이가 있어도 건설적인 대화로 해결할 수 있습니다.</div>`;
+            } else if (compatibility.communication >= 70) {
+                insights += `<div>💬 <strong>의사소통:</strong> 대체로 원활한 소통이 가능하지만, 가끔 오해가 생길 수 있어요. 명확한 표현과 경청이 관계를 더욱 단단하게 만듭니다.</div>`;
+            } else {
+                insights += `<div>💬 <strong>의사소통:</strong> 의사소통 방식의 차이로 어려움을 겪을 수 있어요. 서로의 표현 방식을 배우고, 인내심을 가지고 대화하는 것이 중요합니다.</div>`;
+            }
+
+            // 신뢰 분석
+            if (compatibility.trust >= 90) {
+                insights += `<div>🤝 <strong>신뢰:</strong> 서로를 완전히 믿고 의지할 수 있는 관계예요. 투명하고 정직한 관계를 자연스럽게 형성할 수 있습니다.</div>`;
+            } else if (compatibility.trust >= 70) {
+                insights += `<div>🤝 <strong>신뢰:</strong> 시간이 지나면서 점차 깊은 신뢰를 쌓아갈 수 있어요. 일관된 행동과 약속 이행이 신뢰를 강화합니다.</div>`;
+            } else {
+                insights += `<div>🤝 <strong>신뢰:</strong> 신뢰를 쌓는 데 시간과 노력이 필요할 수 있어요. 작은 약속부터 지키며 천천히 믿음을 쌓아가세요.</div>`;
+            }
+
+            // 열정 분석
+            if (compatibility.passion >= 90) {
+                insights += `<div>🔥 <strong>열정:</strong> 서로에게 강한 끌림과 열정을 느끼며, 관계에 생동감이 넘쳐요. 로맨틱한 순간들이 자연스럽게 이어집니다.</div>`;
+            } else if (compatibility.passion >= 70) {
+                insights += `<div>🔥 <strong>열정:</strong> 적당한 열정과 안정감이 균형을 이루고 있어요. 가끔 로맨틱한 이벤트로 관계에 활력을 불어넣으면 좋습니다.</div>`;
+            } else {
+                insights += `<div>🔥 <strong>열정:</strong> 열정보다는 편안함이 우선되는 관계일 수 있어요. 의식적으로 로맨틱한 순간을 만들어가는 노력이 필요합니다.</div>`;
+            }
+
+            // 가치관 분석
+            if (compatibility.values >= 90) {
+                insights += `<div>⭐ <strong>가치관:</strong> 인생의 중요한 가치관이 잘 맞아 큰 갈등 없이 같은 방향을 향해 나아갈 수 있어요. 인생의 동반자로서 이상적입니다.</div>`;
+            } else if (compatibility.values >= 70) {
+                insights += `<div>⭐ <strong>가치관:</strong> 핵심 가치관은 유사하지만 세부적인 부분에서 차이가 있을 수 있어요. 서로의 가치관을 존중하며 절충점을 찾아가세요.</div>`;
+            } else {
+                insights += `<div>⭐ <strong>가치관:</strong> 인생관이나 우선순위에서 차이가 있을 수 있어요. 중요한 결정을 내릴 때는 충분한 대화와 타협이 필요합니다.</div>`;
+            }
+
+            // 장기 전망 분석
+            if (compatibility.longterm >= 90) {
+                insights += `<div>🌱 <strong>장기 전망:</strong> 오래도록 행복한 관계를 유지할 가능성이 매우 높아요. 함께 성장하고 발전하는 미래를 기대할 수 있습니다.</div>`;
+            } else if (compatibility.longterm >= 70) {
+                insights += `<div>🌱 <strong>장기 전망:</strong> 서로에 대한 이해와 노력을 통해 안정적인 장기 관계를 만들 수 있어요. 지속적인 관심과 배려가 관건입니다.</div>`;
+            } else {
+                insights += `<div>🌱 <strong>장기 전망:</strong> 장기적 관계를 위해서는 더 많은 노력과 타협이 필요할 수 있어요. 하지만 서로의 차이를 받아들인다면 의미있는 관계로 발전할 수 있습니다.</div>`;
+            }
+
+            insights += '</div>';
+            return insights;
+        }
+
+        function getElementName(element) {
+            const names = {
+                fire: '불(화)',
+                earth: '흙(토)',
+                air: '공기(풍)',
+                water: '물(수)'
+            };
+            return names[element];
+        }
+
+        function shareResult() {
+            const maleZodiac = document.getElementById('maleZodiac').value;
+            const femaleZodiac = document.getElementById('femaleZodiac').value;
+            const score = document.getElementById('scoreNumber').textContent;
+            const maleData = zodiacData[maleZodiac];
+            const femaleData = zodiacData[femaleZodiac];
+
+            const shareText = `${maleData.emoji}${maleData.name} ❤️ ${femaleData.name}${femaleData.emoji}\n별자리 궁합: ${score}\n\n우리의 별자리 궁합을 알아보세요!`;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: '별자리 궁합 결과',
+                    text: shareText
+                }).catch(() => {});
+            } else {
+                // 클립보드에 복사
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert('결과가 클립보드에 복사되었습니다! 친구들과 공유해보세요 📋');
+                });
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('startScreen').style.display = 'block';
+            document.getElementById('resultScreen').style.display = 'none';
+            document.getElementById('maleBirthdate').value = '';
+            document.getElementById('femaleBirthdate').value = '';
+            document.getElementById('maleZodiacDisplay').style.display = 'none';
+            document.getElementById('femaleZodiacDisplay').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

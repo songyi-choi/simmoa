@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한글 닉네임 생성기</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #f8f9fa;
+            --bg-card: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #6c757d;
+            --accent: #2d3436;
+            --accent-light: #636e72;
+            --border: #e9ecef;
+            --hover: #f1f3f5;
+            --active: #2d3436;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 300;
+        }
+
+        .main-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 48px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: 1px solid var(--border);
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .consonant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+            gap: 10px;
+        }
+
+        .consonant-btn {
+            background: var(--bg-primary);
+            border: 2px solid var(--border);
+            color: var(--text-primary);
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .consonant-btn:hover {
+            background: var(--hover);
+            border-color: var(--accent-light);
+        }
+
+        .consonant-btn.active {
+            background: var(--active);
+            border-color: var(--active);
+            color: white;
+        }
+
+        .length-selector {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .length-btn {
+            background: var(--bg-primary);
+            border: 2px solid var(--border);
+            color: var(--text-primary);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 48px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .length-btn:hover {
+            background: var(--hover);
+            border-color: var(--accent-light);
+        }
+
+        .length-btn.active {
+            background: var(--active);
+            border-color: var(--active);
+            color: white;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .option-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-primary);
+            padding: 16px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid var(--border);
+        }
+
+        .option-checkbox:hover {
+            background: var(--hover);
+            border-color: var(--accent-light);
+        }
+
+        .option-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--active);
+            cursor: pointer;
+        }
+
+        .option-checkbox label {
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9375rem;
+            user-select: none;
+            color: var(--text-primary);
+        }
+
+        .result-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--bg-primary);
+            border-radius: 12px;
+            margin-bottom: 32px;
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid var(--border);
+        }
+
+        .result-nickname {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: 2px;
+        }
+
+        .result-placeholder {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 36px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .btn-generate {
+            background: var(--active);
+            color: white;
+        }
+
+        .btn-generate:hover {
+            background: var(--accent-light);
+            transform: translateY(-1px);
+        }
+
+        .btn-generate:active {
+            transform: translateY(0);
+        }
+
+        .btn-copy {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 2px solid var(--border);
+        }
+
+        .btn-copy:hover {
+            background: var(--hover);
+            border-color: var(--accent-light);
+        }
+
+        .btn-copy.copied {
+            background: var(--active);
+            color: white;
+            border-color: var(--active);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--active);
+            color: white;
+            padding: 16px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 48px;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 300;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.25rem;
+            }
+            
+            .main-card {
+                padding: 32px 24px;
+            }
+            
+            .result-nickname {
+                font-size: 2.5rem;
+            }
+            
+            .consonant-grid {
+                grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+                gap: 8px;
+            }
+            
+            .btn {
+                padding: 14px 28px;
+                font-size: 0.9375rem;
+            }
+
+            .result-section {
+                padding: 48px 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 24px 16px;
+            }
+
+            h1 {
+                font-size: 1.875rem;
+            }
+
+            .main-card {
+                padding: 24px 20px;
+            }
+
+            .section {
+                margin-bottom: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>NICKNAME</h1>
+            <p class="subtitle">나만의 특별한 한글 닉네임을 만들어보세요</p>
+        </header>
+
+        <div class="main-card">
+            <div class="section">
+                <h2 class="section-title">초성 선택</h2>
+                <div class="consonant-grid" id="consonantGrid"></div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">길이 선택</h2>
+                <div class="length-selector" id="lengthSelector"></div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">옵션</h2>
+                <div class="options-grid">
+                    <div class="option-checkbox">
+                        <input type="checkbox" id="mainConsonants" checked>
+                        <label for="mainConsonants">주요 자음만 사용</label>
+                    </div>
+                    <div class="option-checkbox">
+                        <input type="checkbox" id="mainVowels" checked>
+                        <label for="mainVowels">주요 모음만 사용</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-section">
+                <div id="result">
+                    <p class="result-placeholder">랜덤생성 버튼을 눌러보세요</p>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-generate" id="generateBtn">랜덤생성</button>
+                <button class="btn btn-copy" id="copyBtn">복사하기</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2026 닉네임 생성기</p>
+        </footer>
+    </div>
+
+    <div class="toast" id="toast">클립보드에 복사되었습니다!</div>
+
+    <script>
+        // 한글 자모 데이터
+        const CONSONANTS = ['ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'];
+        const MAIN_CONSONANTS = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'];
+        const VOWELS = ['ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ', 'ㅣ'];
+        const MAIN_VOWELS = ['ㅏ', 'ㅐ', 'ㅓ', 'ㅔ', 'ㅗ', 'ㅜ', 'ㅡ', 'ㅣ'];
+
+        // 상태
+        let selectedConsonants = new Set();
+        let selectedLength = 4;
+        let currentNickname = '';
+
+        // 초기화
+        function init() {
+            renderConsonants();
+            renderLengthSelector();
+            setupEventListeners();
+        }
+
+        // 초성 버튼 렌더링
+        function renderConsonants() {
+            const grid = document.getElementById('consonantGrid');
+            CONSONANTS.forEach(consonant => {
+                const btn = document.createElement('button');
+                btn.className = 'consonant-btn';
+                btn.textContent = consonant;
+                btn.onclick = () => toggleConsonant(consonant, btn);
+                grid.appendChild(btn);
+            });
+        }
+
+        // 길이 선택 버튼 렌더링
+        function renderLengthSelector() {
+            const selector = document.getElementById('lengthSelector');
+            for (let i = 1; i <= 10; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'length-btn' + (i === 4 ? ' active' : '');
+                btn.textContent = i;
+                btn.onclick = () => selectLength(i);
+                selector.appendChild(btn);
+            }
+        }
+
+        // 초성 토글
+        function toggleConsonant(consonant, btn) {
+            if (selectedConsonants.has(consonant)) {
+                selectedConsonants.delete(consonant);
+                btn.classList.remove('active');
+            } else {
+                selectedConsonants.add(consonant);
+                btn.classList.add('active');
+            }
+        }
+
+        // 길이 선택
+        function selectLength(length) {
+            selectedLength = length;
+            document.querySelectorAll('.length-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent === length.toString()) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // 이벤트 리스너 설정
+        function setupEventListeners() {
+            document.getElementById('generateBtn').addEventListener('click', generateNickname);
+            document.getElementById('copyBtn').addEventListener('click', copyToClipboard);
+        }
+
+        // 한글 조합 함수 (종성 없음)
+        function assembleHangul(initial, medial) {
+            const initialIndex = CONSONANTS.indexOf(initial);
+            const medialIndex = VOWELS.indexOf(medial);
+            
+            if (initialIndex === -1 || medialIndex === -1) {
+                return '';
+            }
+            
+            // 종성 없음 (finalIndex = 0)
+            const unicode = 0xAC00 + (initialIndex * 21 * 28) + (medialIndex * 28);
+            return String.fromCharCode(unicode);
+        }
+
+        // 닉네임 생성
+        function generateNickname() {
+            const mainConsonants = document.getElementById('mainConsonants').checked;
+            const mainVowels = document.getElementById('mainVowels').checked;
+
+            let consonantsToUse = mainConsonants ? MAIN_CONSONANTS : CONSONANTS;
+            let vowelsToUse = mainVowels ? MAIN_VOWELS : VOWELS;
+
+            // 선택된 초성이 있으면 그것만 사용
+            if (selectedConsonants.size > 0) {
+                consonantsToUse = Array.from(selectedConsonants);
+            }
+
+            let nickname = '';
+            for (let i = 0; i < selectedLength; i++) {
+                const initial = consonantsToUse[Math.floor(Math.random() * consonantsToUse.length)];
+                const medial = vowelsToUse[Math.floor(Math.random() * vowelsToUse.length)];
+                
+                nickname += assembleHangul(initial, medial);
+            }
+
+            currentNickname = nickname;
+            displayNickname(nickname);
+        }
+
+        // 닉네임 표시
+        function displayNickname(nickname) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `<div class="result-nickname">${nickname}</div>`;
+        }
+
+        // 클립보드에 복사
+        function copyToClipboard() {
+            if (!currentNickname) {
+                showToast('먼저 닉네임을 생성해주세요!');
+                return;
+            }
+
+            navigator.clipboard.writeText(currentNickname).then(() => {
+                const copyBtn = document.getElementById('copyBtn');
+                copyBtn.classList.add('copied');
+                copyBtn.textContent = '복사 완료!';
+                
+                showToast('클립보드에 복사되었습니다!');
+                
+                setTimeout(() => {
+                    copyBtn.classList.remove('copied');
+                    copyBtn.textContent = '복사하기';
+                }, 2000);
+            });
+        }
+
+        // 토스트 메시지 표시
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+        // 페이지 로드 시 초기화
+        init();
+    </script>
+</body>
+</html>
