@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>무쓸모.test - 트렌디한 심리테스트 모음</title>
+    <title>무쓸모.test - 당신의 모든 순간을 테스트하세요</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6727122014134843"
+         crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Black+Han+Sans&family=Jua&family=Gaegu:wght@400;700&family=Hi+Melody&display=swap" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-        /* 기존 커스텀 폰트 */
+        /* 폰트 설정 */
         @font-face {
             font-family: 'MullaebreweryYoungchoel';
             src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-4@1.1/YDPCF-MullaebreweryYoungchoel-Regular.woff2') format('woff2');
@@ -20,158 +22,200 @@
             font-weight: normal;
         }
 
+        :root {
+            --primary-accent: #FF6B6B;
+            --bg-soft: #fbfbfd;
+            --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+            --card-hover-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            color: #222;
+            color: #333;
+            background-color: var(--bg-soft);
             line-height: 1.6;
-            min-height: 100vh;
-            background-color: #FFF8F0;
-            background-image:
-                radial-gradient(circle at 10% 15%, #FF6B6B 6px, transparent 6px),
-                radial-gradient(circle at 85% 8%, #667eea 4px, transparent 4px),
-                radial-gradient(circle at 45% 5%, #feca57 8px, transparent 8px),
-                radial-gradient(circle at 70% 18%, #48dbBE 5px, transparent 5px),
-                radial-gradient(circle at 25% 25%, #f093fb 4px, transparent 4px),
-                radial-gradient(circle at 92% 30%, #FF6B6B 3px, transparent 3px),
-                radial-gradient(circle at 5% 45%, #feca57 5px, transparent 5px),
-                radial-gradient(circle at 95% 55%, #f093fb 7px, transparent 7px),
-                radial-gradient(circle at 15% 70%, #667eea 6px, transparent 6px),
-                radial-gradient(circle at 80% 75%, #feca57 4px, transparent 4px),
-                radial-gradient(circle at 50% 85%, #48dbBE 6px, transparent 6px),
-                radial-gradient(circle at 35% 92%, #FF6B6B 5px, transparent 5px),
-                radial-gradient(circle at 88% 90%, #667eea 8px, transparent 8px),
-                radial-gradient(circle at 60% 60%, #feca57 3px, transparent 3px);
-            background-attachment: fixed;
             overflow-x: hidden;
         }
 
-        /* 내비게이션 바 */
+        /* 세련된 배경 장식 */
+        .bg-blob {
+            position: fixed;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255,107,107,0.08) 0%, rgba(255,255,255,0) 70%);
+            top: -200px;
+            right: -200px;
+            z-index: -1;
+            border-radius: 50%;
+        }
+
+        /* 내비게이션 바 - 푸망 스타일의 미니멀리즘 */
         nav {
-            height: 70px;
+            height: 64px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255, 248, 240, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 2px dashed #FFD4B8;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
         }
 
         nav h2 {
             font-family: 'KerisKeduLine', cursive;
-            font-size: 1.8rem;
-            color: #FF6B6B;
-            letter-spacing: -1px;
+            font-size: 1.6rem;
+            color: var(--primary-accent);
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1040px;
             margin: 0 auto;
-            padding: 0 20px 100px;
+            padding: 0 24px 100px;
         }
 
-        .hero { padding: 60px 0 20px; text-align: center; }
+        /* 히어로 섹션 - 더욱 정갈하게 */
+        .hero {
+            padding: 80px 0 40px;
+            text-align: center;
+        }
+
         .hero h1 {
-            font-size: 2.2rem;
+            font-size: 2.8rem;
             font-weight: 900;
-            background: linear-gradient(to right, #222, #666);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
+            letter-spacing: -1.5px;
+            margin-bottom: 16px;
+            color: #111;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 500;
         }
 
         .section-title {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 800;
-            margin: 60px 0 25px;
-            color: #333;
+            margin: 60px 0 24px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            color: #1a1a1a;
         }
 
+        .section-title::before {
+            content: '';
+            width: 6px;
+            height: 22px;
+            background-color: var(--primary-accent);
+            border-radius: 10px;
+        }
+
+        /* 그리드 시스템 */
         .test-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 28px;
         }
 
-        /* --- 기존 탭 스타일 유지 + 세련된 그림자 --- */
+        /* 카드 커스텀 디자인 복구 및 세련미 추가 */
         .test-card {
             text-decoration: none;
             color: inherit;
             display: flex;
             flex-direction: column;
-            border-radius: 24px;
-            overflow: hidden;
+            border-radius: 28px;
             background: #fff;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
+            border: 1px solid rgba(0,0,0,0.03);
+            box-shadow: var(--card-shadow);
+            transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+            overflow: hidden;
         }
 
         .test-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+            transform: translateY(-10px);
+            box-shadow: var(--card-hover-shadow);
+            border-color: rgba(0,0,0,0.08);
         }
 
-        .card-emoji { font-size: 3.8rem; text-align: center; padding: 35px 0 15px; }
-        .card-content { padding: 25px; flex-grow: 1; }
-        .card-title { font-size: 1.5rem; margin-bottom: 10px; }
-        .card-desc { font-size: 0.95rem; line-height: 1.6; opacity: 0.85; }
-        .card-btn { margin: 0 25px 25px; padding: 14px; text-align: center; font-weight: 800; border-radius: 12px; font-size: 1rem; }
+        .card-emoji {
+            font-size: 4.5rem;
+            text-align: center;
+            padding: 40px 0 20px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(0,0,0,0.02));
+        }
 
-        /* --- 개별 카드 테마 (기본 유지) --- */
-        .card-fortune { background: linear-gradient(135deg, #1a1a2e, #16213e); border: 2px solid #e94560; color: #eee; }
+        .card-content { padding: 30px; flex-grow: 1; }
+        .card-title { font-size: 1.6rem; margin-bottom: 12px; color: inherit; }
+        .card-desc { font-size: 1rem; line-height: 1.6; opacity: 0.8; font-weight: 400; }
+
+        .card-btn {
+            margin: 0 30px 30px;
+            padding: 16px;
+            text-align: center;
+            font-weight: 800;
+            border-radius: 16px;
+            font-size: 1rem;
+            transition: opacity 0.2s;
+        }
+
+        .test-card:hover .card-btn { opacity: 0.9; }
+
+        /* --- 개별 테마 유지 --- */
+        .card-fortune { background: #161625; color: #fff; border: none; }
         .card-fortune .card-title { font-family: 'MullaebreweryYoungchoel'; }
-        .card-fortune .card-btn { background: #e94560; color: white; }
+        .card-fortune .card-btn { background: #e94560; color: #fff; }
 
-        .card-baseball { background: #c0c0c0; border: 4px outset #fff; border-radius: 4px; color: #000; }
+        .card-baseball { background: #c6c6c6; border: 4px outset #eee; border-radius: 0; }
         .card-baseball .card-title { font-family: 'Black Han Sans'; color: #000080; }
-        .card-baseball .card-btn { background: #c0c0c0; border: 2px outset #fff; color: #000; }
+        .card-baseball .card-btn { background: #000080; color: #fff; border: 2px outset #fff; }
 
-        .card-animal { background: #fff9e6; border: 3px solid #5a4a3a; color: #5a4a3a; }
-        .card-animal .card-title { font-family: 'Gaegu'; font-weight: 700; }
+        .card-animal { background: #fffdf5; border: 3px solid #5a4a3a; color: #5a4a3a; }
+        .card-animal .card-title { font-family: 'Gaegu'; }
         .card-animal .card-btn { background: #5a4a3a; color: #fff; font-family: 'Gaegu'; }
 
-        .card-retro { background: #000; border: 3px solid #00ff00; color: #00ff00; }
-        .card-retro .card-title { font-family: 'Press Start 2P'; font-size: 0.8rem; }
+        .card-retro { background: #000; border: 2px solid #00ff00; color: #00ff00; }
+        .card-retro .card-title { font-family: 'Press Start 2P'; font-size: 0.9rem; }
         .card-retro .card-btn { background: #00ff00; color: #000; font-family: 'Press Start 2P'; }
 
-        .card-worldcup { background: linear-gradient(135deg, #FF6B6B, #feca57); border: 2px solid #fff; color: #fff; }
+        .card-worldcup { background: linear-gradient(135deg, #FF6B6B, #FF8E53); color: #fff; border: none; }
         .card-worldcup .card-title { font-family: 'Jua'; }
-        .card-worldcup .card-btn { background: rgba(255,255,255,0.3); color: #fff; }
+        .card-worldcup .card-btn { background: #fff; color: #FF6B6B; }
 
-        .card-star { background: linear-gradient(135deg, #0c0c2e, #2d1b69); border: 2px solid #f8c542; color: #eee; }
-        .card-star .card-title { font-family: 'MullaebreweryYoungchoel'; color: #f8c542; }
-        .card-star .card-btn { background: #f8c542; color: #1a1a2e; }
+        .card-star { background: #0c0c20; color: #f8c542; border: 1px solid #f8c542; }
+        .card-star .card-title { font-family: 'MullaebreweryYoungchoel'; }
+        .card-star .card-btn { background: #f8c542; color: #0c0c20; }
 
-        .card-solo { background: linear-gradient(135deg, #667eea, #f093fb); border: 2px solid #fff; color: #fff; }
+        .card-solo { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; border: none; }
         .card-solo .card-title { font-family: 'Jua'; }
-        .card-solo .card-btn { background: rgba(255,255,255,0.25); color: #fff; }
+        .card-solo .card-btn { background: #fff; color: #764ba2; }
 
-        .card-lunch { background: #fff; border: 2px solid #222; color: #222; }
-        .card-lunch .card-btn { background: #222; color: #fff; }
+        .card-lunch { background: #fff; border: 2px solid #111; color: #111; }
+        .card-lunch .card-btn { background: #111; color: #fff; }
 
-        .card-nickname { background: #1a1a1a; border: 2px solid #444; color: #f0f0f0; }
-        .card-nickname .card-btn { background: #333; color: #f0f0f0; }
+        .card-nickname { background: #222; border: 1px solid #444; color: #eee; }
+        .card-nickname .card-btn { background: #444; color: #fff; }
 
-        .card-goal { background: #fefdfb; border: 2px solid #c19a6b; color: #8b4513; }
-        .card-goal .card-title { font-family: 'Hi Melody'; }
+        .card-goal { background: #fffcf9; border: 2px solid #c19a6b; color: #8b4513; }
+        .card-goal .card-title { font-family: 'Hi Melody'; font-size: 1.8rem; }
         .card-goal .card-btn { background: #c19a6b; color: #fff; font-family: 'Hi Melody'; }
 
-        footer { text-align: center; padding: 60px; color: #888; font-size: 13px; }
+        footer { text-align: center; padding: 80px 0; color: #999; border-top: 1px solid rgba(0,0,0,0.05); }
 
         @media (max-width: 600px) {
+            .hero h1 { font-size: 2.2rem; }
             .test-grid { grid-template-columns: 1fr; }
+            .card-emoji { font-size: 3.8rem; }
         }
     </style>
 </head>
 <body>
+
+<div class="bg-blob"></div>
 
 <nav>
     <h2>무쓸모.test</h2>
@@ -179,7 +223,8 @@
 
 <div class="container">
     <header class="hero">
-        <h1>지루할 틈 없는 테스트 광장</h1>
+        <h1>지루한 일상에,<br>작은 재미 한 스푼</h1>
+        <p>요즘 가장 유행하는 테스트만 모았습니다</p>
     </header>
 
     <div class="section-title">✏️ 심심풀이 테스트</div>
@@ -188,7 +233,7 @@
             <div class="card-emoji">🔮</div>
             <div class="card-content">
                 <h2 class="card-title">프리미엄 사주팔자</h2>
-                <p class="card-desc">당신의 운명을 읽어드립니다. 별자리와 사주 기반 운세!</p>
+                <p class="card-desc">당신의 타고난 운명을 심층 분석해 드립니다.</p>
             </div>
             <div class="card-btn">운명 확인하기</div>
         </a>
@@ -197,7 +242,7 @@
             <div class="card-emoji">⚾</div>
             <div class="card-content">
                 <h2 class="card-title">어울리는 야구팀</h2>
-                <p class="card-desc">성향 분석을 통해 KBO 찰떡 팀을 찾아드립니다.</p>
+                <p class="card-desc">나와 가장 케미가 잘 맞는 구단은 어디일까요?</p>
             </div>
             <div class="card-btn">[ 테스트 시작 ]</div>
         </a>
@@ -206,7 +251,7 @@
             <div class="card-emoji">🦊</div>
             <div class="card-content">
                 <h2 class="card-title">닮은 동물 찾기</h2>
-                <p class="card-desc">나의 행동 패턴으로 보는 찰떡 동물 찾기!</p>
+                <p class="card-desc">성격으로 알아보는 나의 '동물 자아' 찾기!</p>
             </div>
             <div class="card-btn">동물 찾으러 가기</div>
         </a>
@@ -224,7 +269,7 @@
             <div class="card-emoji">🍕</div>
             <div class="card-content">
                 <h2 class="card-title">최애 음식 월드컵</h2>
-                <p class="card-desc">이상형 월드컵으로 나의 최애 음식을 가려보세요!</p>
+                <p class="card-desc">진정한 미식가라면 피해갈 수 없는 선택!</p>
             </div>
             <div class="card-btn">월드컵 시작</div>
         </a>
@@ -233,7 +278,7 @@
             <div class="card-emoji">⭐</div>
             <div class="card-content">
                 <h2 class="card-title">별자리 궁합</h2>
-                <p class="card-desc">두 사람의 별자리로 알아보는 운명적 궁합!</p>
+                <p class="card-desc">별들의 위치로 알아보는 우리의 운명적인 연결.</p>
             </div>
             <div class="card-btn">궁합 확인하기</div>
         </a>
@@ -245,7 +290,7 @@
             <div class="card-emoji">💕</div>
             <div class="card-content">
                 <h2 class="card-title">나는솔로 테스트</h2>
-                <p class="card-desc">솔로 나라에 출연한다면 당신의 이름은?</p>
+                <p class="card-desc">솔로 나라에 출연한다면 당신의 이름은 무엇?</p>
             </div>
             <div class="card-btn">이름 찾기</div>
         </a>
@@ -254,7 +299,7 @@
             <div class="card-emoji">🍽️</div>
             <div class="card-content">
                 <h2 class="card-title">점심메뉴 추천기</h2>
-                <p class="card-desc">오늘 뭐 먹지? 랜덤 메뉴를 골라드려요.</p>
+                <p class="card-desc">결정 장애를 해결해 주는 오늘의 메뉴 추천!</p>
             </div>
             <div class="card-btn">메뉴 추천받기</div>
         </a>
@@ -263,7 +308,7 @@
             <div class="card-emoji">✍️</div>
             <div class="card-content">
                 <h2 class="card-title">닉네임 생성기</h2>
-                <p class="card-desc">초성으로 만드는 나만의 한글 닉네임!</p>
+                <p class="card-desc">나만의 독창적인 한글 닉네임을 만들어보세요.</p>
             </div>
             <div class="card-btn">닉네임 만들기</div>
         </a>
@@ -272,14 +317,14 @@
             <div class="card-emoji">📝</div>
             <div class="card-content">
                 <h2 class="card-title">월간 목표 생성기</h2>
-                <p class="card-desc">이번 달 당신이 꼭 이뤄야 할 목표는?</p>
+                <p class="card-desc">이번 달, 당신을 성장시킬 새로운 목표는?</p>
             </div>
             <div class="card-btn">목표 찾기</div>
         </a>
     </div>
 
     <footer>
-        <p>© 2026 무쓸모 테스트. 즐거운 하루 되세요! ✨</p>
+        <p>© 2026 무쓸모 테스트. 재밌게 즐겨주세요! ✨</p>
     </footer>
 </div>
 </body>
