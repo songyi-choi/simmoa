@@ -409,6 +409,7 @@
             }
         }
     </style>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 </head>
 <body>
     <div class="container">
@@ -899,12 +900,43 @@
                 li.textContent = trait;
                 traitsList.appendChild(li);
             });
+
+            // URL에 결과 파라미터 추가
+            const url = new URL(window.location);
+            url.searchParams.set('r', resultName);
+            window.history.pushState({}, '', url);
         }
 
         function shareKakao() {
-            const result = document.getElementById('resultName').textContent;
-            alert('카카오톡 공유 기능은 카카오 개발자 키가 필요합니다.\n결과: ' + result);
-            // 실제 구현시 Kakao SDK 사용
+            const resultName = document.getElementById('resultName').textContent;
+
+            if (typeof Kakao === 'undefined') {
+                alert('카카오 SDK를 불러오지 못했습니다. 페이지를 새로고침 해주세요.');
+                return;
+            }
+            if (!Kakao.isInitialized()) {
+                Kakao.init('bf0fd5739aebee3aa7cd7e8ec516f118');
+            }
+
+            Kakao.Share.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: '💕 나는솔로 이름 테스트',
+                    description: `나의 솔로 나라 이름은 "${resultName}"! 당신의 이름은?`,
+                    imageUrl: 'https://via.placeholder.com/800x400/667eea/ffffff?text=' + encodeURIComponent('💕 ' + resultName),
+                    link: {
+                        mobileWebUrl: window.location.href,
+                        webUrl: window.location.href
+                    }
+                },
+                buttons: [{
+                    title: '나도 테스트하기',
+                    link: {
+                        mobileWebUrl: window.location.href.split('?')[0],
+                        webUrl: window.location.href.split('?')[0]
+                    }
+                }]
+            });
         }
 
         function shareTwitter() {
@@ -923,6 +955,25 @@
             });
         }
 
+        function displayResultByName(name) {
+            const result = results[name];
+            if (!result) return;
+
+            document.getElementById('genderScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
+
+            document.getElementById('resultName').textContent = result.name;
+            document.getElementById('resultDescription').textContent = result.description;
+
+            const traitsList = document.getElementById('resultTraits');
+            traitsList.innerHTML = '';
+            result.traits.forEach(trait => {
+                const li = document.createElement('li');
+                li.textContent = trait;
+                traitsList.appendChild(li);
+            });
+        }
+
         function restartTest() {
             currentQuestion = 0;
             selectedGender = '';
@@ -934,6 +985,19 @@
             document.getElementById('resultScreen').classList.add('hidden');
             document.getElementById('genderScreen').classList.remove('hidden');
         }
+
+        // 페이지 로드 시 URL 파라미터 체크
+        window.addEventListener('load', () => {
+            if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
+                Kakao.init('bf0fd5739aebee3aa7cd7e8ec516f118');
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            const name = params.get('r');
+            if (name && results[name]) {
+                displayResultByName(name);
+            }
+        });
     </script>
 </body>
 </html>

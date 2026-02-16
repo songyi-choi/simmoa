@@ -430,6 +430,7 @@
             }
         }
     </style>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 </head>
 <body>
     <!-- 별 애니메이션 생성 -->
@@ -502,7 +503,11 @@
                 </div>
             </div>
 
-            <button class="btn share-btn" onclick="shareResult()"><span style="position: relative; z-index: 1;">📤 결과 공유하기</span></button>
+            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 10px;">
+                <button class="btn share-btn" onclick="shareResult()" style="width: auto; padding: 14px 24px; font-size: 0.95em;"><span style="position: relative; z-index: 1;">📋 링크 복사</span></button>
+                <button class="btn" onclick="shareKakao()" style="width: auto; padding: 14px 24px; font-size: 0.95em; background: linear-gradient(135deg, #FEE500, #f5d900); color: #3c1e1e; box-shadow: 0 5px 25px rgba(254, 229, 0, 0.4);"><span style="position: relative; z-index: 1;">💬 카카오톡</span></button>
+                <button class="btn" onclick="shareTwitter()" style="width: auto; padding: 14px 24px; font-size: 0.95em; background: linear-gradient(135deg, #1DA1F2, #0d8bd9); box-shadow: 0 5px 25px rgba(29, 161, 242, 0.4);"><span style="position: relative; z-index: 1;">🐦 트위터</span></button>
+            </div>
             <button class="btn reset-btn" onclick="resetForm()"><span style="position: relative; z-index: 1;">🔄 다시 알아보기</span></button>
         </div>
     </div>
@@ -715,6 +720,16 @@
             const maleData = zodiacData[male];
             const femaleData = zodiacData[female];
             const compatibility = getCompatibilityKey(male, female);
+
+            // URL에 별자리 파라미터 추가
+            const url = new URL(window.location);
+            url.searchParams.set('m', male);
+            url.searchParams.set('f', female);
+            window.history.pushState({}, '', url);
+
+            // 별자리 키 저장 (공유용)
+            window._maleZodiac = male;
+            window._femaleZodiac = female;
 
             // 화면 전환
             document.getElementById('startScreen').style.display = 'none';
@@ -1101,25 +1116,81 @@
         }
 
         function shareResult() {
-            const maleZodiac = document.getElementById('maleZodiac').value;
-            const femaleZodiac = document.getElementById('femaleZodiac').value;
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('링크가 복사되었습니다! 🎉');
+            }).catch(() => {
+                alert('링크 복사에 실패했습니다.');
+            });
+        }
+
+        function shareKakao() {
+            const maleKey = window._maleZodiac;
+            const femaleKey = window._femaleZodiac;
             const score = document.getElementById('scoreNumber').textContent;
-            const maleData = zodiacData[maleZodiac];
-            const femaleData = zodiacData[femaleZodiac];
+            const maleData = zodiacData[maleKey];
+            const femaleData = zodiacData[femaleKey];
 
-            const shareText = `${maleData.emoji}${maleData.name} ❤️ ${femaleData.name}${femaleData.emoji}\n별자리 궁합: ${score}\n\n우리의 별자리 궁합을 알아보세요!`;
-
-            if (navigator.share) {
-                navigator.share({
-                    title: '별자리 궁합 결과',
-                    text: shareText
-                }).catch(() => {});
-            } else {
-                // 클립보드에 복사
-                navigator.clipboard.writeText(shareText).then(() => {
-                    alert('결과가 클립보드에 복사되었습니다! 친구들과 공유해보세요 📋');
-                });
+            if (typeof Kakao === 'undefined') {
+                alert('카카오 SDK를 불러오지 못했습니다. 페이지를 새로고침 해주세요.');
+                return;
             }
+            if (!Kakao.isInitialized()) {
+                Kakao.init('bf0fd5739aebee3aa7cd7e8ec516f118');
+            }
+
+            Kakao.Share.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: '✨ 별자리 궁합 ✨',
+                    description: `${maleData.emoji}${maleData.name} ❤️ ${femaleData.name}${femaleData.emoji} 궁합: ${score}`,
+                    imageUrl: 'https://via.placeholder.com/800x400/1B2735/E0B0FF?text=' + encodeURIComponent(maleData.emoji + ' ❤️ ' + femaleData.emoji),
+                    link: {
+                        mobileWebUrl: window.location.href,
+                        webUrl: window.location.href
+                    }
+                },
+                buttons: [{
+                    title: '우리도 궁합 보기',
+                    link: {
+                        mobileWebUrl: window.location.href.split('?')[0],
+                        webUrl: window.location.href.split('?')[0]
+                    }
+                }]
+            });
+        }
+
+        function shareTwitter() {
+            const maleKey = window._maleZodiac;
+            const femaleKey = window._femaleZodiac;
+            const score = document.getElementById('scoreNumber').textContent;
+            const maleData = zodiacData[maleKey];
+            const femaleData = zodiacData[femaleKey];
+            const text = `${maleData.emoji}${maleData.name} ❤️ ${femaleData.name}${femaleData.emoji} 별자리 궁합: ${score} ✨`;
+            const url = window.location.href;
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+        }
+
+        function displayResultFromParams(maleKey, femaleKey) {
+            const maleData = zodiacData[maleKey];
+            const femaleData = zodiacData[femaleKey];
+            if (!maleData || !femaleData) return;
+
+            const compatibility = getCompatibilityKey(maleKey, femaleKey);
+            if (!compatibility) return;
+
+            window._maleZodiac = maleKey;
+            window._femaleZodiac = femaleKey;
+
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'block';
+
+            document.getElementById('coupleNames').innerHTML =
+                `${maleData.emoji} ${maleData.name} <span class="heart-icon">❤️</span> ${femaleData.name} ${femaleData.emoji}`;
+
+            animateScore(compatibility.score);
+            drawScoreCircle(compatibility.score);
+            displayDetailChart(compatibility);
+            displayAdviceAndWarning(maleKey, femaleKey, maleData, femaleData, compatibility);
         }
 
         function resetForm() {
@@ -1130,6 +1201,20 @@
             document.getElementById('maleZodiacDisplay').style.display = 'none';
             document.getElementById('femaleZodiacDisplay').style.display = 'none';
         }
+
+        // 페이지 로드 시 URL 파라미터 체크
+        window.addEventListener('load', () => {
+            if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
+                Kakao.init('bf0fd5739aebee3aa7cd7e8ec516f118');
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            const m = params.get('m');
+            const f = params.get('f');
+            if (m && f && zodiacData[m] && zodiacData[f]) {
+                displayResultFromParams(m, f);
+            }
+        });
     </script>
 </body>
 </html>

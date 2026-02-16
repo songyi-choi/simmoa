@@ -260,6 +260,7 @@
             background: #9c27b0;
         }
     </style>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 </head>
 <body>
     <div class="container">
@@ -716,6 +717,13 @@
             document.getElementById('loveStyle').textContent = result.love;
             document.getElementById('personality').textContent = result.personality;
             document.getElementById('weakness').textContent = result.weakness;
+
+            // URL에 점수 파라미터 추가
+            const url = new URL(window.location);
+            url.searchParams.set('e', scores.energy);
+            url.searchParams.set('t', scores.thinking);
+            url.searchParams.set('o', scores.organized);
+            window.history.pushState({}, '', url);
         }
 
         // 공유 기능
@@ -730,8 +738,35 @@
 
         function shareKakao() {
             const resultText = document.getElementById('resultTitle').textContent;
-            const url = window.location.href;
-            alert('카카오톡 공유는 카카오 개발자 등록이 필요합니다.\n링크를 복사해서 공유해주세요!\n\n나는 ' + resultText + '!');
+            const emoji = document.getElementById('resultEmoji').textContent;
+
+            if (typeof Kakao === 'undefined') {
+                alert('카카오 SDK를 불러오지 못했습니다. 페이지를 새로고침 해주세요.');
+                return;
+            }
+            if (!Kakao.isInitialized()) {
+                Kakao.init('bf0fd5739aebee3aa7cd7e8ec516f118');
+            }
+
+            Kakao.Share.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: '🐾 나를 닮은 동물 찾기',
+                    description: `나는 ${emoji} ${resultText}! 당신은 어떤 동물일까요?`,
+                    imageUrl: 'https://via.placeholder.com/800x400/ffeb3b/333333?text=' + encodeURIComponent(emoji + ' ' + resultText),
+                    link: {
+                        mobileWebUrl: window.location.href,
+                        webUrl: window.location.href
+                    }
+                },
+                buttons: [{
+                    title: '나도 테스트하기',
+                    link: {
+                        mobileWebUrl: window.location.href.split('?')[0],
+                        webUrl: window.location.href.split('?')[0]
+                    }
+                }]
+            });
         }
 
         function shareTwitter() {
@@ -740,6 +775,42 @@
             const text = `나는 ${resultText}! 🐾\n당신은 어떤 동물일까요?`;
             window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
         }
+
+        // 페이지 로드 시 URL 파라미터 체크
+        window.addEventListener('load', () => {
+            if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
+                Kakao.init('bf0fd5739aebee3aa7cd7e8ec516f118');
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            const e = params.get('e');
+            const t = params.get('t');
+            const o = params.get('o');
+            if (e !== null && t !== null && o !== null) {
+                scores.energy = parseInt(e);
+                scores.thinking = parseInt(t);
+                scores.organized = parseInt(o);
+
+                const adj1 = getWord(scores.energy, adj1Map).word;
+                const adj2 = getWord(scores.thinking, adj2Map).word;
+                const animalData = getWord(scores.organized, animalMap);
+                const animal = animalData.word;
+                const emoji = animalData.emoji;
+
+                const resultKey = `${adj1} ${adj2} ${animal}`;
+                const result = generateResult(adj1, adj2, animal);
+
+                document.getElementById('startScreen').classList.add('hidden');
+                document.getElementById('resultScreen').classList.add('active');
+                document.getElementById('resultEmoji').textContent = emoji;
+                document.getElementById('resultTitle').textContent = resultKey;
+                document.getElementById('mbtiResult').textContent = result.mbti;
+                document.getElementById('mbtiDesc').textContent = result.mbti_desc;
+                document.getElementById('loveStyle').textContent = result.love;
+                document.getElementById('personality').textContent = result.personality;
+                document.getElementById('weakness').textContent = result.weakness;
+            }
+        });
 
     </script>
 </body>

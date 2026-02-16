@@ -292,6 +292,7 @@
             display: none;
         }
     </style>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 </head>
 <body>
     <div class="container">
@@ -423,6 +424,11 @@
                     <div class="info-content" id="resultInfo"></div>
                 </div>
 
+                <div class="button-group" style="margin-bottom: 10px;">
+                    <button class="action-button" onclick="copyLink()">📋 링크 복사</button>
+                    <button class="action-button" onclick="shareKakao()" style="background: #FEE500; color: #3c1e1e;">💬 카카오톡</button>
+                    <button class="action-button" onclick="shareTwitter()">🐦 트위터</button>
+                </div>
                 <div class="button-group">
                     <button class="action-button" onclick="resetTest()">Retry Test</button>
                     <button class="action-button">OK</button>
@@ -726,6 +732,41 @@
 
             document.getElementById('questionScreen').classList.add('hidden');
             document.getElementById('resultScreen').classList.remove('hidden');
+
+            // URL에 결과 파라미터 추가
+            const url = new URL(window.location);
+            url.searchParams.set('r', topTeam);
+            window.history.pushState({}, '', url);
+        }
+
+        function displayResultByKey(teamKey) {
+            const team = teams[teamKey];
+            if (!team) return;
+
+            document.getElementById('resultEmoji').textContent = team.emoji;
+            document.getElementById('resultTeam').textContent = team.name;
+            document.getElementById('resultStadium').textContent = team.stadium;
+            document.getElementById('resultDescription').textContent = team.description;
+
+            const traitsContainer = document.getElementById('resultTraits');
+            traitsContainer.innerHTML = '';
+            team.traits.forEach(trait => {
+                const badge = document.createElement('div');
+                badge.className = 'trait-badge';
+                badge.textContent = trait;
+                traitsContainer.appendChild(badge);
+            });
+
+            const matchRate = Math.floor(Math.random() * 15 + 85);
+            document.getElementById('resultInfo').innerHTML = `
+                <div>Team Name: ${team.name}</div>
+                <div>Stadium: ${team.stadium}</div>
+                <div>Match Rate: ${matchRate}%</div>
+                <div>Status: Ready</div>
+            `;
+
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
         }
 
         function resetTest() {
@@ -736,7 +777,67 @@
             document.getElementById('resultScreen').classList.add('hidden');
         }
 
-        // Initialize - Show start screen
+        // 공유 기능
+        function shareKakao() {
+            const teamName = document.getElementById('resultTeam').textContent;
+            const teamEmoji = document.getElementById('resultEmoji').textContent;
+
+            if (typeof Kakao === 'undefined') {
+                alert('카카오 SDK를 불러오지 못했습니다. 페이지를 새로고침 해주세요.');
+                return;
+            }
+            if (!Kakao.isInitialized()) {
+                Kakao.init('bf0fd5739aebee3aa7cd7e8ec516f118');
+            }
+
+            Kakao.Share.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: '⚾ 야구팀 매칭 테스트',
+                    description: `나와 어울리는 KBO 팀은 ${teamEmoji} ${teamName}! 당신의 팀은?`,
+                    imageUrl: 'https://via.placeholder.com/800x400/000080/ffffff?text=' + encodeURIComponent(teamEmoji + ' ' + teamName),
+                    link: {
+                        mobileWebUrl: window.location.href,
+                        webUrl: window.location.href
+                    }
+                },
+                buttons: [{
+                    title: '나도 테스트하기',
+                    link: {
+                        mobileWebUrl: window.location.href.split('?')[0],
+                        webUrl: window.location.href.split('?')[0]
+                    }
+                }]
+            });
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('링크가 복사되었습니다! 🎉');
+            }).catch(() => {
+                alert('링크 복사에 실패했습니다.');
+            });
+        }
+
+        function shareTwitter() {
+            const teamName = document.getElementById('resultTeam').textContent;
+            const text = `나와 어울리는 KBO 야구팀은 ${teamName}! ⚾`;
+            const url = window.location.href;
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+        }
+
+        // 페이지 로드 시 URL 파라미터 체크
+        window.addEventListener('load', () => {
+            if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
+                Kakao.init('bf0fd5739aebee3aa7cd7e8ec516f118');
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            const teamKey = params.get('r');
+            if (teamKey && teams[teamKey]) {
+                displayResultByKey(teamKey);
+            }
+        });
     </script>
 </body>
 </html>

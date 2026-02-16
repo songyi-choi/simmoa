@@ -455,6 +455,7 @@
             }
         }
     </style>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 </head>
 <body>
     <div class="stars" id="stars"></div>
@@ -753,6 +754,17 @@
                 document.getElementById('result').innerHTML = result;
                 document.getElementById('result').classList.add('show');
                 document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                // URL에 입력 파라미터 추가
+                const url = new URL(window.location);
+                url.searchParams.set('name', name);
+                url.searchParams.set('g', gender);
+                url.searchParams.set('y', year);
+                url.searchParams.set('m', month);
+                url.searchParams.set('d', day);
+                url.searchParams.set('h', hour);
+                url.searchParams.set('c', calendar);
+                window.history.pushState({}, '', url);
             }, 2000);
         }
 
@@ -923,6 +935,12 @@
                         <div class="section-content">
                             ${getLifeAdvice(name, elements, dayGan, gender)}
                         </div>
+                    </div>
+
+                    <div style="display: flex; gap: 15px; justify-content: center; margin-top: 40px; flex-wrap: wrap;">
+                        <button onclick="copyLink()" style="padding: 16px 32px; background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%); border: none; border-radius: 12px; color: white; font-size: 1em; font-weight: 600; cursor: pointer; font-family: 'Noto Sans KR', sans-serif;">📋 링크 복사</button>
+                        <button onclick="shareKakao()" style="padding: 16px 32px; background: linear-gradient(135deg, #FEE500 0%, #f5d900 100%); border: none; border-radius: 12px; color: #3c1e1e; font-size: 1em; font-weight: 600; cursor: pointer; font-family: 'Noto Sans KR', sans-serif;">💬 카카오톡</button>
+                        <button onclick="shareTwitter()" style="padding: 16px 32px; background: linear-gradient(135deg, #1DA1F2 0%, #0d8bd9 100%); border: none; border-radius: 12px; color: white; font-size: 1em; font-weight: 600; cursor: pointer; font-family: 'Noto Sans KR', sans-serif;">🐦 트위터 공유</button>
                     </div>
                 </div>
             `;
@@ -1217,6 +1235,85 @@
 
             return advice;
         }
+
+        // 공유 기능
+        function shareKakao() {
+            const name = document.getElementById('name').value || '사용자';
+
+            if (typeof Kakao === 'undefined') {
+                alert('카카오 SDK를 불러오지 못했습니다. 페이지를 새로고침 해주세요.');
+                return;
+            }
+            if (!Kakao.isInitialized()) {
+                Kakao.init('bf0fd5739aebee3aa7cd7e8ec516f118');
+            }
+
+            Kakao.Share.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: '🔮 프리미엄 사주팔자',
+                    description: `${name}님의 사주 운명 분석 결과를 확인해보세요!`,
+                    imageUrl: 'https://via.placeholder.com/800x400/0a0a0a/a78bfa?text=' + encodeURIComponent('🔮 사주팔자'),
+                    link: {
+                        mobileWebUrl: window.location.href,
+                        webUrl: window.location.href
+                    }
+                },
+                buttons: [{
+                    title: '나도 사주 보기',
+                    link: {
+                        mobileWebUrl: window.location.href.split('?')[0],
+                        webUrl: window.location.href.split('?')[0]
+                    }
+                }]
+            });
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('링크가 복사되었습니다! 🎉');
+            }).catch(() => {
+                alert('링크 복사에 실패했습니다.');
+            });
+        }
+
+        function shareTwitter() {
+            const text = `🔮 사주팔자 운명 분석 결과를 확인해보세요!`;
+            const url = window.location.href;
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+        }
+
+        // 페이지 로드 시 URL 파라미터 체크
+        window.addEventListener('load', () => {
+            if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
+                Kakao.init('bf0fd5739aebee3aa7cd7e8ec516f118');
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            const name = params.get('name');
+            const gender = params.get('g');
+            const year = params.get('y');
+            const month = params.get('m');
+            const day = params.get('d');
+            const hour = params.get('h');
+            const calendar = params.get('c');
+
+            if (name && gender && year && month && day && hour && calendar) {
+                // 폼에 값 채우기
+                document.getElementById('name').value = name;
+                document.getElementById('gender').value = gender;
+                document.getElementById('year').value = year;
+                document.getElementById('month').value = month;
+                document.getElementById('day').value = day;
+                document.getElementById('hour').value = hour;
+                document.getElementById('calendar').value = calendar;
+
+                // 바로 결과 표시 (로딩 없이)
+                const result = generateDetailedFortune(name, gender, parseInt(year), parseInt(month), parseInt(day), hour, calendar);
+                document.getElementById('result').innerHTML = result;
+                document.getElementById('result').classList.add('show');
+            }
+        });
     </script>
 </body>
 </html>

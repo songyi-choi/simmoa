@@ -468,6 +468,7 @@
             100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
     </style>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 </head>
 <body>
     <div class="particles" id="particles"></div>
@@ -535,6 +536,11 @@
                     </div>
                 </div>
                 
+                <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap;">
+                    <button class="btn" onclick="copyLink()" style="font-size: 13px; padding: 12px 20px;">📋 링크 복사</button>
+                    <button class="btn" onclick="shareKakao()" style="font-size: 13px; padding: 12px 20px; background: linear-gradient(180deg, #FEE500 0%, #f5d900 100%); color: #3c1e1e;">💬 카카오톡</button>
+                    <button class="btn" onclick="shareTwitter()" style="font-size: 13px; padding: 12px 20px;">🐦 트위터</button>
+                </div>
                 <button class="btn" onclick="location.reload()">다시 측정하기</button>
             </div>
         </div>
@@ -804,19 +810,94 @@
         function showResult() {
             document.querySelector('.question-screen').classList.remove('active');
             document.querySelector('.result-screen').classList.add('active');
-            
+
             const result = results.find(r => totalScore >= r.range[0] && totalScore <= r.range[1]);
-            
+
             document.getElementById('resultEmoji').textContent = result.emoji;
             document.getElementById('scoreDisplay').textContent = totalScore + '점';
             document.getElementById('resultTitle').textContent = result.title;
             document.getElementById('resultDescription').textContent = result.description;
-            
+
             setTimeout(() => {
                 document.getElementById('stat1').style.width = result.stats[0] + '%';
                 document.getElementById('stat2').style.width = result.stats[1] + '%';
                 document.getElementById('stat3').style.width = result.stats[2] + '%';
             }, 500);
+
+            // URL에 점수 파라미터 추가
+            const url = new URL(window.location);
+            url.searchParams.set('s', totalScore);
+            window.history.pushState({}, '', url);
+        }
+
+        function displayResultByScore(score) {
+            const result = results.find(r => score >= r.range[0] && score <= r.range[1]);
+            if (!result) return;
+
+            document.querySelector('.start-screen').classList.remove('active');
+            document.querySelector('.result-screen').classList.add('active');
+
+            document.getElementById('resultEmoji').textContent = result.emoji;
+            document.getElementById('scoreDisplay').textContent = score + '점';
+            document.getElementById('resultTitle').textContent = result.title;
+            document.getElementById('resultDescription').textContent = result.description;
+
+            setTimeout(() => {
+                document.getElementById('stat1').style.width = result.stats[0] + '%';
+                document.getElementById('stat2').style.width = result.stats[1] + '%';
+                document.getElementById('stat3').style.width = result.stats[2] + '%';
+            }, 500);
+        }
+
+        // 공유 기능
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('링크가 복사되었습니다! 🎉');
+            }).catch(() => {
+                alert('링크 복사에 실패했습니다.');
+            });
+        }
+
+        function shareTwitter() {
+            const title = document.getElementById('resultTitle').textContent;
+            const score = document.getElementById('scoreDisplay').textContent;
+            const text = `나의 하찮음 수치는 ${score}! ${title} 👾`;
+            const url = window.location.href;
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+        }
+
+        function shareKakao() {
+            const title = document.getElementById('resultTitle').textContent;
+            const emoji = document.getElementById('resultEmoji').textContent;
+            const score = document.getElementById('scoreDisplay').textContent;
+
+            if (typeof Kakao === 'undefined') {
+                alert('카카오 SDK를 불러오지 못했습니다. 페이지를 새로고침 해주세요.');
+                return;
+            }
+            if (!Kakao.isInitialized()) {
+                Kakao.init('bf0fd5739aebee3aa7cd7e8ec516f118');
+            }
+
+            Kakao.Share.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: '👾 하찮음 측정기',
+                    description: `나의 하찮음 수치는 ${score}! ${emoji} ${title} 당신은?`,
+                    imageUrl: 'https://via.placeholder.com/800x400/1a1a2e/ffd93d?text=' + encodeURIComponent(emoji + ' ' + title),
+                    link: {
+                        mobileWebUrl: window.location.href,
+                        webUrl: window.location.href
+                    }
+                },
+                buttons: [{
+                    title: '나도 측정하기',
+                    link: {
+                        mobileWebUrl: window.location.href.split('?')[0],
+                        webUrl: window.location.href.split('?')[0]
+                    }
+                }]
+            });
         }
 
         function createParticles() {
@@ -841,6 +922,23 @@
 
         // 주기적으로 파티클 생성
         setInterval(createParticles, 5000);
+
+        // 페이지 로드 시 URL 파라미터 체크
+        window.addEventListener('load', () => {
+            if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
+                Kakao.init('bf0fd5739aebee3aa7cd7e8ec516f118');
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            const s = params.get('s');
+            if (s !== null) {
+                const score = parseInt(s);
+                if (score >= 10 && score <= 100) {
+                    totalScore = score;
+                    displayResultByScore(score);
+                }
+            }
+        });
     </script>
 </body>
 </html>
