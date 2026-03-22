@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사주팔자란? 나의 운명을 읽는 동양 철학의 지혜 - 무쓸모.test</title>
+    <meta name="description" content="사주팔자의 기본 원리부터 천간, 지지, 오행까지. 동양 철학의 운명 해석법을 쉽고 재미있게 알아봅니다.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6727122014134843"
+         crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'KerisKeduLine';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-3@1.0/KERISKEDU_Line.woff2') format('woff2');
+            font-weight: normal;
+        }
+
+        :root { --primary-accent: #FF6B6B; --bg-soft: #fbfbfd; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #333;
+            background-color: var(--bg-soft);
+            line-height: 1.9;
+        }
+
+        nav {
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav a { text-decoration: none; color: inherit; }
+        nav h2 { font-family: 'KerisKeduLine', cursive; font-size: 1.6rem; color: var(--primary-accent); }
+
+        .article-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 48px 24px 100px;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .article-tag {
+            background: #161625;
+            color: #e94560;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .article-date {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .article-title {
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: #111;
+            line-height: 1.3;
+            margin-bottom: 16px;
+            letter-spacing: -1.5px;
+        }
+
+        .article-subtitle {
+            font-size: 1.15rem;
+            color: #777;
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        .article-hero {
+            background: linear-gradient(135deg, #161625, #2a1a3e);
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .article-hero .emoji { font-size: 5rem; margin-bottom: 16px; }
+        .article-hero p { color: rgba(255,255,255,0.7); font-size: 1rem; }
+
+        h2.section-heading {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #111;
+            margin: 48px 0 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary-accent);
+            display: inline-block;
+        }
+
+        .article-body p {
+            font-size: 1.05rem;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .info-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 28px;
+            margin: 24px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .info-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .info-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-card ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .info-card ul li:last-child { border-bottom: none; }
+        .info-card ul li strong { color: #333; }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .col-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .col-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .col-card p { font-size: 0.9rem; color: #666; margin-bottom: 0; }
+
+        .highlight-quote {
+            background: linear-gradient(135deg, #fff7f7, #ffeef0);
+            border-left: 4px solid var(--primary-accent);
+            border-radius: 0 12px 12px 0;
+            padding: 24px 28px;
+            margin: 32px 0;
+            font-size: 1.05rem;
+            color: #555;
+            font-style: italic;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #161625, #2a1a3e);
+            color: #fff;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-top: 48px;
+        }
+
+        .cta-box h3 { font-size: 1.4rem; margin-bottom: 12px; }
+        .cta-box p { color: rgba(255,255,255,0.8); margin-bottom: 24px; }
+
+        .cta-btn {
+            display: inline-block;
+            background: #e94560;
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: transform 0.2s;
+        }
+
+        .cta-btn:hover { transform: translateY(-2px); }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #999;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            font-size: 0.9rem;
+        }
+
+        footer a { color: #999; text-decoration: none; margin: 0 12px; }
+        footer a:hover { color: var(--primary-accent); }
+
+        @media (max-width: 600px) {
+            .article-title { font-size: 1.8rem; }
+            .article-hero { padding: 40px 20px; }
+            .two-col { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html"><h2>무쓸모.test</h2></a>
+</nav>
+
+<div class="article-container">
+    <div class="article-meta">
+        <span class="article-tag">사주 가이드</span>
+        <span class="article-date">2026.03.15</span>
+    </div>
+
+    <h1 class="article-title">사주팔자란? 나의 운명을 읽는 동양 철학의 지혜</h1>
+    <p class="article-subtitle">
+        수천 년간 이어져 온 동양의 운명 해석법, 사주팔자. 복잡해 보이지만 기본 원리를 알면 의외로 흥미로운 이야기가 숨어 있습니다.
+    </p>
+
+    <div class="article-hero">
+        <div class="emoji">🔮</div>
+        <p>사주팔자 - 네 기둥, 여덟 글자에 담긴 운명의 이야기</p>
+    </div>
+
+    <div class="article-body">
+        <h2 class="section-heading">사주팔자, 무엇일까?</h2>
+        <p>
+            사주팔자(四柱八字)는 말 그대로 '네 개의 기둥(四柱)'과 '여덟 개의 글자(八字)'를 의미합니다.
+            태어난 연도, 월, 일, 시간을 각각 천간(天干)과 지지(地支)라는 두 글자로 표현하면
+            총 여덟 글자가 되는데, 이것이 바로 사주팔자입니다.
+        </p>
+        <p>
+            동양 철학에서는 사람이 태어난 순간의 우주 에너지가 그 사람의 기본 성격과 인생의 흐름에
+            영향을 미친다고 봅니다. 이를 분석하는 학문이 바로 명리학(命理學)이며,
+            사주팔자는 명리학의 핵심 도구라고 할 수 있습니다.
+        </p>
+
+        <h2 class="section-heading">네 개의 기둥이란?</h2>
+        <p>사주(四柱)의 네 기둥은 각각 다른 의미를 가지고 있습니다.</p>
+
+        <div class="info-card">
+            <h3>사주의 네 기둥</h3>
+            <ul>
+                <li><strong>연주(年柱) - 태어난 해</strong> : 조상과 가문의 운, 사회적 환경을 나타냅니다. 초년운(1~15세)을 관장합니다.</li>
+                <li><strong>월주(月柱) - 태어난 달</strong> : 부모와의 관계, 성장 환경을 나타냅니다. 청년운(16~30세)에 해당합니다.</li>
+                <li><strong>일주(日柱) - 태어난 날</strong> : 본인 자신과 배우자를 나타냅니다. 중년운(31~45세)이며, 사주에서 가장 중요한 기둥입니다.</li>
+                <li><strong>시주(時柱) - 태어난 시간</strong> : 자녀와 말년의 운세를 나타냅니다. 만년운(46세 이후)에 해당합니다.</li>
+            </ul>
+        </div>
+
+        <h2 class="section-heading">천간과 지지</h2>
+        <p>
+            각 기둥은 천간(天干)과 지지(地支) 한 쌍으로 이루어져 있습니다.
+            천간은 하늘의 기운, 지지는 땅의 기운을 상징합니다.
+        </p>
+
+        <div class="two-col">
+            <div class="col-card">
+                <h4>천간 (10개)</h4>
+                <p>갑(甲), 을(乙), 병(丙), 정(丁), 무(戊), 기(己), 경(庚), 신(辛), 임(壬), 계(癸)</p>
+            </div>
+            <div class="col-card">
+                <h4>지지 (12개)</h4>
+                <p>자(子), 축(丑), 인(寅), 묘(卯), 진(辰), 사(巳), 오(午), 미(未), 신(申), 유(酉), 술(戌), 해(亥)</p>
+            </div>
+        </div>
+
+        <p>
+            지지의 12글자는 우리에게 익숙한 12간지(띠)와 같습니다.
+            쥐(자), 소(축), 호랑이(인), 토끼(묘), 용(진), 뱀(사),
+            말(오), 양(미), 원숭이(신), 닭(유), 개(술), 돼지(해)가 바로 그것이죠.
+        </p>
+
+        <h2 class="section-heading">오행 - 다섯 가지 에너지</h2>
+        <p>
+            사주 해석의 핵심은 오행(五行)입니다. 목(木), 화(火), 토(土), 금(金), 수(水) 다섯 가지 원소가
+            서로 도와주기도 하고(상생), 억제하기도 하면서(상극) 균형을 이룹니다.
+        </p>
+
+        <div class="info-card">
+            <h3>오행의 특성</h3>
+            <ul>
+                <li><strong>목(木) - 나무</strong> : 성장, 시작, 인자함. 봄의 에너지. 직진하는 추진력이 강합니다.</li>
+                <li><strong>화(火) - 불</strong> : 열정, 예의, 밝음. 여름의 에너지. 활발하고 적극적인 성향입니다.</li>
+                <li><strong>토(土) - 흙</strong> : 안정, 신뢰, 중재. 환절기의 에너지. 중심을 잡아주는 역할입니다.</li>
+                <li><strong>금(金) - 쇠</strong> : 결단력, 의리, 정의. 가을의 에너지. 단호하고 깔끔한 성향입니다.</li>
+                <li><strong>수(水) - 물</strong> : 지혜, 유연함, 소통. 겨울의 에너지. 적응력이 뛰어나고 총명합니다.</li>
+            </ul>
+        </div>
+
+        <div class="highlight-quote">
+            "사주는 정해진 운명의 대본이 아니라, 내가 가진 카드를 보여주는 것입니다.
+            어떤 카드를 어떻게 쓸지는 결국 나 자신에게 달려 있습니다."
+        </div>
+
+        <h2 class="section-heading">사주팔자, 어떻게 활용할까?</h2>
+        <p>
+            현대에 와서 사주팔자는 절대적인 운명론이라기보다, 자기 이해의 도구로 활용되는 경우가 많습니다.
+            나의 타고난 성향과 강점을 파악하고, 시기별로 유리한 방향을 참고하는 용도로 보는 것이 건강한 접근법이에요.
+        </p>
+        <p>
+            사주에서 어떤 오행이 강하고 약한지에 따라 직업 적성, 대인 관계 스타일, 건강 관리 포인트 등을
+            가늠해 볼 수 있습니다. 물론 이것은 참고 사항일 뿐, 실제 인생은 본인의 노력과 선택으로 만들어가는 것이라는 걸
+            잊지 마세요.
+        </p>
+
+        <h2 class="section-heading">재미로 보는 띠별 기본 성격</h2>
+        <div class="info-card">
+            <ul>
+                <li><strong>쥐띠 (자)</strong> : 영리하고 사교적. 기회를 잘 포착하며 재치가 넘칩니다.</li>
+                <li><strong>소띠 (축)</strong> : 성실하고 인내심이 강함. 묵묵히 목표를 향해 나아갑니다.</li>
+                <li><strong>호랑이띠 (인)</strong> : 용감하고 리더십이 있음. 도전을 두려워하지 않습니다.</li>
+                <li><strong>토끼띠 (묘)</strong> : 온화하고 세심함. 예술적 감각이 뛰어납니다.</li>
+                <li><strong>용띠 (진)</strong> : 카리스마와 자신감. 큰 뜻을 품고 행동합니다.</li>
+                <li><strong>뱀띠 (사)</strong> : 지혜롭고 직관력이 강함. 깊이 있는 사고를 합니다.</li>
+                <li><strong>말띠 (오)</strong> : 활동적이고 자유로움. 에너지가 넘치고 독립적입니다.</li>
+                <li><strong>양띠 (미)</strong> : 온순하고 창의적. 예술적 재능과 풍부한 감성의 소유자입니다.</li>
+                <li><strong>원숭이띠 (신)</strong> : 똑똑하고 재주가 많음. 유머 감각이 뛰어납니다.</li>
+                <li><strong>닭띠 (유)</strong> : 근면하고 꼼꼼함. 완벽주의적 성향이 있습니다.</li>
+                <li><strong>개띠 (술)</strong> : 충직하고 정의로움. 신뢰할 수 있는 사람입니다.</li>
+                <li><strong>돼지띠 (해)</strong> : 너그럽고 낙천적. 복을 끌어당기는 타입입니다.</li>
+            </ul>
+        </div>
+
+        <div class="cta-box">
+            <h3>나의 사주팔자가 궁금하다면?</h3>
+            <p>무쓸모.test의 프리미엄 사주팔자 분석으로 재미있게 확인해 보세요!</p>
+            <a href="life.html" class="cta-btn">사주팔자 테스트 하러 가기</a>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>
+        <a href="index.html">홈</a>
+        <a href="about.html">소개</a>
+        <a href="privacy.html">개인정보처리방침</a>
+        <a href="terms.html">이용약관</a>
+    </p>
+    <p style="margin-top: 12px;">&copy; 2026 무쓸모.test</p>
+</footer>
+
+</body>
+</html>

@@ -204,11 +204,97 @@
         .card-goal .card-title { font-family: 'Hi Melody'; font-size: 1.8rem; }
         .card-goal .card-btn { background: #c19a6b; color: #fff; font-family: 'Hi Melody'; }
 
-        footer { text-align: center; padding: 80px 0; color: #999; border-top: 1px solid rgba(0,0,0,0.05); }
+        .card-instrument { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; border: none; }
+        .card-instrument .card-title { font-family: 'Jua'; }
+        .card-instrument .card-btn { background: #fff; color: #764ba2; }
+
+        /* 블로그 카드 */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .blog-card {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            border-radius: 16px;
+            background: #fff;
+            border: 1px solid rgba(0,0,0,0.06);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            padding: 24px;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+        }
+
+        .blog-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .blog-tag {
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .blog-date { font-size: 0.8rem; color: #bbb; }
+
+        .blog-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #222;
+            line-height: 1.4;
+        }
+
+        .blog-card p {
+            font-size: 0.9rem;
+            color: #888;
+            line-height: 1.5;
+        }
+
+        /* 푸터 */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #999;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .footer-links {
+            margin-bottom: 16px;
+        }
+
+        .footer-links a {
+            color: #999;
+            text-decoration: none;
+            margin: 0 14px;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--primary-accent); }
+
+        .footer-copy {
+            font-size: 0.85rem;
+            color: #bbb;
+        }
 
         @media (max-width: 600px) {
             .hero h1 { font-size: 2.2rem; }
             .test-grid { grid-template-columns: 1fr; }
+            .blog-grid { grid-template-columns: 1fr; }
             .card-emoji { font-size: 3.8rem; }
         }
     </style>
@@ -218,7 +304,7 @@
 <div class="bg-blob"></div>
 
 <nav>
-    <h2>무쓸모.test</h2>
+    <a href="index.html" style="text-decoration:none;"><h2>무쓸모.test</h2></a>
 </nav>
 
 <div class="container">
@@ -282,6 +368,15 @@
             </div>
             <div class="card-btn">궁합 확인하기</div>
         </a>
+
+        <a href="instrument.html" class="test-card card-instrument">
+            <div class="card-emoji">🎵</div>
+            <div class="card-content">
+                <h2 class="card-title">어울리는 악기 찾기</h2>
+                <p class="card-desc">나의 성격과 가장 잘 어울리는 악기는 무엇일까?</p>
+            </div>
+            <div class="card-btn">악기 찾기</div>
+        </a>
     </div>
 
     <div class="section-title">🛠️ 재미있는 생성기</div>
@@ -323,8 +418,61 @@
         </a>
     </div>
 
+    <div class="section-title">📖 읽을거리</div>
+    <div class="blog-grid">
+        <a href="blog-sajupalza.html" class="blog-card">
+            <div class="blog-meta">
+                <span class="blog-tag" style="background:#161625;color:#e94560;">사주 가이드</span>
+                <span class="blog-date">2026.03.15</span>
+            </div>
+            <h3>사주팔자란? 나의 운명을 읽는 동양 철학의 지혜</h3>
+            <p>천간, 지지, 오행까지. 사주팔자의 기본 원리를 쉽고 재미있게 알아봅니다.</p>
+        </a>
+
+        <a href="blog-zodiac.html" class="blog-card">
+            <div class="blog-meta">
+                <span class="blog-tag" style="background:#0c0c20;color:#f8c542;">별자리 가이드</span>
+                <span class="blog-date">2026.03.10</span>
+            </div>
+            <h3>12별자리 성격과 궁합 완벽 가이드</h3>
+            <p>양자리부터 물고기자리까지, 각 별자리의 성격과 최고의 궁합 조합을 한눈에.</p>
+        </a>
+
+        <a href="blog-animal-personality.html" class="blog-card">
+            <div class="blog-meta">
+                <span class="blog-tag" style="background:#5a4a3a;color:#fffdf5;">동물 성격</span>
+                <span class="blog-date">2026.03.05</span>
+            </div>
+            <h3>동물로 보는 성격 유형 - 나를 닮은 동물은?</h3>
+            <p>사자형, 고양이형, 강아지형... 동물 성격 유형으로 나를 이해하기.</p>
+        </a>
+
+        <a href="blog-food-personality.html" class="blog-card">
+            <div class="blog-meta">
+                <span class="blog-tag" style="background:linear-gradient(135deg,#FF6B6B,#FF8E53);color:#fff;">음식 & 성격</span>
+                <span class="blog-date">2026.02.28</span>
+            </div>
+            <h3>음식 취향으로 알아보는 나의 성격</h3>
+            <p>매운 음식 마니아부터 디저트 러버까지, 음식 취향과 성격의 관계.</p>
+        </a>
+
+        <a href="blog-psychology-tests.html" class="blog-card">
+            <div class="blog-meta">
+                <span class="blog-tag" style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;">심리테스트 가이드</span>
+                <span class="blog-date">2026.02.20</span>
+            </div>
+            <h3>심심할 때 하기 좋은 심리테스트 가이드</h3>
+            <p>심리테스트의 종류, 원리, 그리고 더 재미있게 즐기는 방법 총정리.</p>
+        </a>
+    </div>
+
     <footer>
-        <p>© 2026 무쓸모 테스트. 재밌게 즐겨주세요! ✨</p>
+        <div class="footer-links">
+            <a href="about.html">소개</a>
+            <a href="privacy.html">개인정보처리방침</a>
+            <a href="terms.html">이용약관</a>
+        </div>
+        <p class="footer-copy">&copy; 2026 무쓸모.test. 재밌게 즐겨주세요!</p>
     </footer>
 </div>
 </body>

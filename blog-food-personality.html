@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>음식 취향으로 알아보는 나의 성격 - 무쓸모.test</title>
+    <meta name="description" content="좋아하는 음식이 나의 성격을 말해준다? 매운 음식, 단 음식, 짠 음식... 음식 취향과 성격의 재미있는 관계를 알아봅니다.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6727122014134843"
+         crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Jua&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'KerisKeduLine';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-3@1.0/KERISKEDU_Line.woff2') format('woff2');
+            font-weight: normal;
+        }
+
+        :root { --primary-accent: #FF6B6B; --bg-soft: #fbfbfd; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #333;
+            background-color: var(--bg-soft);
+            line-height: 1.9;
+        }
+
+        nav {
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav a { text-decoration: none; color: inherit; }
+        nav h2 { font-family: 'KerisKeduLine', cursive; font-size: 1.6rem; color: var(--primary-accent); }
+
+        .article-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 48px 24px 100px;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .article-tag {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            color: #fff;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .article-date { color: #999; font-size: 0.9rem; }
+
+        .article-title {
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: #111;
+            line-height: 1.3;
+            margin-bottom: 16px;
+            letter-spacing: -1.5px;
+        }
+
+        .article-subtitle {
+            font-size: 1.15rem;
+            color: #777;
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        .article-hero {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .article-hero .emoji { font-size: 5rem; margin-bottom: 16px; }
+        .article-hero p { color: rgba(255,255,255,0.9); font-size: 1.1rem; font-family: 'Jua', sans-serif; }
+
+        h2.section-heading {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #111;
+            margin: 48px 0 20px;
+            padding-bottom: 8px;
+            border-bottom: 3px solid #FF8E53;
+            display: inline-block;
+        }
+
+        .article-body p {
+            font-size: 1.05rem;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .food-type-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 32px;
+            margin: 24px 0;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+            border-left: 5px solid;
+            transition: transform 0.2s;
+        }
+
+        .food-type-card:hover { transform: translateY(-3px); }
+
+        .food-type-card.spicy { border-color: #e74c3c; }
+        .food-type-card.sweet { border-color: #e91e63; }
+        .food-type-card.salty { border-color: #3498db; }
+        .food-type-card.sour { border-color: #f1c40f; }
+        .food-type-card.bitter { border-color: #2c3e50; }
+        .food-type-card.bland { border-color: #95a5a6; }
+
+        .food-type-card .card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .food-type-card .card-emoji { font-size: 2.5rem; }
+
+        .food-type-card h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #222;
+            font-family: 'Jua', sans-serif;
+        }
+
+        .food-type-card h3 span {
+            display: block;
+            font-size: 0.85rem;
+            color: #999;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        .food-type-card p { font-size: 0.95rem; color: #555; margin-bottom: 10px; }
+
+        .food-type-card .foods {
+            font-size: 0.9rem;
+            color: #888;
+            padding-top: 8px;
+            border-top: 1px dashed #eee;
+        }
+
+        .fun-facts {
+            background: #fff;
+            border-radius: 20px;
+            padding: 32px;
+            margin: 32px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+
+        .fun-facts h3 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #222;
+            margin-bottom: 20px;
+            font-family: 'Jua', sans-serif;
+        }
+
+        .fun-fact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+        }
+
+        .fun-fact-item:last-child { border-bottom: none; }
+        .fun-fact-item .num {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .fun-fact-item p { font-size: 0.95rem; color: #555; margin: 0; }
+
+        .highlight-quote {
+            background: linear-gradient(135deg, #fff5f5, #fff0eb);
+            border-left: 4px solid #FF8E53;
+            border-radius: 0 12px 12px 0;
+            padding: 24px 28px;
+            margin: 32px 0;
+            font-size: 1.1rem;
+            color: #555;
+            font-family: 'Jua', sans-serif;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            color: #fff;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-top: 48px;
+        }
+
+        .cta-box h3 { font-size: 1.5rem; margin-bottom: 12px; font-family: 'Jua', sans-serif; }
+        .cta-box p { color: rgba(255,255,255,0.9); margin-bottom: 24px; }
+
+        .cta-btn {
+            display: inline-block;
+            background: #fff;
+            color: #FF6B6B;
+            padding: 14px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: transform 0.2s;
+        }
+
+        .cta-btn:hover { transform: translateY(-2px); }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #999;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            font-size: 0.9rem;
+        }
+
+        footer a { color: #999; text-decoration: none; margin: 0 12px; }
+        footer a:hover { color: var(--primary-accent); }
+
+        @media (max-width: 600px) {
+            .article-title { font-size: 1.8rem; }
+            .article-hero { padding: 40px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html"><h2>무쓸모.test</h2></a>
+</nav>
+
+<div class="article-container">
+    <div class="article-meta">
+        <span class="article-tag">음식 & 성격</span>
+        <span class="article-date">2026.02.28</span>
+    </div>
+
+    <h1 class="article-title">음식 취향으로 알아보는 나의 성격</h1>
+    <p class="article-subtitle">
+        좋아하는 음식에는 그 사람의 성격이 담겨 있다? 매운 음식 마니아부터 디저트 러버까지,
+        음식 취향과 성격의 재미있는 연결고리를 찾아봅니다.
+    </p>
+
+    <div class="article-hero">
+        <div class="emoji">🍕🌶️🍰🍜</div>
+        <p>당신이 좋아하는 음식이 당신의 성격을 말해줍니다!</p>
+    </div>
+
+    <div class="article-body">
+        <h2 class="section-heading">음식과 성격의 관계</h2>
+        <p>
+            "음식 취향과 성격이 관련이 있을까?" 재미있게도, 여러 연구에서 맛 선호도와 성격 특성 사이에
+            흥미로운 상관관계가 있다고 밝혀졌습니다. 물론 과학적으로 완벽히 입증된 것은 아니지만,
+            음식 선택은 우리의 감각적 선호, 모험심, 안정 추구 등 다양한 심리적 요소와 연결되어 있습니다.
+        </p>
+        <p>
+            좋아하는 맛, 선호하는 식감, 새로운 음식에 대한 태도 등은 우리가 세상을 경험하는 방식의 일부이기 때문이죠.
+            지금부터 맛별로 어떤 성격 특성이 연결되는지 재미있게 살펴볼게요!
+        </p>
+
+        <h2 class="section-heading">맛별 성격 유형</h2>
+
+        <div class="food-type-card spicy">
+            <div class="card-header">
+                <div class="card-emoji">🌶️</div>
+                <h3>매운 음식 마니아 <span>도전적이고 열정 넘치는 모험가</span></h3>
+            </div>
+            <p>
+                매운 음식을 즐기는 사람은 스릴과 도전을 좋아하는 경향이 있습니다.
+                새로운 경험에 적극적이고, 일상의 자극을 즐기며, 대담하고 외향적인 성격인 경우가 많아요.
+                "더 매운 거 없어요?"라고 물어보는 당신, 인생도 매콤하게 살고 있지 않나요?
+            </p>
+            <div class="foods">대표 음식: 불닭볶음면, 매운 떡볶이, 마라탕, 청양고추 김치</div>
+        </div>
+
+        <div class="food-type-card sweet">
+            <div class="card-header">
+                <div class="card-emoji">🍰</div>
+                <h3>단 음식 러버 <span>따뜻하고 친절한 감성파</span></h3>
+            </div>
+            <p>
+                단 음식을 좋아하는 사람은 타인에게 친절하고 따뜻한 성격인 경우가 많습니다.
+                감정이 풍부하고 공감 능력이 뛰어나며, 주변 사람들과의 관계를 소중히 여깁니다.
+                디저트처럼 주변을 달콤하게 만드는 존재라고 할 수 있죠.
+            </p>
+            <div class="foods">대표 음식: 케이크, 초콜릿, 마카롱, 크로플, 아이스크림</div>
+        </div>
+
+        <div class="food-type-card salty">
+            <div class="card-header">
+                <div class="card-emoji">🍟</div>
+                <h3>짠 음식 파 <span>여유롭고 흐름을 타는 낙관주의자</span></h3>
+            </div>
+            <p>
+                짠 음식을 즐기는 사람은 대체로 "흘러가는 대로" 사는 스타일입니다.
+                유머 감각이 뛰어나고, 트렌드에 민감하며, 소소한 즐거움을 잘 찾아냅니다.
+                스트레스 상황에서도 감자칩 한 봉지면 금세 기분이 풀리는 타입!
+            </p>
+            <div class="foods">대표 음식: 감자칩, 치킨, 라면, 프렌치프라이, 팝콘</div>
+        </div>
+
+        <div class="food-type-card sour">
+            <div class="card-header">
+                <div class="card-emoji">🍋</div>
+                <h3>신 음식 애호가 <span>독창적이고 비판적 사고의 소유자</span></h3>
+            </div>
+            <p>
+                새콤한 맛을 좋아하는 사람은 독립적이고 비판적 사고를 하는 경향이 있습니다.
+                틀에 박히지 않은 사고를 하며, 호불호가 확실합니다.
+                자신만의 기준이 명확하고, 유행을 따르기보다 자기 스타일을 고수하는 타입이에요.
+            </p>
+            <div class="foods">대표 음식: 레몬, 유자차, 피클, 식초 요리, 사워 캔디</div>
+        </div>
+
+        <div class="food-type-card bitter">
+            <div class="card-header">
+                <div class="card-emoji">☕</div>
+                <h3>쓴 맛 마니아 <span>성숙하고 깊이 있는 내면의 소유자</span></h3>
+            </div>
+            <p>
+                블랙커피, 다크 초콜릿 같은 쓴 맛을 즐기는 사람은 정신적으로 성숙하고,
+                혼자만의 시간을 즐기는 내성적인 면이 있습니다. 깊이 있는 대화를 좋아하고,
+                표면적인 관계보다 의미 있는 연결을 추구합니다.
+            </p>
+            <div class="foods">대표 음식: 블랙커피, 다크 초콜릿, 녹차, 맥주, 자몽</div>
+        </div>
+
+        <div class="food-type-card bland">
+            <div class="card-header">
+                <div class="card-emoji">🍚</div>
+                <h3>담백한 음식 선호 <span>안정적이고 계획적인 현실주의자</span></h3>
+            </div>
+            <p>
+                자극적이지 않은 담백한 음식을 좋아하는 사람은 안정과 질서를 중시합니다.
+                계획적이고 신중하며, 변화보다는 일관성을 추구합니다.
+                신뢰할 수 있는 사람이며, 주변에서 "가장 어른스러운 사람"으로 통하는 경우가 많아요.
+            </p>
+            <div class="foods">대표 음식: 흰 밥, 두부, 닭가슴살, 시리얼, 우유</div>
+        </div>
+
+        <div class="highlight-quote">
+            "음식은 단순한 영양 섭취가 아닌, 감정과 추억, 그리고 나다움을 담는 그릇입니다."
+        </div>
+
+        <h2 class="section-heading">음식 선택 습관도 성격을 말해줘요</h2>
+
+        <div class="fun-facts">
+            <h3>음식과 성격에 대한 재미있는 사실들</h3>
+            <div class="fun-fact-item">
+                <div class="num">1</div>
+                <p><strong>메뉴를 빨리 결정하는 사람</strong>은 직관적이고 결단력이 강한 편. 평소에도 빠른 판단을 내리는 경향이 있습니다.</p>
+            </div>
+            <div class="fun-fact-item">
+                <div class="num">2</div>
+                <p><strong>새로운 식당, 새로운 메뉴를 자주 시도하는 사람</strong>은 모험심이 강하고 개방적인 성격. 여행이나 새로운 경험도 좋아합니다.</p>
+            </div>
+            <div class="fun-fact-item">
+                <div class="num">3</div>
+                <p><strong>항상 같은 메뉴만 시키는 사람</strong>은 안정적이고 루틴을 중시하는 타입. 신뢰감이 있고 한결같은 사람입니다.</p>
+            </div>
+            <div class="fun-fact-item">
+                <div class="num">4</div>
+                <p><strong>음식을 섞어 먹는 사람</strong>은 창의적이고 유연한 사고의 소유자. 고정관념에 얽매이지 않습니다.</p>
+            </div>
+            <div class="fun-fact-item">
+                <div class="num">5</div>
+                <p><strong>반찬을 한 종류씩 깔끔하게 먹는 사람</strong>은 체계적이고 계획적인 성격. 일 처리도 순서대로 꼼꼼하게 합니다.</p>
+            </div>
+        </div>
+
+        <h2 class="section-heading">결론: 음식은 나를 표현하는 또 하나의 방법</h2>
+        <p>
+            물론 음식 취향만으로 성격을 100% 판단할 수는 없습니다.
+            하지만 좋아하는 음식에 대해 생각해 보는 것은 자기 자신을 새로운 시각으로 바라볼 수 있는 재미있는 방법이에요.
+        </p>
+        <p>
+            오늘 식사할 때 "내가 이 음식을 왜 좋아하지?"라고 한번 생각해 보세요.
+            의외의 자기 발견을 할 수 있을지도 모릅니다!
+        </p>
+
+        <div class="cta-box">
+            <h3>나의 최애 음식은 과연?</h3>
+            <p>무쓸모.test의 음식 월드컵으로 진짜 좋아하는 음식을 찾아보세요!</p>
+            <a href="worldcup.html" class="cta-btn">음식 월드컵 하러 가기</a>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>
+        <a href="index.html">홈</a>
+        <a href="about.html">소개</a>
+        <a href="privacy.html">개인정보처리방침</a>
+        <a href="terms.html">이용약관</a>
+    </p>
+    <p style="margin-top: 12px;">&copy; 2026 무쓸모.test</p>
+</footer>
+
+</body>
+</html>
