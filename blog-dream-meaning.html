@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>꿈 해몽 가이드 - 자주 꾸는 꿈의 숨겨진 의미 - 무쓸모.test</title>
+    <meta name="description" content="떨어지는 꿈, 쫓기는 꿈, 이빨 빠지는 꿈 등 자주 꾸는 꿈 10가지의 숨겨진 의미를 심리학적, 전통 해몽 관점에서 깊이 있게 해석합니다. 길몽과 흉몽 구별법, 꿈을 잘 기억하는 방법까지.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6727122014134843" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'KerisKeduLine';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-3@1.0/KERISKEDU_Line.woff2') format('woff2');
+            font-weight: normal;
+        }
+
+        :root {
+            --deep-indigo: #1e1b4b;
+            --mid-purple: #312e81;
+            --light-violet: #c4b5fd;
+            --accent-glow: #a78bfa;
+            --soft-white: #e8e0f0;
+            --primary-accent: #FF6B6B;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            color: var(--light-violet);
+            background: linear-gradient(180deg, #0f0c29 0%, var(--deep-indigo) 30%, #1a1550 100%);
+            line-height: 1.9;
+            min-height: 100vh;
+        }
+
+        /* 배경 장식 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -300px;
+            right: -200px;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(167,139,250,0.08) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -200px;
+            left: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .article-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 48px 24px 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .article-tag {
+            background: var(--deep-indigo);
+            color: var(--light-violet);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border: 1px solid rgba(196,181,253,0.3);
+        }
+
+        .article-date {
+            color: rgba(196,181,253,0.6);
+            font-size: 0.9rem;
+        }
+
+        .article-title {
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: #ede9fe;
+            line-height: 1.3;
+            margin-bottom: 16px;
+            letter-spacing: -1.5px;
+        }
+
+        .article-subtitle {
+            font-size: 1.15rem;
+            color: rgba(196,181,253,0.7);
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        .hero-visual {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(135deg, var(--mid-purple) 0%, #4c1d95 50%, #1e1b4b 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            margin-bottom: 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-visual::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(167,139,250,0.2) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 30%, rgba(139,92,246,0.15) 0%, transparent 50%);
+        }
+
+        .hero-visual span {
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 40px rgba(167,139,250,0.5);
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .stars span {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 50%;
+            animation: twinkle 3s infinite ease-in-out;
+            font-size: 3px !important;
+        }
+
+        .stars span:nth-child(1) { top: 15%; left: 10%; animation-delay: 0s; }
+        .stars span:nth-child(2) { top: 25%; left: 85%; animation-delay: 0.5s; }
+        .stars span:nth-child(3) { top: 60%; left: 20%; animation-delay: 1s; }
+        .stars span:nth-child(4) { top: 45%; left: 75%; animation-delay: 1.5s; }
+        .stars span:nth-child(5) { top: 80%; left: 50%; animation-delay: 2s; }
+        .stars span:nth-child(6) { top: 10%; left: 55%; animation-delay: 0.7s; }
+        .stars span:nth-child(7) { top: 70%; left: 90%; animation-delay: 1.2s; }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+
+        article {
+            background: var(--deep-indigo);
+            color: var(--light-violet);
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #ede9fe;
+            margin: 56px 0 20px;
+            letter-spacing: -0.5px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(167,139,250,0.2);
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-glow);
+            margin: 36px 0 14px;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.9;
+            margin-bottom: 18px;
+            color: var(--light-violet);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(49,46,129,0.6) 0%, rgba(76,29,149,0.4) 100%);
+            border-left: 4px solid var(--accent-glow);
+            border-radius: 0 12px 12px 0;
+            padding: 24px 28px;
+            margin: 28px 0;
+        }
+
+        .highlight-box p {
+            margin-bottom: 0;
+            color: var(--soft-white);
+        }
+
+        .dream-card {
+            background: linear-gradient(135deg, rgba(49,46,129,0.5) 0%, rgba(30,27,75,0.8) 100%);
+            border: 1px solid rgba(167,139,250,0.15);
+            border-radius: 16px;
+            padding: 28px;
+            margin: 24px 0;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .dream-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(167,139,250,0.35);
+        }
+
+        .dream-card-icon {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+        }
+
+        .dream-card h3 {
+            margin-top: 0;
+            color: #ede9fe;
+            font-size: 1.2rem;
+        }
+
+        .dream-card p {
+            font-size: 0.95rem;
+            color: rgba(196,181,253,0.85);
+        }
+
+        .dream-card .interpretation {
+            background: rgba(167,139,250,0.1);
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-top: 14px;
+            font-size: 0.9rem;
+            color: var(--accent-glow);
+            line-height: 1.7;
+        }
+
+        .dream-card .interpretation strong {
+            color: #ede9fe;
+        }
+
+        .gilhyung-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 24px 0;
+        }
+
+        .gilhyung-card {
+            border-radius: 14px;
+            padding: 24px;
+        }
+
+        .gilhyung-card.good {
+            background: linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(6,78,59,0.3) 100%);
+            border: 1px solid rgba(16,185,129,0.3);
+        }
+
+        .gilhyung-card.bad {
+            background: linear-gradient(135deg, rgba(239,68,68,0.15) 0%, rgba(127,29,29,0.3) 100%);
+            border: 1px solid rgba(239,68,68,0.3);
+        }
+
+        .gilhyung-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .gilhyung-card.good h4 { color: #6ee7b7; }
+        .gilhyung-card.bad h4 { color: #fca5a5; }
+
+        .gilhyung-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .gilhyung-card ul li {
+            font-size: 0.9rem;
+            padding: 4px 0;
+            color: rgba(196,181,253,0.8);
+        }
+
+        .gilhyung-card.good ul li::before {
+            content: '';
+            margin-right: 8px;
+            color: #6ee7b7;
+        }
+
+        .gilhyung-card.bad ul li::before {
+            content: '';
+            margin-right: 8px;
+            color: #fca5a5;
+        }
+
+        .tip-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .tip-list li {
+            background: rgba(49,46,129,0.4);
+            border: 1px solid rgba(167,139,250,0.12);
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--light-violet);
+        }
+
+        .tip-list li strong {
+            color: #ede9fe;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #4c1d95 0%, var(--mid-purple) 50%, #1e1b4b 100%);
+            border-radius: 20px;
+            padding: 40px 32px;
+            text-align: center;
+            margin: 56px 0 32px;
+            border: 1px solid rgba(167,139,250,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 50% 0%, rgba(167,139,250,0.15) 0%, transparent 60%);
+        }
+
+        .cta-box h3 {
+            color: #ede9fe;
+            font-size: 1.4rem;
+            margin: 0 0 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-box p {
+            color: rgba(196,181,253,0.8);
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+            color: #fff;
+            text-decoration: none;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(139,92,246,0.4);
+        }
+
+        footer {
+            background: rgba(15,12,41,0.9);
+            border-top: 1px solid rgba(167,139,250,0.1);
+            padding: 40px 24px;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: rgba(196,181,253,0.6);
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-glow);
+        }
+
+        .footer-copy {
+            font-size: 0.8rem;
+            color: rgba(196,181,253,0.35);
+        }
+
+        /* 반응형 */
+        @media (max-width: 640px) {
+            .article-title {
+                font-size: 1.7rem;
+            }
+
+            .article-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-visual {
+                height: 200px;
+                font-size: 4rem;
+            }
+
+            h2 {
+                font-size: 1.35rem;
+            }
+
+            .gilhyung-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dream-card {
+                padding: 22px;
+            }
+
+            .cta-box {
+                padding: 32px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav style="height:64px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.8);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,0.05);position:sticky;top:0;z-index:1000;"><a href="index.html" style="text-decoration:none;"><h2 style="font-family:'KerisKeduLine',cursive;font-size:1.6rem;color:#FF6B6B;">무쓸모.test</h2></a></nav>
+
+    <article>
+        <div class="article-container">
+            <div class="article-meta">
+                <span class="article-tag">꿈 해몽</span>
+                <span class="article-date">2026.01.10</span>
+            </div>
+
+            <h1 class="article-title">꿈 해몽 가이드 - 자주 꾸는 꿈의 숨겨진 의미</h1>
+            <p class="article-subtitle">매일 밤 우리가 꾸는 꿈에는 어떤 메시지가 숨어 있을까요? 심리학과 전통 해몽의 관점에서 가장 흔한 꿈 10가지의 의미를 깊이 있게 탐구합니다.</p>
+
+            <div class="hero-visual">
+                <div class="stars">
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <span>&#127769;</span>
+            </div>
+
+            <!-- 꿈이란 무엇인가 -->
+            <h2>꿈이란 무엇인가 - 과학과 심리학의 관점</h2>
+
+            <p>인간은 하루 평균 6~8시간을 수면에 사용하며, 그중 약 2시간 동안 꿈을 꿉니다. 우리는 매일 밤 4~6개의 꿈을 꾸지만, 대부분은 깨어나면 잊어버립니다. 그렇다면 꿈은 도대체 왜 꾸는 것이며, 그 안에 담긴 의미는 무엇일까요?</p>
+
+            <p>과학적 관점에서 꿈은 수면의 REM(Rapid Eye Movement) 단계에서 발생합니다. REM 수면 중 뇌는 깨어 있을 때와 거의 비슷한 수준의 활동을 보이며, 이때 대뇌 피질이 활성화되면서 생생한 이미지와 서사가 만들어집니다. 신경과학자들은 이 과정이 낮 동안 경험한 정보를 정리하고, 기억을 장기 저장소로 옮기는 과정과 관련이 있다고 설명합니다. 쉽게 말해, 꿈은 뇌가 하루 동안 수집한 데이터를 분류하고 최적화하는 '야간 정비 작업'인 셈입니다.</p>
+
+            <p>심리학적 관점에서는 좀 더 깊은 의미를 부여합니다. 정신분석학의 창시자 지그문트 프로이트는 꿈을 '무의식으로 가는 왕도'라고 불렀습니다. 그는 꿈이 의식적으로 억압된 욕망과 감정이 상징적으로 표현되는 통로라고 보았습니다. 예를 들어, 하늘을 나는 꿈은 자유에 대한 갈망을, 쫓기는 꿈은 회피하고 싶은 문제를 상징한다는 것입니다.</p>
+
+            <div class="highlight-box">
+                <p>칼 융은 프로이트와 달리 꿈을 개인의 억압된 욕망만이 아닌, 인류 전체가 공유하는 '집단 무의식'의 표현으로 보았습니다. 융에 따르면 꿈에 등장하는 원형적 이미지들 - 그림자, 아니마/아니무스, 현자 등 - 은 문화와 시대를 초월하여 보편적으로 나타나며, 이는 인간 정신의 깊은 곳에 공통된 심리적 구조가 있음을 보여줍니다.</p>
+            </div>
+
+            <p>한국의 전통 해몽 문화도 매우 오래된 역사를 가지고 있습니다. 삼국시대부터 꿈을 통해 미래를 점치는 문화가 있었으며, 조선시대에는 해몽에 관한 전문 서적까지 편찬되었습니다. 동양의 해몽은 꿈의 상징을 음양오행과 연결하여 해석하는 독특한 체계를 가지고 있으며, 현대에도 태몽이나 로또 번호 꿈 등의 형태로 해몽 문화가 이어지고 있습니다.</p>
+
+            <p>현대 심리학에서는 꿈을 감정 조절의 도구로 보는 시각도 있습니다. 매튜 워커 교수는 그의 저서에서 REM 수면 중 스트레스 호르몬인 노르에피네프린 수치가 떨어지는 동안 감정적으로 힘든 기억을 재처리함으로써 일종의 '밤 동안의 치료' 효과가 발생한다고 설명합니다. 즉, 꿈은 우리의 정서적 건강을 유지하는 데 핵심적인 역할을 한다는 것입니다.</p>
+
+            <!-- 자주 꾸는 꿈 10가지 -->
+            <h2>자주 꾸는 꿈 10가지와 그 해석</h2>
+
+            <p>전 세계 사람들이 공통적으로 자주 꾸는 꿈의 유형이 있습니다. 문화와 나이, 성별에 관계없이 반복적으로 나타나는 이 꿈들은 인간 보편적인 심리 상태를 반영합니다. 아래에서 가장 흔한 10가지 꿈의 의미를 전통 해몽과 현대 심리학의 관점에서 함께 살펴보겠습니다.</p>
+
+            <!-- 1. 떨어지는 꿈 -->
+            <div class="dream-card">
+                <div class="dream-card-icon">&#127754;</div>
+                <h3>1. 떨어지는 꿈 (추락하는 꿈)</h3>
+                <p>높은 곳에서 아래로 끝없이 떨어지는 꿈은 성인의 약 75%가 한 번 이상 경험하는 가장 흔한 꿈 유형 중 하나입니다. 절벽, 건물 옥상, 하늘 등에서 아래로 곤두박질치면서 강렬한 공포감을 느끼는 것이 특징이며, 대부분 바닥에 닿기 직전에 깨어납니다.</p>
+                <div class="interpretation">
+                    <strong>심리학적 해석:</strong> 현실에서 통제력을 잃어가는 느낌, 불안감, 또는 실패에 대한 두려움을 상징합니다. 직장이나 인간관계에서 기반이 흔들리고 있다고 느낄 때 자주 나타납니다.<br>
+                    <strong>전통 해몽:</strong> 역설적으로 높은 곳에서 떨어지되 다치지 않는 꿈은 지위가 높아질 길조로 해석하기도 합니다. 다만 떨어져서 다치는 꿈은 사업이나 계획에 차질이 생길 수 있음을 경고합니다.
+                </div>
+            </div>
+
+            <!-- 2. 쫓기는 꿈 -->
+            <div class="dream-card">
+                <div class="dream-card-icon">&#128168;</div>
+                <h3>2. 쫓기는 꿈</h3>
+                <p>정체를 알 수 없는 존재, 괴물, 동물, 또는 사람에게 쫓기며 필사적으로 도망치는 꿈입니다. 달리려 해도 다리가 움직이지 않거나, 숨으려 해도 계속 발견되는 답답한 상황이 반복됩니다. 심장이 두근거리며 식은땀을 흘리다 깨어나는 경우가 많습니다.</p>
+                <div class="interpretation">
+                    <strong>심리학적 해석:</strong> 현실에서 직면하기 어려운 문제나 감정을 회피하고 있음을 나타냅니다. 쫓아오는 대상은 사실 자신이 외면하고 있는 스트레스, 책임, 또는 감정의 투영입니다. 이 꿈이 반복된다면 회피 중인 문제를 정면으로 마주할 필요가 있습니다.<br>
+                    <strong>전통 해몽:</strong> 쫓기다 결국 잡히는 꿈은 어려운 상황이 오지만 결국 해결될 것을 의미합니다. 성공적으로 도망치는 꿈은 현재의 고난에서 벗어날 수 있음을 암시합니다.
+                </div>
+            </div>
+
+            <!-- 3. 이빨 빠지는 꿈 -->
+            <div class="dream-card">
+                <div class="dream-card-icon">&#129463;</div>
+                <h3>3. 이빨 빠지는 꿈</h3>
+                <p>이빨이 흔들리다가 빠지거나, 한꺼번에 우수수 빠지는 꿈은 불쾌하면서도 매우 생생하게 기억되는 꿈입니다. 빠진 이빨을 손에 쥐고 당혹스러워하거나, 거울을 보며 충격을 받는 장면이 흔합니다. 많은 사람들이 이 꿈을 꾼 뒤 실제로 이가 괜찮은지 확인하기도 합니다.</p>
+                <div class="interpretation">
+                    <strong>심리학적 해석:</strong> 자존감의 저하, 외모에 대한 불안, 노화에 대한 두려움, 또는 중요한 것을 잃을 수 있다는 불안감을 반영합니다. 또한 의사소통에 대한 걱정 - 말실수를 하거나, 할 말을 못 하는 상황 - 과도 연결됩니다.<br>
+                    <strong>전통 해몽:</strong> 한국에서 이빨이 빠지는 꿈은 전통적으로 가까운 가족에게 좋지 않은 일이 생길 수 있음을 암시하는 흉몽으로 여겨집니다. 윗니는 윗사람(부모, 상사), 아랫니는 아랫사람(자녀, 후배)과 관련됩니다.
+                </div>
+            </div>
+
+            <!-- 4. 시험 보는 꿈 -->
+            <div class="dream-card">
+                <div class="dream-card-icon">&#128221;</div>
+                <h3>4. 시험 보는 꿈</h3>
+                <p>시험 시간에 아무것도 기억나지 않거나, 시험장을 찾지 못해 헤매거나, 답안지가 백지인 꿈은 학창 시절을 지난 성인들에게도 빈번하게 나타납니다. 준비가 전혀 되어 있지 않은 상태로 시험을 봐야 하는 극심한 초조함이 특징적입니다.</p>
+                <div class="interpretation">
+                    <strong>심리학적 해석:</strong> 자기 평가에 대한 불안, 다른 사람에게 인정받지 못할 것이라는 두려움을 반영합니다. 직장에서의 실적 평가, 면접, 프레젠테이션 등 '시험받는 상황'이 예정되어 있을 때 자주 나타납니다. 완벽주의적 성향을 가진 사람에게 특히 흔합니다.<br>
+                    <strong>전통 해몽:</strong> 시험에서 떨어지는 꿈은 반대로 좋은 결과를 얻을 길몽으로 해석됩니다. 반대의 원리가 적용되어 시험에 합격하는 꿈이 오히려 좋지 않을 수 있습니다.
+                </div>
+            </div>
+
+            <!-- 5. 날아다니는 꿈 -->
+            <div class="dream-card">
+                <div class="dream-card-icon">&#128038;</div>
+                <h3>5. 날아다니는 꿈</h3>
+                <p>자유롭게 하늘을 날아다니는 꿈은 가장 즐거운 꿈 중 하나로 꼽힙니다. 팔을 펼치고 도시 위를 날거나, 구름 사이를 통과하는 짜릿한 감각을 경험합니다. 때로는 처음에는 잘 날다가 점점 고도를 유지하기 어려워지기도 합니다.</p>
+                <div class="interpretation">
+                    <strong>심리학적 해석:</strong> 현실의 제약에서 벗어나고 싶은 자유에 대한 갈망, 또는 현재 자신의 능력에 대한 자신감을 상징합니다. 높이 자유롭게 나는 꿈은 긍정적 자아상을, 힘겹게 나는 꿈은 목표 달성의 어려움을 반영합니다. 루시드 드림(자각몽) 상태에서 가장 흔히 시도되는 행동이기도 합니다.<br>
+                    <strong>전통 해몽:</strong> 하늘 높이 나는 꿈은 대표적인 길몽으로, 사회적 지위 상승이나 큰 뜻을 이룰 징조로 해석됩니다. 특히 구름 위까지 올라가는 꿈은 큰 성공을 예고합니다.
+                </div>
+            </div>
+
+            <!-- 6. 물에 빠지는 꿈 -->
+            <div class="dream-card">
+                <div class="dream-card-icon">&#127754;</div>
+                <h3>6. 물에 빠지는 꿈</h3>
+                <p>바다, 강, 호수, 수영장 등 물속으로 빠져들어가는 꿈입니다. 숨을 쉴 수 없는 공포감, 수면 위로 올라가려 해도 몸이 가라앉는 무력감이 특징적입니다. 때로는 투명하고 고요한 물속을 유영하는 평화로운 형태로 나타나기도 합니다.</p>
+                <div class="interpretation">
+                    <strong>심리학적 해석:</strong> 물은 무의식과 감정을 상징하는 가장 보편적인 이미지입니다. 물에 빠지는 꿈은 감정에 압도당하고 있음을, 맑은 물속을 헤엄치는 꿈은 감정을 잘 다루고 있음을 나타냅니다. 탁한 물은 혼란스러운 감정 상태를, 깨끗한 물은 정서적 정화를 의미합니다.<br>
+                    <strong>전통 해몽:</strong> 맑은 물에 빠지는 꿈은 재물이 들어올 징조로, 탁한 물에 빠지는 꿈은 건강이나 재정에 주의가 필요함을 암시합니다. 물에서 빠져나오면 어려움을 극복할 수 있음을 뜻합니다.
+                </div>
+            </div>
+
+            <!-- 7. 고인을 만나는 꿈 -->
+            <div class="dream-card">
+                <div class="dream-card-icon">&#128591;</div>
+                <h3>7. 돌아가신 분을 만나는 꿈</h3>
+                <p>이미 세상을 떠난 가족, 친척, 친구 등이 꿈에 나타나는 경우입니다. 고인이 생전의 모습 그대로 나타나 대화를 나누거나, 따뜻하게 안아주거나, 때로는 무언가를 알려주려는 듯한 모습을 보입니다. 이 꿈은 깨어난 후에도 오래도록 여운이 남는 것이 특징입니다.</p>
+                <div class="interpretation">
+                    <strong>심리학적 해석:</strong> 애도 과정의 일부로, 상실에 대한 슬픔과 그리움이 표현된 것입니다. 고인과의 미해결된 감정이나 하지 못한 말이 있을 때 자주 나타납니다. 이러한 꿈은 심리적 치유의 한 과정으로 보며, 고인에 대한 기억과 감정을 건강하게 처리하는 자연스러운 메커니즘입니다.<br>
+                    <strong>전통 해몽:</strong> 고인이 웃으면서 나타나면 후손에게 복이 오는 길몽이며, 고인이 울거나 괴로워하면 집안에 주의가 필요합니다. 고인이 무언가를 건네주는 꿈은 큰 행운이 찾아올 조짐으로 여겨집니다.
+                </div>
+            </div>
+
+            <!-- 8. 뱀 꿈 -->
+            <div class="dream-card">
+                <div class="dream-card-icon">&#128013;</div>
+                <h3>8. 뱀 꿈</h3>
+                <p>뱀이 등장하는 꿈은 한국에서 가장 많이 검색되는 해몽 키워드 중 하나입니다. 큰 뱀이 몸을 감거나, 뱀에게 물리거나, 뱀이 집 안에 들어오거나, 여러 마리의 뱀이 나타나는 등 다양한 형태로 나타납니다. 뱀에 대한 본능적 공포 때문에 잠에서 깬 후에도 불안감이 지속되는 경우가 많습니다.</p>
+                <div class="interpretation">
+                    <strong>심리학적 해석:</strong> 뱀은 변화와 치유(허물을 벗는 행위), 억압된 성적 에너지(프로이트), 또는 위협적인 존재에 대한 공포를 상징합니다. 꿈속에서 뱀을 두려워하면 현실의 위협을 감지하고 있음을, 뱀을 평화롭게 관찰하면 변화를 수용하고 있음을 나타냅니다.<br>
+                    <strong>전통 해몽:</strong> 뱀 꿈은 대표적인 재물 꿈으로 해석됩니다. 큰 구렁이가 나타나면 큰 재물이 들어올 징조이며, 뱀에게 감기는 꿈은 귀인을 만날 것을 암시합니다. 많은 사람들이 뱀 꿈을 꾼 후 로또를 구매하기도 합니다.
+                </div>
+            </div>
+
+            <!-- 9. 돈 꿈 -->
+            <div class="dream-card">
+                <div class="dream-card-icon">&#128176;</div>
+                <h3>9. 돈 꿈 (재물 꿈)</h3>
+                <p>돈을 줍거나, 돈을 세거나, 돈을 잃어버리거나, 누군가에게 돈을 받는 꿈입니다. 금고 가득한 돈을 발견하거나, 길에서 지폐를 줍거나, 반대로 지갑을 도둑맞는 등 다양한 시나리오로 전개됩니다. 이 꿈을 꾸면 실제로 돈이 생길지 기대하게 됩니다.</p>
+                <div class="interpretation">
+                    <strong>심리학적 해석:</strong> 돈은 단순한 재화가 아니라 자기 가치, 권력, 안전감을 상징합니다. 돈을 얻는 꿈은 자존감의 상승이나 성취감을, 돈을 잃는 꿈은 자신의 가치가 인정받지 못하고 있다는 불안감을 반영합니다. 재정적 스트레스가 있을 때도 자주 나타납니다.<br>
+                    <strong>전통 해몽:</strong> 돈을 줍는 꿈은 오히려 지출이 생길 수 있는 흉몽, 돈을 잃는 꿈은 반대로 재물이 들어올 길몽으로 해석하는 반대해몽이 적용됩니다. 누군가가 돈을 건네주는 꿈은 실제로 좋은 소식이 올 수 있습니다.
+                </div>
+            </div>
+
+            <!-- 10. 화장실 꿈 -->
+            <div class="dream-card">
+                <div class="dream-card-icon">&#128701;</div>
+                <h3>10. 화장실 꿈 (대변/소변 꿈)</h3>
+                <p>화장실을 찾아 헤매거나, 화장실이 너무 더럽거나, 사람들 앞에서 화장실을 사용해야 하거나, 대변이나 소변과 관련된 꿈은 생각보다 많은 사람들이 자주 경험합니다. 화장실 문이 없거나, 변기가 넘치는 등 당혹스러운 상황이 연출됩니다.</p>
+                <div class="interpretation">
+                    <strong>심리학적 해석:</strong> 화장실은 정화와 해소의 상징입니다. 화장실을 찾지 못하는 꿈은 감정을 표현할 출구가 없음을, 더러운 화장실은 정서적 정화가 필요함을 나타냅니다. 프라이버시에 대한 욕구나 경계의 문제와도 연결됩니다. 물론 실제로 요의가 있을 때 이 꿈을 꾸는 경우도 많습니다.<br>
+                    <strong>전통 해몽:</strong> 한국 해몽에서 대변 꿈은 대표적인 재물 꿈입니다. 대변을 밟거나 옷에 묻는 꿈은 뜻밖의 재물이 들어올 큰 길몽으로 해석됩니다. 화장실이 대변으로 가득한 꿈 역시 재물운이 크게 상승할 징조입니다.
+                </div>
+            </div>
+
+            <!-- 길몽과 흉몽 -->
+            <h2>길몽과 흉몽 - 좋은 꿈과 나쁜 꿈 구별하기</h2>
+
+            <p>전통 해몽에서는 꿈을 크게 길몽(좋은 꿈)과 흉몽(나쁜 꿈)으로 나눕니다. 하지만 재미있는 점은, 꿈의 내용이 좋다고 반드시 길몽인 것은 아니며, 불쾌한 꿈이 오히려 좋은 징조일 수 있다는 것입니다. 이를 '반대해몽'이라고 합니다. 아래에서 대표적인 길몽과 흉몽의 예를 살펴보겠습니다.</p>
+
+            <div class="gilhyung-grid">
+                <div class="gilhyung-card good">
+                    <h4>길몽 (좋은 꿈)</h4>
+                    <ul>
+                        <li>돼지 꿈 - 재물운 상승</li>
+                        <li>용 꿈 - 큰 성공과 권력</li>
+                        <li>대변 꿈 - 뜻밖의 재물</li>
+                        <li>고인이 웃는 꿈 - 가문의 복</li>
+                        <li>큰 뱀 꿈 - 큰 재물 유입</li>
+                        <li>하늘을 나는 꿈 - 승진, 합격</li>
+                        <li>맑은 물 꿈 - 정서적 안정</li>
+                        <li>과일을 따는 꿈 - 성과와 보상</li>
+                        <li>해/달 꿈 - 명예와 권위</li>
+                        <li>시험 떨어지는 꿈 - 반대로 합격</li>
+                    </ul>
+                </div>
+                <div class="gilhyung-card bad">
+                    <h4>흉몽 (나쁜 꿈)</h4>
+                    <ul>
+                        <li>이빨 빠지는 꿈 - 가족 걱정</li>
+                        <li>돈을 줍는 꿈 - 뜻밖의 지출</li>
+                        <li>검은 물 꿈 - 건강 주의</li>
+                        <li>고인이 우는 꿈 - 집안 주의</li>
+                        <li>집이 무너지는 꿈 - 기반 흔들림</li>
+                        <li>옷이 찢어지는 꿈 - 체면 손상</li>
+                        <li>머리카락 빠지는 꿈 - 기력 저하</li>
+                        <li>까마귀 꿈 - 불길한 소식</li>
+                        <li>피 흘리는 꿈 - 에너지 소모</li>
+                        <li>불에 타는 꿈 - 감정적 소진</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p>길몽을 꾸었을 때는 다른 사람에게 말하지 않는 것이 좋다고 전해집니다. 좋은 꿈의 기운이 사라질 수 있기 때문입니다. 반대로 흉몽을 꾸었을 때는 해가 뜨기 전에 누군가에게 이야기하면 나쁜 기운이 풀린다는 속설이 있습니다. 조선시대에는 좋은 꿈을 돈으로 사고파는 '꿈 매매' 풍습도 있었다고 합니다.</p>
+            </div>
+
+            <p>다만 현대 심리학에서는 꿈을 단순히 좋고 나쁨으로 분류하기보다, 꿈이 전달하려는 메시지에 집중할 것을 권합니다. 불쾌한 꿈이라도 자신의 내면에서 보내는 중요한 신호일 수 있으며, 즐거운 꿈이라도 현실 도피의 표현일 수 있습니다. 중요한 것은 꿈의 감정적 질감과 맥락을 함께 고려하여 자신만의 해석을 만들어가는 것입니다.</p>
+
+            <!-- 꿈을 잘 기억하는 방법 -->
+            <h2>꿈을 잘 기억하는 방법</h2>
+
+            <p>꿈은 깨어난 후 약 5분 이내에 절반 이상이 사라지고, 10분이 지나면 90%가 잊혀집니다. 하지만 몇 가지 방법을 실천하면 꿈을 더 생생하게 기억하고, 나아가 자신의 무의식과 더 깊이 소통할 수 있습니다. 꿈 일기를 쓰는 습관은 자기 이해를 높이는 강력한 도구가 될 수 있습니다.</p>
+
+            <ul class="tip-list">
+                <li>
+                    <strong>1. 꿈 일기를 침대 옆에 두세요</strong>
+                    잠자리 옆에 노트와 펜(또는 스마트폰 메모 앱)을 준비해 두고, 깨어나자마자 기억나는 것을 바로 기록하세요. 완벽한 문장이 아니어도 됩니다. 키워드, 감정, 색상, 등장인물만이라도 적어두면 나중에 전체 꿈을 복원하는 데 큰 도움이 됩니다. 꿈 일기를 꾸준히 쓰면 2~3주 후부터 꿈 기억력이 눈에 띄게 향상됩니다.
+                </li>
+                <li>
+                    <strong>2. 잠들기 전 의도를 설정하세요</strong>
+                    잠들기 전에 "나는 오늘 밤 꿈을 기억할 것이다"라고 마음속으로 반복하세요. 이 간단한 자기 암시가 놀라울 정도로 효과적입니다. 뇌에 '기억'이라는 과제를 부여하면 REM 수면에서 각성으로 전환될 때 꿈 내용을 더 쉽게 의식으로 가져올 수 있습니다.
+                </li>
+                <li>
+                    <strong>3. 깨어날 때 천천히 일어나세요</strong>
+                    알람 소리에 급하게 일어나면 꿈 기억이 순식간에 사라집니다. 가능하다면 자연스럽게 깨어나되, 눈을 뜬 후에도 바로 움직이지 말고 1~2분 동안 가만히 누운 채로 꿈의 잔상을 떠올려 보세요. 몸을 뒤척이지 않는 것이 중요한데, 수면 중의 신체 자세가 꿈 기억과 연결되어 있기 때문입니다.
+                </li>
+                <li>
+                    <strong>4. 충분한 수면 시간을 확보하세요</strong>
+                    REM 수면은 수면 후반부에 더 길어지기 때문에, 7~8시간 이상 충분히 자야 꿈을 더 많이, 더 생생하게 꿀 수 있습니다. 수면 부족은 REM 수면 비율을 줄여 꿈 경험 자체를 감소시킵니다. 규칙적인 수면 패턴을 유지하는 것도 꿈 기억에 도움이 됩니다.
+                </li>
+                <li>
+                    <strong>5. 자기 전 알코올과 수면제를 피하세요</strong>
+                    알코올은 수면을 유도하는 것처럼 보이지만, 실제로는 REM 수면을 억제하여 꿈을 제대로 꾸지 못하게 만듭니다. 수면제 역시 자연스러운 수면 구조를 방해합니다. 대신 명상이나 가벼운 스트레칭으로 마음을 안정시키면 더 풍부한 꿈 경험을 할 수 있습니다.
+                </li>
+                <li>
+                    <strong>6. 반복되는 꿈의 패턴을 분석하세요</strong>
+                    꿈 일기를 한 달 이상 기록하면 반복되는 주제, 장소, 인물, 감정의 패턴이 보이기 시작합니다. 이 패턴은 현재 자신의 심리 상태와 무의식적 관심사를 보여주는 소중한 자료입니다. 패턴을 인식하는 것만으로도 자각몽(루시드 드림)을 경험할 확률이 높아집니다.
+                </li>
+            </ul>
+
+            <p>꿈 해몽은 과학적으로 완전히 증명된 것은 아니지만, 수천 년간 인류가 축적해온 경험적 지혜와 현대 심리학의 통찰이 어우러진 흥미로운 분야입니다. 꿈을 통해 자신의 내면을 들여다보고, 무의식이 보내는 메시지에 귀를 기울여 보세요. 매일 밤 펼쳐지는 꿈의 세계가 어쩌면 자기 이해와 성장을 위한 가장 솔직한 거울일지도 모릅니다.</p>
+
+            <p>꿈의 해석에 정답은 없습니다. 같은 꿈이라도 꾸는 사람의 상황, 감정, 문화적 배경에 따라 그 의미가 달라질 수 있습니다. 전통 해몽과 심리학적 관점을 참고하되, 가장 중요한 것은 꿈을 꾼 자신의 직관과 느낌입니다. 꿈이 주는 메시지를 열린 마음으로 받아들이고, 자기 자신과 더 깊이 연결되는 계기로 삼아보시기 바랍니다.</p>
+
+            <!-- CTA -->
+            <div class="cta-box">
+                <h3>내 운명의 흐름이 궁금하다면?</h3>
+                <p>꿈 해몽을 넘어 사주팔자로 나의 타고난 운명과 올해의 운세를 확인해 보세요.</p>
+                <a href="life.html" class="cta-button">사주팔자 테스트하기</a>
+            </div>
+        </div>
+    </article>
+
+    <footer>
+        <div class="footer-links">
+            <a href="index.html">홈</a>
+            <a href="about.html">소개</a>
+            <a href="privacy.html">개인정보처리방침</a>
+            <a href="terms.html">이용약관</a>
+        </div>
+        <p class="footer-copy">&copy; 2026 무쓸모.test</p>
+    </footer>
+</body>
+</html>

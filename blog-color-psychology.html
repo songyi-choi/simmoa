@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>좋아하는 색깔로 알아보는 나의 심리 - 컬러 심리학 가이드 - 무쓸모.test</title>
+    <meta name="description" content="좋아하는 색깔로 나의 심리와 성격을 알아보세요. 빨강, 주황, 노랑, 초록, 파랑, 보라, 검정, 흰색 각 색상이 가진 심리적 의미와 컬러 심리학의 모든 것을 소개합니다.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6727122014134843" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'KerisKeduLine';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-3@1.0/KERISKEDU_Line.woff2') format('woff2');
+            font-weight: normal;
+        }
+
+        :root { --primary-accent: #FF6B6B; --bg-soft: #fbfbfd; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #333;
+            background-color: var(--bg-soft);
+            line-height: 1.9;
+        }
+
+        nav {
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav a { text-decoration: none; color: inherit; }
+        nav h2 { font-family: 'KerisKeduLine', cursive; font-size: 1.6rem; color: var(--primary-accent); }
+
+        .article-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 48px 24px 100px;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .article-tag {
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            color: #fff;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .article-date { color: #999; font-size: 0.9rem; }
+
+        .article-title {
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: #111;
+            line-height: 1.3;
+            margin-bottom: 16px;
+            letter-spacing: -1.5px;
+        }
+
+        .article-subtitle {
+            font-size: 1.15rem;
+            color: #777;
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        .article-hero {
+            background: linear-gradient(135deg, #ff6b6b, #ffa500, #ffd700, #4caf50, #2196f3, #9c27b0);
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            margin-bottom: 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.15);
+            border-radius: 20px;
+        }
+
+        .article-hero .emoji { font-size: 5rem; margin-bottom: 16px; position: relative; z-index: 1; }
+        .article-hero p { color: rgba(255,255,255,0.95); font-size: 1.05rem; position: relative; z-index: 1; font-weight: 500; }
+
+        h2.section-heading {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #111;
+            margin: 48px 0 20px;
+            padding-bottom: 8px;
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #ff6b6b, #ffa500, #ffd700, #4caf50, #2196f3, #9c27b0) 1;
+            display: inline-block;
+        }
+
+        .article-body p {
+            font-size: 1.05rem;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .color-card {
+            border-radius: 20px;
+            padding: 32px;
+            margin: 24px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .color-card .card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .color-card .color-dot {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .color-card h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+        }
+
+        .color-card h3 span {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 400;
+            margin-top: 2px;
+            opacity: 0.85;
+        }
+
+        .color-card p { font-size: 0.95rem; margin-bottom: 12px; }
+
+        .color-card .personality-tag {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            margin: 4px 4px 4px 0;
+        }
+
+        /* Red */
+        .color-card.red { background: linear-gradient(135deg, #fff5f5, #ffe3e3); border-left: 5px solid #e53e3e; }
+        .color-card.red h3 { color: #c53030; }
+        .color-card.red p { color: #742a2a; }
+        .color-card.red .color-dot { background: #e53e3e; }
+        .color-card.red .personality-tag { background: #fed7d7; color: #c53030; }
+
+        /* Orange */
+        .color-card.orange { background: linear-gradient(135deg, #fffaf0, #feebc8); border-left: 5px solid #ed8936; }
+        .color-card.orange h3 { color: #c05621; }
+        .color-card.orange p { color: #7b341e; }
+        .color-card.orange .color-dot { background: #ed8936; }
+        .color-card.orange .personality-tag { background: #feebc8; color: #c05621; }
+
+        /* Yellow */
+        .color-card.yellow { background: linear-gradient(135deg, #fffff0, #fefcbf); border-left: 5px solid #ecc94b; }
+        .color-card.yellow h3 { color: #b7791f; }
+        .color-card.yellow p { color: #744210; }
+        .color-card.yellow .color-dot { background: #ecc94b; }
+        .color-card.yellow .personality-tag { background: #fefcbf; color: #975a16; }
+
+        /* Green */
+        .color-card.green { background: linear-gradient(135deg, #f0fff4, #c6f6d5); border-left: 5px solid #48bb78; }
+        .color-card.green h3 { color: #276749; }
+        .color-card.green p { color: #22543d; }
+        .color-card.green .color-dot { background: #48bb78; }
+        .color-card.green .personality-tag { background: #c6f6d5; color: #276749; }
+
+        /* Blue */
+        .color-card.blue { background: linear-gradient(135deg, #ebf8ff, #bee3f8); border-left: 5px solid #4299e1; }
+        .color-card.blue h3 { color: #2b6cb0; }
+        .color-card.blue p { color: #2a4365; }
+        .color-card.blue .color-dot { background: #4299e1; }
+        .color-card.blue .personality-tag { background: #bee3f8; color: #2b6cb0; }
+
+        /* Purple */
+        .color-card.purple { background: linear-gradient(135deg, #faf5ff, #e9d8fd); border-left: 5px solid #9f7aea; }
+        .color-card.purple h3 { color: #6b46c1; }
+        .color-card.purple p { color: #44337a; }
+        .color-card.purple .color-dot { background: #9f7aea; }
+        .color-card.purple .personality-tag { background: #e9d8fd; color: #6b46c1; }
+
+        /* Black */
+        .color-card.black { background: linear-gradient(135deg, #f7fafc, #e2e8f0); border-left: 5px solid #2d3748; }
+        .color-card.black h3 { color: #1a202c; }
+        .color-card.black p { color: #2d3748; }
+        .color-card.black .color-dot { background: #2d3748; }
+        .color-card.black .personality-tag { background: #e2e8f0; color: #2d3748; }
+
+        /* White */
+        .color-card.white { background: linear-gradient(135deg, #f7fafc, #edf2f7); border-left: 5px solid #a0aec0; }
+        .color-card.white h3 { color: #4a5568; }
+        .color-card.white p { color: #4a5568; }
+        .color-card.white .color-dot { background: #fff; border: 2px solid #cbd5e0; }
+        .color-card.white .personality-tag { background: #edf2f7; color: #4a5568; }
+
+        .highlight-quote {
+            background: linear-gradient(135deg, #fef3f2, #fdf2f8, #f5f3ff, #eff6ff, #ecfdf5);
+            border-left: 4px solid;
+            border-image: linear-gradient(180deg, #ef4444, #f59e0b, #22c55e, #3b82f6, #a855f7) 1;
+            border-radius: 0 12px 12px 0;
+            padding: 24px 28px;
+            margin: 32px 0;
+            font-size: 1.05rem;
+            color: #555;
+            font-style: italic;
+        }
+
+        .emotion-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .emotion-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .emotion-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .emotion-card .emoji { font-size: 2rem; margin-bottom: 10px; }
+        .emotion-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; color: #333; }
+        .emotion-card p { font-size: 0.85rem; color: #777; margin: 0; }
+
+        .marketing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .marketing-table thead th {
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            color: #fff;
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .marketing-table tbody td {
+            background: #fff;
+            padding: 14px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .marketing-table tbody tr:last-child td { border-bottom: none; }
+
+        .marketing-table .color-indicator {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .find-color-steps {
+            counter-reset: steps;
+            list-style: none;
+            padding: 0;
+        }
+
+        .find-color-steps li {
+            counter-increment: steps;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .find-color-steps li:last-child { border-bottom: none; }
+
+        .find-color-steps li::before {
+            content: counter(steps);
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .find-color-steps li div h4 { font-size: 1.05rem; font-weight: 700; color: #333; margin-bottom: 4px; }
+        .find-color-steps li div p { font-size: 0.9rem; color: #777; margin: 0; }
+
+        .cta-section {
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            border-radius: 20px;
+            padding: 48px 32px;
+            text-align: center;
+            margin: 48px 0 32px;
+        }
+
+        .cta-section h3 {
+            color: #fff;
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .cta-section p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1rem;
+            margin-bottom: 24px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #fff;
+            color: #8b5cf6;
+            padding: 14px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.05rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.2);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #999;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            font-size: 0.9rem;
+        }
+
+        footer a { color: #999; text-decoration: none; margin: 0 12px; }
+        footer a:hover { color: var(--primary-accent); }
+
+        @media (max-width: 600px) {
+            .article-title { font-size: 1.8rem; }
+            .article-hero { padding: 40px 20px; }
+            .emotion-grid { grid-template-columns: 1fr; }
+            .color-card { padding: 24px 20px; }
+            .marketing-table { font-size: 0.85rem; }
+            .marketing-table thead th, .marketing-table tbody td { padding: 10px 12px; }
+            .cta-section { padding: 36px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav style="height:64px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.8);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,0.05);position:sticky;top:0;z-index:1000;">
+    <a href="index.html" style="text-decoration:none;"><h2 style="font-family:'KerisKeduLine',cursive;font-size:1.6rem;color:#FF6B6B;">무쓸모.test</h2></a>
+</nav>
+
+<div class="article-container">
+    <div class="article-meta">
+        <span class="article-tag">컬러 심리학</span>
+        <span class="article-date">2026.01.15</span>
+    </div>
+
+    <h1 class="article-title">좋아하는 색깔로 알아보는 나의 심리</h1>
+    <p class="article-subtitle">
+        무심코 고르는 색깔 속에 나의 성격과 감정이 숨어 있습니다.
+        컬러 심리학을 통해 내가 좋아하는 색이 말해주는 나의 내면을 탐구해 보세요.
+    </p>
+
+    <div class="article-hero">
+        <div class="emoji">🎨</div>
+        <p>색깔은 당신의 무의식이 보내는 메시지입니다</p>
+    </div>
+
+    <div class="article-body">
+
+        <h2 class="section-heading">컬러 심리학이란?</h2>
+        <p>
+            컬러 심리학(Color Psychology)은 색채가 인간의 감정, 행동, 의사결정에 미치는 영향을 연구하는 심리학의 한 분야입니다. 고대 이집트와 그리스 시대부터 사람들은 색깔이 치유와 감정에 영향을 준다고 믿었으며, 현대에 와서는 마케팅, 인테리어, 패션, 심리 치료 등 다양한 분야에서 과학적으로 활용되고 있습니다.
+        </p>
+        <p>
+            스위스의 심리학자 막스 뤼셔(Max Luscher)는 1940년대에 색채 심리 진단 테스트를 개발하여, 사람이 선호하는 색깔을 통해 그 사람의 심리 상태와 성격 특성을 파악할 수 있다고 주장했습니다. 이후 수많은 연구를 통해 색깔이 우리의 기분, 식욕, 수면, 집중력 등에 실질적인 영향을 미친다는 사실이 밝혀졌습니다.
+        </p>
+        <p>
+            흥미로운 점은 색깔에 대한 선호도가 단순한 취향이 아니라, 그 사람의 내면 심리를 반영한다는 것입니다. 우리가 특정 색깔에 끌리는 이유는 그 색이 가진 에너지가 현재 우리에게 필요한 것이거나, 우리의 근본적인 성격과 공명하기 때문입니다. 지금부터 각 색깔이 가진 심리적 의미와 그 색을 좋아하는 사람의 성격을 자세히 알아보겠습니다.
+        </p>
+
+        <h2 class="section-heading">색깔별 심리와 성격 분석</h2>
+
+        <!-- 빨강 -->
+        <div class="color-card red">
+            <div class="card-header">
+                <div class="color-dot"></div>
+                <h3>빨강 (Red) <span>열정, 에너지, 사랑의 색</span></h3>
+            </div>
+            <p>
+                빨강은 인간이 가장 강렬하게 인식하는 색 중 하나입니다. 심장 박동을 빠르게 하고 혈압을 높이며 아드레날린 분비를 촉진하는 것으로 알려져 있습니다. 이 색은 본능적인 열정과 생명력, 그리고 강한 의지를 상징합니다.
+            </p>
+            <p>
+                빨강을 좋아하는 사람은 대체로 외향적이고 행동력이 넘치는 타입입니다. 목표를 정하면 곧바로 실행에 옮기는 추진력이 있으며, 리더십이 강합니다. 경쟁을 즐기고 도전적인 상황에서 오히려 힘을 발휘합니다. 때로는 충동적이거나 조급할 수 있지만, 그만큼 삶에 대한 열의가 넘칩니다. 연애에서도 적극적이고 감정 표현이 풍부합니다.
+            </p>
+            <div>
+                <span class="personality-tag">열정적</span>
+                <span class="personality-tag">행동파</span>
+                <span class="personality-tag">리더형</span>
+                <span class="personality-tag">도전적</span>
+            </div>
+        </div>
+
+        <!-- 주황 -->
+        <div class="color-card orange">
+            <div class="card-header">
+                <div class="color-dot"></div>
+                <h3>주황 (Orange) <span>활력, 창의성, 모험의 색</span></h3>
+            </div>
+            <p>
+                주황은 빨강의 에너지와 노랑의 밝음이 결합된 색입니다. 따뜻하고 친근한 느낌을 주며, 보는 것만으로도 기분이 좋아지는 긍정적인 에너지를 가지고 있습니다. 식욕을 자극하는 색이기도 하여 많은 음식 브랜드에서 활용됩니다.
+            </p>
+            <p>
+                주황을 좋아하는 사람은 사교적이고 유머 감각이 뛰어납니다. 새로운 경험과 모험을 즐기며, 낙관적인 성격으로 주변 사람들에게 활력을 불어넣어 줍니다. 창의적인 아이디어가 풍부하고 틀에 박힌 것을 싫어합니다. 자유로운 영혼의 소유자로, 사람들과 어울리는 것을 좋아하지만 지나치게 속박받는 관계는 어려워합니다. 분위기 메이커 역할을 자주 맡으며, 어디서든 존재감이 뚜렷합니다.
+            </p>
+            <div>
+                <span class="personality-tag">사교적</span>
+                <span class="personality-tag">모험가</span>
+                <span class="personality-tag">낙관적</span>
+                <span class="personality-tag">자유로운</span>
+            </div>
+        </div>
+
+        <!-- 노랑 -->
+        <div class="color-card yellow">
+            <div class="card-header">
+                <div class="color-dot"></div>
+                <h3>노랑 (Yellow) <span>희망, 지성, 즐거움의 색</span></h3>
+            </div>
+            <p>
+                노랑은 태양빛을 연상시키는 가장 밝은 색으로, 희망과 행복의 상징입니다. 정신적 활동을 자극하고 집중력을 높여주며, 창의적 사고를 촉진하는 효과가 있습니다. 심리학적으로 노랑은 왼쪽 뇌, 즉 논리적 사고와 분석력을 자극한다고 알려져 있습니다.
+            </p>
+            <p>
+                노랑을 좋아하는 사람은 지적 호기심이 강하고 배움을 즐기는 타입입니다. 밝고 긍정적인 에너지로 주변을 환하게 만들며, 유머와 재치가 넘칩니다. 새로운 아이디어에 대해 열린 태도를 보이고, 변화를 두려워하지 않습니다. 다만 때로는 너무 이상적이거나 비현실적인 계획을 세우기도 합니다. 소통 능력이 뛰어나 사람들에게 영감을 주는 역할을 자주 합니다.
+            </p>
+            <div>
+                <span class="personality-tag">지적인</span>
+                <span class="personality-tag">낙천적</span>
+                <span class="personality-tag">소통형</span>
+                <span class="personality-tag">창의적</span>
+            </div>
+        </div>
+
+        <!-- 초록 -->
+        <div class="color-card green">
+            <div class="card-header">
+                <div class="color-dot"></div>
+                <h3>초록 (Green) <span>평화, 균형, 성장의 색</span></h3>
+            </div>
+            <p>
+                초록은 자연을 대표하는 색으로, 인간의 눈이 가장 편안하게 느끼는 색입니다. 스트레스를 줄이고 심리적 안정감을 높여주며, 치유와 회복의 에너지를 가지고 있습니다. 병원이나 치료 공간에서 초록색이 자주 사용되는 이유이기도 합니다.
+            </p>
+            <p>
+                초록을 좋아하는 사람은 평화를 사랑하고 조화로운 관계를 중시합니다. 갈등보다는 대화와 타협을 선호하며, 다른 사람의 이야기에 귀 기울이는 공감 능력이 뛰어납니다. 성실하고 신뢰할 수 있는 성격으로, 한번 맺은 인간관계를 오래 유지합니다. 자연과 동물을 사랑하며, 환경 문제에 관심이 많은 경우가 흔합니다. 안정적인 삶을 추구하면서도 개인적인 성장에 대한 욕구가 강합니다.
+            </p>
+            <div>
+                <span class="personality-tag">평화주의</span>
+                <span class="personality-tag">공감형</span>
+                <span class="personality-tag">성실한</span>
+                <span class="personality-tag">치유형</span>
+            </div>
+        </div>
+
+        <!-- 파랑 -->
+        <div class="color-card blue">
+            <div class="card-header">
+                <div class="color-dot"></div>
+                <h3>파랑 (Blue) <span>신뢰, 지혜, 안정의 색</span></h3>
+            </div>
+            <p>
+                파랑은 하늘과 바다를 연상시키는 색으로, 전 세계적으로 가장 많은 사람들이 좋아하는 색입니다. 심박수를 낮추고 체온을 떨어뜨리는 진정 효과가 있으며, 집중력과 생산성을 높여주는 것으로 알려져 있습니다. 파랑은 신뢰와 안정감의 상징으로, 많은 기업과 기관에서 로고 색상으로 활용합니다.
+            </p>
+            <p>
+                파랑을 좋아하는 사람은 이성적이고 분석적인 사고를 가진 경우가 많습니다. 감정보다는 논리를 중시하며, 신중하게 결정을 내립니다. 책임감이 강하고 약속을 잘 지키며, 다른 사람들에게 믿음직한 인상을 줍니다. 내면이 깊고 풍부한 감성을 가지고 있지만, 감정을 겉으로 잘 드러내지 않는 편입니다. 혼자만의 시간을 통해 에너지를 충전하며, 깊이 있는 대화를 선호합니다. 완벽주의적 성향이 있어 때로는 자신에게 지나치게 엄격할 수 있습니다.
+            </p>
+            <div>
+                <span class="personality-tag">이성적</span>
+                <span class="personality-tag">신뢰형</span>
+                <span class="personality-tag">분석적</span>
+                <span class="personality-tag">깊이 있는</span>
+            </div>
+        </div>
+
+        <!-- 보라 -->
+        <div class="color-card purple">
+            <div class="card-header">
+                <div class="color-dot"></div>
+                <h3>보라 (Purple) <span>신비, 영성, 고귀함의 색</span></h3>
+            </div>
+            <p>
+                보라는 빨강의 열정과 파랑의 차분함이 결합된 신비로운 색입니다. 고대부터 왕족과 귀족을 상징하는 색이었으며, 영적인 깊이와 직관력을 나타냅니다. 보라색 조명은 명상과 창의적 사고를 촉진하는 것으로 연구되어 있으며, 예술적 영감을 불러일으키는 색으로도 알려져 있습니다.
+            </p>
+            <p>
+                보라를 좋아하는 사람은 예술적 감성이 풍부하고 독창적인 사고를 가진 경우가 많습니다. 남들과 다른 것을 추구하며, 자신만의 세계관이 뚜렷합니다. 직관력이 뛰어나고 미래지향적인 사고를 하며, 깊은 사색을 즐깁니다. 다소 미스터리한 분위기를 가지고 있어 사람들의 호기심을 자극합니다. 감성과 이성을 동시에 사용하는 능력이 있으며, 예술, 철학, 심리학 등 깊이 있는 분야에 관심이 많습니다.
+            </p>
+            <div>
+                <span class="personality-tag">예술적</span>
+                <span class="personality-tag">직관적</span>
+                <span class="personality-tag">독창적</span>
+                <span class="personality-tag">신비로운</span>
+            </div>
+        </div>
+
+        <!-- 검정 -->
+        <div class="color-card black">
+            <div class="card-header">
+                <div class="color-dot"></div>
+                <h3>검정 (Black) <span>권위, 세련, 강인함의 색</span></h3>
+            </div>
+            <p>
+                검정은 모든 색을 흡수하는 가장 강렬한 색입니다. 권위와 품격을 상징하며, 패션에서 가장 세련된 색으로 여겨집니다. 심리학적으로 검정은 보호와 방어의 의미도 가지고 있어, 자신을 보호하고 싶은 무의식적 욕구를 반영하기도 합니다. 현대 사회에서 검정은 전문성과 고급스러움의 상징으로 널리 사용됩니다.
+            </p>
+            <p>
+                검정을 좋아하는 사람은 독립적이고 자신감이 넘치는 타입입니다. 자신만의 기준이 확고하고 타인의 시선에 쉽게 흔들리지 않습니다. 겉으로는 강해 보이지만 내면에는 풍부한 감성을 가지고 있는 경우가 많습니다. 프라이버시를 중시하며 쉽게 마음을 열지 않지만, 한번 가까워지면 깊은 유대감을 형성합니다. 완벽주의적 성향이 있고, 질보다 양을 추구하며, 클래식하고 본질적인 것에 가치를 둡니다.
+            </p>
+            <div>
+                <span class="personality-tag">독립적</span>
+                <span class="personality-tag">세련된</span>
+                <span class="personality-tag">강인한</span>
+                <span class="personality-tag">완벽주의</span>
+            </div>
+        </div>
+
+        <!-- 흰색 -->
+        <div class="color-card white">
+            <div class="card-header">
+                <div class="color-dot"></div>
+                <h3>흰색 (White) <span>순수, 평화, 새로운 시작의 색</span></h3>
+            </div>
+            <p>
+                흰색은 모든 색의 빛이 합쳐진 색으로, 깨끗함과 순수함의 상징입니다. 심리적으로 공간을 넓어 보이게 하고 마음을 정화하는 효과가 있습니다. 동양에서는 애도의 의미도 있지만, 서양에서는 결혼과 새 출발을 상징합니다. 미니멀리즘 트렌드와 함께 현대적이고 깔끔한 이미지로 많이 활용됩니다.
+            </p>
+            <p>
+                흰색을 좋아하는 사람은 깔끔하고 정돈된 환경을 추구합니다. 정직하고 투명한 성격으로, 거짓이나 위선을 싫어합니다. 새로운 시작에 대한 열린 마음을 가지고 있으며, 과거에 집착하기보다는 앞을 향해 나아가는 성향이 있습니다. 미니멀한 생활 방식을 선호하고, 복잡한 것보다는 단순하고 본질적인 것에 매력을 느낍니다. 이상이 높고 완벽함을 추구하지만, 때로는 현실과의 괴리에 스트레스를 받을 수 있습니다.
+            </p>
+            <div>
+                <span class="personality-tag">순수한</span>
+                <span class="personality-tag">정직한</span>
+                <span class="personality-tag">미니멀</span>
+                <span class="personality-tag">이상주의</span>
+            </div>
+        </div>
+
+        <div class="highlight-quote">
+            "색깔은 영혼에 직접적인 영향을 미친다. 색은 건반이고, 눈은 해머이며, 영혼은 수많은 줄을 가진 피아노이다." - 바실리 칸딘스키
+        </div>
+
+        <h2 class="section-heading">색깔과 감정의 관계</h2>
+        <p>
+            색깔이 우리의 감정에 미치는 영향은 과학적으로도 증명되어 있습니다. 연구에 따르면 색채는 뇌의 시상하부를 자극하여 호르몬 분비에 직접적인 영향을 미칩니다. 이는 단순히 심미적인 차원을 넘어 생리적, 심리적 반응을 일으키는 것입니다.
+        </p>
+
+        <div class="emotion-grid">
+            <div class="emotion-card">
+                <div class="emoji">🔴</div>
+                <h4>따뜻한 색 계열</h4>
+                <p>빨강, 주황, 노랑 등 따뜻한 색은 흥분과 활력을 유발합니다. 심박수를 높이고 에너지 수준을 끌어올립니다.</p>
+            </div>
+            <div class="emotion-card">
+                <div class="emoji">🔵</div>
+                <h4>차가운 색 계열</h4>
+                <p>파랑, 초록, 보라 등 차가운 색은 진정과 이완 효과가 있습니다. 스트레스를 줄이고 집중력을 높여줍니다.</p>
+            </div>
+            <div class="emotion-card">
+                <div class="emoji">🌈</div>
+                <h4>채도의 영향</h4>
+                <p>채도가 높은(선명한) 색은 강한 감정 반응을, 채도가 낮은(탁한) 색은 부드럽고 차분한 반응을 유발합니다.</p>
+            </div>
+            <div class="emotion-card">
+                <div class="emoji">🌗</div>
+                <h4>명도의 영향</h4>
+                <p>밝은 색은 가벼움과 즐거움을, 어두운 색은 무게감과 진지함을 느끼게 합니다. 같은 색이라도 톤에 따라 감정이 달라집니다.</p>
+            </div>
+        </div>
+
+        <p>
+            또한 색깔과 감정의 관계는 문화적 배경에 따라 달라지기도 합니다. 예를 들어 흰색은 서양에서는 순수와 결혼을 상징하지만, 동아시아에서는 전통적으로 상복의 색입니다. 빨강은 중국에서는 행운과 번영을 의미하지만, 일부 서양 문화에서는 위험 신호로 인식됩니다. 이처럼 색깔의 심리적 효과는 보편적인 생리학적 반응과 문화적 학습이 결합된 결과물입니다.
+        </p>
+        <p>
+            일상 속에서 색깔의 영향을 직접 경험해 볼 수 있습니다. 우울한 날 밝은 노란색 옷을 입으면 기분이 조금 나아지는 것을 느끼거나, 파란색 방에서 공부하면 집중이 잘 되는 경험을 해보신 적이 있을 것입니다. 이는 모두 색채 심리학의 원리가 실생활에서 작용하는 예시입니다.
+        </p>
+
+        <h2 class="section-heading">마케팅에서의 색채 심리</h2>
+        <p>
+            기업들은 오래전부터 색채 심리학을 마케팅 전략에 적극 활용해왔습니다. 연구에 따르면 소비자의 구매 결정 중 약 85%가 색깔의 영향을 받으며, 브랜드 인지도를 최대 80%까지 높일 수 있다고 합니다. 우리가 매일 접하는 브랜드 로고와 광고 속에 정교한 색채 전략이 숨어 있는 것입니다.
+        </p>
+
+        <table class="marketing-table">
+            <thead>
+                <tr>
+                    <th>색상</th>
+                    <th>마케팅 효과</th>
+                    <th>대표 브랜드 예시</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="color-indicator" style="background:#e53e3e;"></span>빨강</td>
+                    <td>긴급함, 식욕 자극, 충동 구매 유도</td>
+                    <td>코카콜라, 맥도날드, 넷플릭스</td>
+                </tr>
+                <tr>
+                    <td><span class="color-indicator" style="background:#ed8936;"></span>주황</td>
+                    <td>친근함, 행동 유도, 재미 강조</td>
+                    <td>니켈로디언, 파이어폭스, 당근</td>
+                </tr>
+                <tr>
+                    <td><span class="color-indicator" style="background:#ecc94b;"></span>노랑</td>
+                    <td>주의 집중, 밝은 이미지, 낙관적 분위기</td>
+                    <td>카카오, 이케아, 맥도날드</td>
+                </tr>
+                <tr>
+                    <td><span class="color-indicator" style="background:#48bb78;"></span>초록</td>
+                    <td>자연 친화, 건강, 신뢰감 형성</td>
+                    <td>스타벅스, 네이버, 라인</td>
+                </tr>
+                <tr>
+                    <td><span class="color-indicator" style="background:#4299e1;"></span>파랑</td>
+                    <td>신뢰, 안정, 전문성 어필</td>
+                    <td>삼성, 페이스북, 토스</td>
+                </tr>
+                <tr>
+                    <td><span class="color-indicator" style="background:#9f7aea;"></span>보라</td>
+                    <td>고급스러움, 창의성, 독특함 강조</td>
+                    <td>컬리, 트위치, 야후</td>
+                </tr>
+                <tr>
+                    <td><span class="color-indicator" style="background:#2d3748;"></span>검정</td>
+                    <td>고급감, 럭셔리, 프리미엄 이미지</td>
+                    <td>샤넬, 나이키, 애플</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            흥미로운 사실은 같은 업종이라도 타깃 고객층에 따라 사용하는 색이 달라진다는 것입니다. 예를 들어, 고급 레스토랑은 검정과 금색을 사용하여 프리미엄 이미지를 강조하고, 패스트푸드 체인은 빨강과 노랑을 사용하여 빠르고 즐거운 경험을 암시합니다. 이처럼 색채 전략은 단순한 디자인 선택이 아니라, 소비자의 무의식에 영향을 미치는 정교한 심리 전략입니다.
+        </p>
+        <p>
+            온라인 마케팅에서도 색채의 역할은 매우 중요합니다. CTA(Call To Action) 버튼의 색상만 바꿔도 클릭률이 최대 21%까지 차이가 나는 것으로 연구되어 있습니다. 일반적으로 빨강이나 주황 계열의 CTA 버튼이 가장 높은 전환율을 보이며, 이는 이 색들이 가진 긴급함과 행동 유발의 심리적 효과 때문입니다.
+        </p>
+
+        <h2 class="section-heading">나에게 맞는 색 찾기</h2>
+        <p>
+            자신에게 맞는 색을 찾는 것은 단순히 옷을 잘 입기 위한 것이 아닙니다. 나에게 맞는 색은 에너지를 높여주고, 감정을 안정시키며, 자신감을 채워주는 역할을 합니다. 아래 방법들을 통해 나에게 꼭 맞는 색을 찾아보세요.
+        </p>
+
+        <ul class="find-color-steps">
+            <li>
+                <div>
+                    <h4>직관적으로 끌리는 색 확인하기</h4>
+                    <p>가장 간단한 방법입니다. 여러 가지 색을 눈앞에 놓고 아무 생각 없이 가장 먼저 끌리는 색을 골라보세요. 그 색이 현재 당신의 심리 상태를 반영합니다. 흥미롭게도 좋아하는 색은 시기에 따라 바뀔 수 있는데, 이는 심리 상태의 변화를 반영합니다.</p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <h4>옷장 속 색깔 비율 분석하기</h4>
+                    <p>자신의 옷장을 열어보세요. 가장 많은 비율을 차지하는 색이 무엇인지 확인해보면, 무의식적으로 선호하는 색을 파악할 수 있습니다. 옷을 고를 때 우리는 무의식적으로 자신에게 편안한 색, 자신을 잘 표현해주는 색을 선택하기 때문입니다.</p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <h4>색깔에 대한 감정 반응 기록하기</h4>
+                    <p>일주일 동안 일상에서 만나는 다양한 색깔에 대한 감정 반응을 기록해보세요. 어떤 색을 볼 때 마음이 편안해지는지, 어떤 색이 에너지를 주는지, 어떤 색이 불편하게 느껴지는지 관찰합니다. 이 과정을 통해 자신의 색채 심리를 더 깊이 이해할 수 있습니다.</p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <h4>퍼스널 컬러 진단 받아보기</h4>
+                    <p>전문적인 퍼스널 컬러 진단은 피부톤, 눈동자 색, 머리카락 색 등을 분석하여 자신에게 어울리는 색 계열을 찾아줍니다. 봄 웜톤, 여름 쿨톤, 가을 웜톤, 겨울 쿨톤으로 나뉘며, 각 타입에 맞는 색을 활용하면 얼굴이 더 화사하고 건강해 보이는 효과가 있습니다.</p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <h4>상황에 따라 색 활용하기</h4>
+                    <p>중요한 발표가 있는 날에는 빨강이나 검정으로 자신감을 높이고, 스트레스가 심한 날에는 파랑이나 초록으로 마음을 진정시켜 보세요. 창의적인 작업을 해야 할 때는 보라나 노랑을 활용하면 좋습니다. 이처럼 색을 의도적으로 활용하면 일상의 질이 크게 달라질 수 있습니다.</p>
+                </div>
+            </li>
+        </ul>
+
+        <div class="highlight-quote">
+            "당신이 좋아하는 색은 우연이 아닙니다. 그것은 당신의 영혼이 필요로 하는 에너지의 파장이며, 당신의 내면이 세상에 보내는 무의식적 신호입니다."
+        </div>
+
+        <p>
+            컬러 심리학은 단순한 재미를 넘어 자기 이해의 훌륭한 도구가 됩니다. 좋아하는 색깔을 통해 자신의 성격과 심리 상태를 돌아보고, 색채의 힘을 일상에서 적극적으로 활용해 보세요. 작은 색깔 하나가 당신의 하루를 완전히 바꿀 수 있습니다.
+        </p>
+        <p>
+            매일 아침 오늘의 기분에 맞는 색을 골라보는 것부터 시작해보는 건 어떨까요? 색을 의식적으로 선택하는 습관을 들이면, 자신의 감정을 더 잘 이해하고 조절할 수 있게 됩니다. 컬러 심리학의 세계에 첫 발을 내딛은 여러분에게, 매일이 조금 더 다채롭고 풍요로운 하루가 되기를 바랍니다.
+        </p>
+
+        <div class="cta-section">
+            <h3>나와 닮은 동물은 무엇일까?</h3>
+            <p>색깔로 알아본 나의 성격, 이번에는 동물로 확인해보세요!</p>
+            <a href="animal.html" class="cta-button">닮은 동물 찾기 테스트</a>
+        </div>
+
+    </div>
+</div>
+
+<footer>
+    <p>
+        <a href="index.html">홈</a>
+        <a href="about.html">소개</a>
+        <a href="privacy.html">개인정보처리방침</a>
+        <a href="terms.html">이용약관</a>
+    </p>
+    <p style="margin-top: 12px;">&copy; 2026 무쓸모.test</p>
+</footer>
+
+</body>
+</html>
