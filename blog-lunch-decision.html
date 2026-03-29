@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>점심 메뉴 고르기가 왜 이렇게 어려울까? - 무쓸모.test</title>
+    <meta name="description" content="결정 장애의 심리학부터 점심 메뉴 잘 고르는 법까지. 매일 반복되는 점심 선택의 고민을 재미있게 풀어봅니다.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6727122014134843"
+         crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'KerisKeduLine';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-3@1.0/KERISKEDU_Line.woff2') format('woff2');
+            font-weight: normal;
+        }
+        :root { --primary-accent: #FF6B6B; --bg-soft: #fbfbfd; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans KR', sans-serif; color: #333; background-color: var(--bg-soft); line-height: 1.9; }
+        nav { height: 64px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
+        nav a { text-decoration: none; color: inherit; }
+        nav h2 { font-family: 'KerisKeduLine', cursive; font-size: 1.6rem; color: var(--primary-accent); }
+        .article-container { max-width: 720px; margin: 0 auto; padding: 48px 24px 100px; }
+        .article-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+        .article-tag { background: #111; color: #fff; padding: 4px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+        .article-date { color: #999; font-size: 0.9rem; }
+        .article-title { font-size: 2.4rem; font-weight: 900; color: #111; line-height: 1.3; margin-bottom: 16px; letter-spacing: -1.5px; }
+        .article-subtitle { font-size: 1.15rem; color: #777; margin-bottom: 40px; line-height: 1.7; }
+        .article-hero { background: #fff; border-radius: 20px; padding: 60px 40px; text-align: center; margin-bottom: 48px; border: 2px solid #111; }
+        .article-hero .emoji { font-size: 5rem; margin-bottom: 16px; }
+        .article-hero p { color: #666; font-size: 1rem; }
+        h2.section-heading { font-size: 1.5rem; font-weight: 800; color: #111; margin: 48px 0 20px; padding-bottom: 8px; border-bottom: 2px solid #111; display: inline-block; }
+        .article-body p { font-size: 1.05rem; color: #444; margin-bottom: 20px; }
+        .reason-card { background: #fff; border-radius: 16px; padding: 28px; margin: 20px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.06); display: grid; grid-template-columns: 50px 1fr; gap: 16px; align-items: start; }
+        .reason-card .num { background: #111; color: #fff; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 700; }
+        .reason-card h3 { font-size: 1.1rem; font-weight: 700; color: #222; margin-bottom: 6px; }
+        .reason-card p { font-size: 0.95rem; color: #555; margin: 0; }
+        .method-card { background: #fff; border-radius: 16px; padding: 24px; margin: 16px 0; border-left: 4px solid #111; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+        .method-card h3 { font-size: 1.05rem; font-weight: 700; color: #222; margin-bottom: 8px; }
+        .method-card p { font-size: 0.95rem; color: #555; margin: 0; }
+        .fun-stat { background: #f8f8f8; border-radius: 12px; padding: 20px 24px; margin: 16px 0; text-align: center; }
+        .fun-stat .number { font-size: 2.5rem; font-weight: 900; color: #111; }
+        .fun-stat .label { font-size: 0.9rem; color: #888; margin-top: 4px; }
+        .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0; }
+        .highlight-quote { background: #f8f8f8; border-left: 4px solid #111; border-radius: 0 12px 12px 0; padding: 24px 28px; margin: 32px 0; font-size: 1.05rem; color: #555; font-style: italic; }
+        .cta-box { background: #111; color: #fff; border-radius: 20px; padding: 40px; text-align: center; margin-top: 48px; }
+        .cta-box h3 { font-size: 1.4rem; margin-bottom: 12px; }
+        .cta-box p { color: #aaa; margin-bottom: 24px; }
+        .cta-btn { display: inline-block; background: #fff; color: #111; padding: 14px 32px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 1rem; transition: transform 0.2s; }
+        .cta-btn:hover { transform: translateY(-2px); }
+        footer { text-align: center; padding: 40px 0; color: #999; border-top: 1px solid rgba(0,0,0,0.05); font-size: 0.9rem; }
+        footer a { color: #999; text-decoration: none; margin: 0 12px; }
+        footer a:hover { color: var(--primary-accent); }
+        @media (max-width: 600px) { .article-title { font-size: 1.8rem; } .article-hero { padding: 40px 20px; } .stat-grid { grid-template-columns: 1fr; } .reason-card { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+<nav><a href="index.html"><h2>무쓸모.test</h2></a></nav>
+
+<div class="article-container">
+    <div class="article-meta">
+        <span class="article-tag">음식 & 심리</span>
+        <span class="article-date">2026.02.05</span>
+    </div>
+
+    <h1 class="article-title">점심 메뉴 고르기가 왜 이렇게 어려울까?</h1>
+    <p class="article-subtitle">매일 찾아오는 고민, "오늘 점심 뭐 먹지?" 결정 장애의 심리학부터 메뉴 선택을 쉽게 만드는 방법까지 알아봅니다.</p>
+
+    <div class="article-hero">
+        <div class="emoji">🍽️</div>
+        <p>"오늘 점심 뭐 먹지?" - 인류의 가장 오래된 고민</p>
+    </div>
+
+    <div class="article-body">
+        <h2 class="section-heading">점심 메뉴 선택의 어려움</h2>
+        <p>"뭐 먹을래?"라는 질문에 "아무거나"라고 대답해 본 적 있으신가요? 그런데 막상 "그럼 짜장면 먹자"라고 하면 "그건 좀..."이라고 거부하게 되죠. 이 현상은 너무나 보편적이어서 거의 모든 사람이 공감합니다.</p>
+        <p>점심 메뉴를 고르는 것이 유독 어려운 이유는 단순히 우유부단한 성격 때문이 아닙니다. 심리학적으로 명확한 이유들이 있어요.</p>
+
+        <div class="stat-grid">
+            <div class="fun-stat">
+                <div class="number">17분</div>
+                <div class="label">직장인 평균 메뉴 고민 시간</div>
+            </div>
+            <div class="fun-stat">
+                <div class="number">72%</div>
+                <div class="label">"아무거나" 제안 거부율</div>
+            </div>
+            <div class="fun-stat">
+                <div class="number">365회</div>
+                <div class="label">1년간 점심 선택 횟수</div>
+            </div>
+        </div>
+
+        <h2 class="section-heading">점심 메뉴 고르기가 어려운 5가지 이유</h2>
+
+        <div class="reason-card">
+            <div class="num">1</div>
+            <div>
+                <h3>선택 과부하 (Choice Overload)</h3>
+                <p>심리학자 배리 슈워츠의 '선택의 역설'에 따르면, 선택지가 너무 많으면 오히려 결정이 어려워집니다. 회사 주변 식당만 해도 수십 곳, 메뉴까지 합하면 수백 가지. 이 많은 선택지 앞에서 뇌가 과부하에 걸리는 것은 자연스러운 반응입니다.</p>
+            </div>
+        </div>
+
+        <div class="reason-card">
+            <div class="num">2</div>
+            <div>
+                <h3>결정 피로 (Decision Fatigue)</h3>
+                <p>하루 동안 내리는 결정의 수는 평균 35,000개라고 합니다. 오전 내내 업무 관련 결정을 내린 뒤 점심시간이 되면, 이미 결정 에너지가 소진된 상태입니다. 사소한 결정조차 버거워지는 것이죠.</p>
+            </div>
+        </div>
+
+        <div class="reason-card">
+            <div class="num">3</div>
+            <div>
+                <h3>손실 회피 심리</h3>
+                <p>인간은 이득보다 손실에 더 민감하게 반응합니다. "맛없는 걸 선택하면 어쩌지?" 하는 불안감이 선택을 주저하게 만듭니다. 특히 비용(돈과 시간)이 들어가는 식사에서 이 심리가 강하게 작용합니다.</p>
+            </div>
+        </div>
+
+        <div class="reason-card">
+            <div class="num">4</div>
+            <div>
+                <h3>타인의 시선 의식</h3>
+                <p>함께 먹는 사람이 있을 때 고민은 더 커집니다. "다들 한식 분위기인데 나만 초밥이 먹고 싶으면..." 같은 사회적 고려가 더해지면 선택의 복잡도가 급격히 올라갑니다.</p>
+            </div>
+        </div>
+
+        <div class="reason-card">
+            <div class="num">5</div>
+            <div>
+                <h3>기대 수준의 상승</h3>
+                <p>SNS와 맛집 리뷰의 시대에 우리의 음식 기대치는 과거보다 훨씬 높아졌습니다. "대충 때우는 한 끼"가 아니라 "인스타에 올릴 만한 한 끼"를 기대하게 되면서, 선택의 기준이 더 까다로워졌습니다.</p>
+            </div>
+        </div>
+
+        <div class="highlight-quote">
+            "선택의 어려움은 나약함이 아니라, 모든 가능성을 고려하려는 똑똑한 뇌의 자연스러운 반응입니다."
+        </div>
+
+        <h2 class="section-heading">점심 메뉴, 쉽게 고르는 5가지 방법</h2>
+
+        <div class="method-card">
+            <h3>1. 요일별 메뉴 정하기</h3>
+            <p>월요일은 한식, 화요일은 분식, 수요일은 양식... 요일별로 카테고리만 정해두면 선택 범위가 좁아져 결정이 쉬워집니다. 이 방법은 실제로 많은 직장인이 사용하는 검증된 전략이에요.</p>
+        </div>
+
+        <div class="method-card">
+            <h3>2. 소거법 사용하기</h3>
+            <p>"뭘 먹을까?" 대신 "뭘 안 먹을까?"로 접근하세요. 어제 먹은 것, 최근에 자주 먹은 것을 제외하면 선택지가 크게 줄어듭니다.</p>
+        </div>
+
+        <div class="method-card">
+            <h3>3. 5초 룰 적용하기</h3>
+            <p>5초 안에 떠오르는 첫 번째 메뉴를 선택하세요. 직감적으로 떠오르는 것이 그 순간 몸이 원하는 것인 경우가 많습니다.</p>
+        </div>
+
+        <div class="method-card">
+            <h3>4. 랜덤 추천 활용하기</h3>
+            <p>결정을 도구에 맡기는 것도 좋은 방법입니다. 점심 메뉴 추천기, 룰렛, 사다리타기 등을 활용하면 고민 없이 빠르게 결정할 수 있어요.</p>
+        </div>
+
+        <div class="method-card">
+            <h3>5. 단골집 만들기</h3>
+            <p>믿을 수 있는 단골집 3~5곳을 만들어 두면 그 안에서만 고르면 됩니다. 선택지가 줄어들면 결정의 질은 오히려 높아집니다.</p>
+        </div>
+
+        <h2 class="section-heading">점심 메뉴 트렌드</h2>
+        <p>최근 직장인 점심 트렌드를 보면 몇 가지 변화가 눈에 띕니다. 건강식을 찾는 사람이 늘었고, 혼밥 문화가 확산되면서 1인 식당이 증가했습니다. 또한 배달 앱의 발달로 사무실에서 다양한 음식을 접할 수 있게 되면서, 오히려 선택의 어려움은 더 커졌다는 아이러니도 있죠.</p>
+        <p>결국 중요한 것은 "완벽한 메뉴"를 찾는 것이 아니라 "충분히 좋은 메뉴"를 빠르게 선택하는 것입니다. 점심 시간은 정해져 있으니까요!</p>
+
+        <div class="cta-box">
+            <h3>오늘 점심, 고민 그만!</h3>
+            <p>무쓸모.test의 점심 메뉴 추천기가 대신 골라드립니다.</p>
+            <a href="lunch.html" class="cta-btn">점심 메뉴 추천받기</a>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>
+        <a href="index.html">홈</a>
+        <a href="about.html">소개</a>
+        <a href="privacy.html">개인정보처리방침</a>
+        <a href="terms.html">이용약관</a>
+    </p>
+    <p style="margin-top: 12px;">&copy; 2026 무쓸모.test</p>
+</footer>
+</body>
+</html>

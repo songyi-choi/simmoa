@@ -3,3 +3,5 @@ Allow: /
 
 User-agent: AdsBot-Google
 Allow: /ads.txt
+
+Sitemap: https://musslmolab.com/sitemap.xml
