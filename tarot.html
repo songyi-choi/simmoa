@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>타로 카드 운세 - 과거 현재 미래를 읽다</title>
-    <meta name="description" content="메이저 아르카나 22장으로 알아보는 3카드 타로 리딩. 과거, 현재, 미래의 운세를 확인하세요. 연애, 사업, 재물 등 주제별 맞춤 해석을 제공합니다.">
+    <title>별빛 타로 - 운명의 카드가 속삭이는 이야기</title>
+    <meta name="description" content="메이저 아르카나 22장으로 알아보는 3카드 종합 타로 리딩. 세 장의 카드가 전하는 운명의 메시지를 확인하세요. 연애, 사업, 재물 등 주제별 맞춤 해석을 제공합니다.">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6727122014134843"
          crossorigin="anonymous"></script>
     <style>
@@ -73,7 +73,11 @@
             font-size: 6rem;
             animation: float 3s ease-in-out infinite;
             display: inline-block;
-            filter: drop-shadow(0 0 30px rgba(167,139,250,0.5));
+            filter: drop-shadow(0 0 40px rgba(167,139,250,0.7));
+        }
+        @keyframes pulse-glow {
+            0%, 100% { filter: drop-shadow(0 0 40px rgba(167,139,250,0.7)); }
+            50% { filter: drop-shadow(0 0 60px rgba(248,197,66,0.6)) drop-shadow(0 0 80px rgba(167,139,250,0.5)); }
         }
         @keyframes float {
             0%, 100% { transform: translateY(0); }
@@ -424,6 +428,121 @@
         }
         .btn-retry:hover { background: rgba(255,255,255,0.1); color: #fff; }
 
+        /* 부채꼴 카드 선택 */
+        .fan-container {
+            position: relative;
+            width: 100%;
+            height: 420px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            margin: 0 auto;
+            overflow: visible;
+        }
+        .fan-card {
+            position: absolute;
+            bottom: 20px;
+            width: 70px;
+            height: 110px;
+            border-radius: 8px;
+            cursor: pointer;
+            transform-origin: bottom center;
+            transition: all 0.3s ease;
+            transform: rotate(var(--angle)) translateY(0);
+            border: 2px solid rgba(248,197,66,0.15);
+            background: linear-gradient(135deg,#1a103a,#0d0820);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            z-index: 1;
+        }
+        .fan-card:hover {
+            transform: rotate(var(--angle)) translateY(-30px);
+            z-index: 10;
+            border-color: rgba(248,197,66,0.5);
+            box-shadow: 0 0 15px rgba(248,197,66,0.2);
+        }
+        .fan-card.selected {
+            transform: rotate(var(--angle)) translateY(-40px);
+            border-color: #f8c542;
+            box-shadow: 0 0 25px rgba(248,197,66,0.5);
+            z-index: 10;
+        }
+        .fan-card.disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        .fan-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 24px;
+            height: 24px;
+            background: #f8c542;
+            color: #0a0a1a;
+            border-radius: 50%;
+            font-size: 0.75em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 11;
+        }
+        .fan-card-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.5;
+        }
+        .fan-card-inner .card-back-pattern { font-size: 1.8em; }
+        .fan-card-inner .card-back-label { font-size: 0.55em; color: #f8c542; opacity: 0.7; margin-top: 4px; letter-spacing: 2px; }
+        .fan-card.selected .fan-card-inner { opacity: 0.8; }
+
+        /* NPC 대화창 */
+        .npc-dialogue {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            max-width: 500px;
+            margin: 0 auto 30px;
+        }
+        .npc-portrait {
+            font-size: 3em;
+            flex-shrink: 0;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 15px rgba(167,139,250,0.5));
+        }
+        .npc-bubble {
+            background: rgba(167,139,250,0.08);
+            border: 1px solid rgba(167,139,250,0.3);
+            border-radius: 4px 16px 16px 16px;
+            padding: 18px 22px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 0 20px rgba(167,139,250,0.1);
+        }
+        .npc-name {
+            color: #a78bfa;
+            font-weight: 700;
+            font-size: 0.85em;
+            margin-bottom: 6px;
+        }
+        .npc-text {
+            color: #e2e8f0;
+            line-height: 1.7;
+            font-size: 0.95em;
+        }
+
+        .api-detail { margin-top:14px; }
+        .api-detail details { background:rgba(255,255,255,0.03); border-radius:10px; padding:0; }
+        .api-detail summary { padding:10px 14px; cursor:pointer; color:#a78bfa; font-size:0.9em; font-weight:500; list-style:none; display:flex; align-items:center; gap:6px; }
+        .api-detail summary::after { content:'▼'; font-size:0.7em; transition:transform 0.3s; }
+        .api-detail details[open] summary::after { transform:rotate(180deg); }
+        .api-detail .api-desc { padding:8px 14px 14px; color:#94a3b8; font-size:0.85em; line-height:1.7; font-style:italic; }
+        .api-keywords { margin-top:10px; color:#cbd5e1; font-size:0.9em; }
+        .api-keywords strong { color:#f8c542; }
+
         @media (max-width: 600px) {
             .landing h1 { font-size: 2em; }
             .crystal-ball { font-size: 4.5rem; }
@@ -434,6 +553,12 @@
             .card-front .card-name { font-size: 0.7em; }
             .result-card-section { padding: 24px 18px; }
             .result-screen h2 { font-size: 1.6em; }
+            .fan-container { height: 320px; }
+            .fan-card { width: 50px; height: 80px; }
+            .npc-dialogue { max-width: 100%; }
+            .npc-portrait { font-size: 2.4em; }
+            .npc-bubble { padding: 14px 16px; }
+            .npc-text { font-size: 0.9em; }
         }
     </style>
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
@@ -445,17 +570,23 @@
         <!-- 1. 랜딩 -->
         <div class="screen show" id="screenLanding">
             <div class="landing">
-                <div class="crystal-ball">🔮</div>
-                <h1>타로 카드 운세</h1>
-                <p class="sub">카드가 전하는 당신의 이야기</p>
-                <button class="btn-main" onclick="goToTopic()">시작하기</button>
+                <div class="crystal-ball" style="animation: float 3s ease-in-out infinite, pulse-glow 4s ease-in-out infinite;">🔮</div>
+                <h1>별빛 타로</h1>
+                <p class="sub">운명의 카드가 속삭이는 당신의 이야기</p>
+                <button class="btn-main" onclick="goToTopic()">운명의 문을 열다</button>
             </div>
         </div>
 
         <!-- 2. 주제 선택 -->
         <div class="screen" id="screenTopic">
             <div class="topic-screen">
-                <h2>어떤 주제가 궁금하신가요?</h2>
+                <div class="npc-dialogue">
+                    <div class="npc-portrait">🔮</div>
+                    <div class="npc-bubble">
+                        <p class="npc-name">신비의 점술사</p>
+                        <p class="npc-text">어서 오세요, 여행자여... 별들이 당신의 방문을 기다리고 있었답니다. 오늘은 어떤 이야기가 듣고 싶으신가요?</p>
+                    </div>
+                </div>
                 <div class="topic-grid">
                     <div class="topic-card" onclick="selectTopic('general')">
                         <div class="emoji">✨</div>
@@ -480,72 +611,29 @@
         <!-- 3. 세부 주제 선택 -->
         <div class="screen" id="screenSubtopic">
             <div class="subtopic-screen">
-                <h2 id="subtopicTitle"></h2>
+                <div class="npc-dialogue" id="subtopicNpc">
+                    <div class="npc-portrait">🔮</div>
+                    <div class="npc-bubble">
+                        <p class="npc-name">신비의 점술사</p>
+                        <p class="npc-text" id="subtopicNpcText"></p>
+                    </div>
+                </div>
                 <div class="subtopic-grid" id="subtopicGrid"></div>
             </div>
         </div>
 
-        <!-- 4. 카드 뽑기 -->
+        <!-- 4. 카드 뽑기 (22장 부채꼴 선택) -->
         <div class="screen" id="screenDraw">
             <div class="draw-screen">
-                <h2>세 장의 카드를 뽑아주세요</h2>
-                <p class="draw-hint">카드를 터치하면 공개됩니다</p>
-                <div class="card-spread">
-                    <div class="card-slot">
-                        <div class="slot-label">과거</div>
-                        <div class="card-container" id="card0" onclick="flipCard(0)">
-                            <div class="card-face card-back">
-                                <div class="card-back-pattern">✦</div>
-                                <div class="card-back-label">TAROT</div>
-                            </div>
-                            <div class="card-face card-front" id="cardFront0">
-                                <div class="card-inner">
-                                    <span class="card-number" id="cardNum0"></span>
-                                    <span class="card-emoji" id="cardEmoji0"></span>
-                                    <span class="card-name" id="cardName0"></span>
-                                    <span class="card-name-en" id="cardNameEn0"></span>
-                                    <span class="reversed-badge">역방향 (Reversed)</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-slot">
-                        <div class="slot-label">현재</div>
-                        <div class="card-container" id="card1" onclick="flipCard(1)">
-                            <div class="card-face card-back">
-                                <div class="card-back-pattern">✦</div>
-                                <div class="card-back-label">TAROT</div>
-                            </div>
-                            <div class="card-face card-front" id="cardFront1">
-                                <div class="card-inner">
-                                    <span class="card-number" id="cardNum1"></span>
-                                    <span class="card-emoji" id="cardEmoji1"></span>
-                                    <span class="card-name" id="cardName1"></span>
-                                    <span class="card-name-en" id="cardNameEn1"></span>
-                                    <span class="reversed-badge">역방향 (Reversed)</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-slot">
-                        <div class="slot-label">미래</div>
-                        <div class="card-container" id="card2" onclick="flipCard(2)">
-                            <div class="card-face card-back">
-                                <div class="card-back-pattern">✦</div>
-                                <div class="card-back-label">TAROT</div>
-                            </div>
-                            <div class="card-face card-front" id="cardFront2">
-                                <div class="card-inner">
-                                    <span class="card-number" id="cardNum2"></span>
-                                    <span class="card-emoji" id="cardEmoji2"></span>
-                                    <span class="card-name" id="cardName2"></span>
-                                    <span class="card-name-en" id="cardNameEn2"></span>
-                                    <span class="reversed-badge">역방향 (Reversed)</span>
-                                </div>
-                            </div>
-                        </div>
+                <div class="npc-dialogue">
+                    <div class="npc-portrait">🔮</div>
+                    <div class="npc-bubble">
+                        <p class="npc-name">신비의 점술사</p>
+                        <p class="npc-text">운명의 카드가 당신을 기다리고 있습니다... 마음이 끌리는 세 장을 골라주세요.</p>
                     </div>
                 </div>
+                <h2 id="pickCounter" style="font-family:'Noto Serif KR',serif; text-align:center; font-size:1.2em; color:#a78bfa; margin-bottom:24px;">0 / 3</h2>
+                <div class="fan-container" id="fanContainer"></div>
             </div>
         </div>
 
@@ -553,7 +641,7 @@
         <div class="screen" id="screenLoading">
             <div class="loading-screen">
                 <div class="loading-spinner"></div>
-                <p class="loading-text">카드의 메시지를 해석하고 있습니다...</p>
+                <p class="loading-text">별빛이 카드의 비밀을 풀어내고 있습니다...</p>
             </div>
         </div>
 
@@ -567,7 +655,7 @@
     // ==================== 별 생성 ====================
     (function(){
         const c = document.getElementById('stars');
-        for(let i=0;i<120;i++){
+        for(let i=0;i<180;i++){
             const s = document.createElement('div');
             s.className='star';
             s.style.left=Math.random()*100+'%';
@@ -1308,11 +1396,38 @@
       }
     ];
 
+    // ==================== API 카드 한국어 번역 ====================
+    const CARD_TRANSLATIONS = {
+      0:  { desc:'절벽 끝에 선 젊은 여행자가 하늘을 올려다보며 첫 발을 내딛으려 합니다. 어깨에 맨 보따리 하나와 흰 장미를 들고, 작은 개가 그의 발치에서 짖고 있습니다.', meaning_up:'시작, 자유, 순수함, 모험', meaning_rev:'무모함, 부주의, 위험 감수' },
+      1:  { desc:'한 손은 하늘을, 다른 손은 땅을 가리키는 마법사가 앞에 놓인 도구들—지팡이, 컵, 검, 동전—을 다루고 있습니다. 무한대 기호가 머리 위에 빛납니다.', meaning_up:'의지력, 창조, 집중, 기술', meaning_rev:'속임수, 조작, 재능 낭비' },
+      2:  { desc:'달의 왕관을 쓴 여사제가 두 기둥 사이에 앉아 무릎 위 두루마리를 지키고 있습니다. 뒤편에 석류 문양 장막이 신비로운 세계를 가리고 있습니다.', meaning_up:'직관, 신비, 내면의 지혜', meaning_rev:'숨겨진 의도, 표면적 판단, 직감 무시' },
+      3:  { desc:'풍요로운 자연 속 왕좌에 앉은 여황제가 별 장식 왕관을 쓰고 있습니다. 발치에는 익은 밀이 자라고, 금성의 방패가 곁에 놓여 있습니다.', meaning_up:'풍요, 모성, 아름다움, 자연', meaning_rev:'의존, 공허, 과잉 집착' },
+      4:  { desc:'돌 왕좌에 앉은 황제가 수염을 기르고 붉은 로브를 걸치고 있습니다. 한 손에 앙크를, 다른 손에 보주를 쥐고 있으며 뒤편에 험준한 산맥이 보입니다.', meaning_up:'권위, 안정, 체계, 리더십', meaning_rev:'통제욕, 완고함, 유연성 부족' },
+      5:  { desc:'종교적 예복을 입은 교황이 두 성직자 앞에서 축복을 내리고 있습니다. 왼손에 삼중 십자가를, 발 앞에 교차된 열쇠가 놓여 있습니다.', meaning_up:'전통, 지혜, 가르침, 조언', meaning_rev:'관습 타파, 독자적 길, 비순응' },
+      6:  { desc:'천사가 하늘에서 축복을 내리는 가운데 나체의 남녀가 서로를 마주보고 서 있습니다. 뒤편에 생명나무와 지식나무가 있습니다.', meaning_up:'사랑, 조화, 선택, 유대', meaning_rev:'갈등, 불화, 가치관 충돌' },
+      7:  { desc:'별이 새겨진 캐노피 아래 전차에 탄 전사가 두 마리 스핑크스를 이끕니다. 도시를 뒤에 두고 승리의 표정으로 전진합니다.', meaning_up:'의지력, 승리, 결단, 돌진', meaning_rev:'방향 상실, 공격성, 통제 불능' },
+      8:  { desc:'흰 옷의 여인이 사자의 입을 부드럽게 열고 있습니다. 머리 위에 무한대 기호가 떠 있으며, 화환으로 장식된 평온한 풍경입니다.', meaning_up:'내면의 힘, 인내, 용기, 부드러운 강인함', meaning_rev:'자기 의심, 불안, 내면 갈등' },
+      9:  { desc:'회색 로브를 입은 은둔자가 높은 산 위에서 손에 든 등불로 아래를 비추고 있습니다. 지팡이에 의지하며 홀로 길을 걷습니다.', meaning_up:'성찰, 내면 탐구, 지혜, 고독', meaning_rev:'고립, 외로움, 세상과의 단절' },
+      10: { desc:'구름 속에 거대한 수레바퀴가 돌아가고 있습니다. 바퀴에는 신비로운 문자가 새겨져 있고, 네 모서리에 네 생물이 책을 읽고 있습니다.', meaning_up:'운명, 전환점, 행운, 순환', meaning_rev:'역경, 예측 불가, 변동' },
+      11: { desc:'보라색 베일 사이에 앉은 정의의 여신이 한 손에 저울을, 다른 손에 칼을 들고 있습니다. 왕관 아래 냉정한 눈빛으로 정면을 바라봅니다.', meaning_up:'공정, 진실, 균형, 인과응보', meaning_rev:'불공정, 편향, 책임 회피' },
+      12: { desc:'한쪽 발이 나무에 묶여 거꾸로 매달린 사람이 평온한 표정을 짓고 있습니다. 머리에 후광이 비치며, 자유로운 다리는 4자 모양을 이룹니다.', meaning_up:'희생, 새로운 관점, 멈춤, 내려놓음', meaning_rev:'불필요한 희생, 지연, 우유부단' },
+      13: { desc:'갑옷을 입은 해골 기사가 백마를 타고 있습니다. 깃발에는 다섯 잎 장미가 그려져 있으며, 왕과 아이가 같은 길 위에 서 있습니다.', meaning_up:'변화, 끝과 시작, 탈피, 변환', meaning_rev:'변화 거부, 집착, 정체' },
+      14: { desc:'날개 달린 천사가 두 잔 사이로 물을 옮기고 있습니다. 한 발은 물에, 다른 발은 땅에 딛고 서서 길의 끝 산 위의 왕관을 바라봅니다.', meaning_up:'균형, 절제, 인내, 조화', meaning_rev:'불균형, 과도함, 조급함' },
+      15: { desc:'어둠 속 돌 좌대 위에 날개 달린 악마가 앉아 있습니다. 느슨한 사슬에 묶인 남녀가 그 아래 서 있으나, 원하면 벗어날 수 있습니다.', meaning_up:'유혹, 집착, 물질주의, 속박', meaning_rev:'해방, 나쁜 습관 끊기, 자유' },
+      16: { desc:'번개가 탑의 꼭대기를 때려 왕관이 날아가고, 두 사람이 타오르는 탑에서 추락하고 있습니다. 하늘에는 불꽃이 흩날립니다.', meaning_up:'급변, 충격, 파괴 후 재건, 각성', meaning_rev:'경고 무시, 위기 전조, 파국 회피' },
+      17: { desc:'별이 가득한 밤하늘 아래 벌거벗은 여인이 두 개의 물병에서 물을 부어 땅과 연못에 흘려보내고 있습니다. 커다란 노란 별이 빛나고 있습니다.', meaning_up:'희망, 영감, 치유, 밝은 미래', meaning_rev:'희망 상실, 비관, 불신' },
+      18: { desc:'보름달이 두 탑 사이에 걸려 있고, 가재가 물에서 기어 나옵니다. 개와 늑대가 달을 향해 울부짖으며, 구불구불한 길이 멀리 이어집니다.', meaning_up:'불확실성, 직감, 무의식, 환상', meaning_rev:'두려움 극복, 진실 발견, 혼란 해소' },
+      19: { desc:'찬란한 태양 아래 벌거벗은 아이가 흰 말 위에서 기뻐하고 있습니다. 해바라기가 가득 핀 정원 벽 너머로 밝은 빛이 쏟아집니다.', meaning_up:'기쁨, 성공, 활력, 긍정', meaning_rev:'자신감 부족, 지연, 일시적 침체' },
+      20: { desc:'천사가 나팔을 불자 관 속에서 사람들이 일어나 두 팔을 벌려 하늘을 향합니다. 산맥 사이 바다 위로 울려 퍼지는 심판의 소리입니다.', meaning_up:'각성, 소명, 재탄생, 반성', meaning_rev:'과거 집착, 자기 부정, 후회' },
+      21: { desc:'월계관으로 둘러싸인 무용수가 두 개의 지팡이를 들고 춤추고 있습니다. 네 모서리에 사자, 황소, 독수리, 천사가 자리합니다.', meaning_up:'완성, 성취, 통합, 새로운 시작', meaning_rev:'미완성, 정체, 마무리 부족' }
+    };
+
     // ==================== 상태 관리 ====================
     let currentTopic = '';
     let currentSubtopic = '';
     let drawnCards = [];
-    let flippedCount = 0;
+    let selectedCards = [];  // 사용자가 고른 카드 id (최대 3)
+    let apiCards = null;     // tarotapi.dev 데이터 캐시
 
     const TOPIC_LABELS = {
         general: '제너럴 운세',
@@ -1326,7 +1441,7 @@
         wealth: '재물 운세'
     };
 
-    const POSITION_LABELS = ['과거', '현재', '미래'];
+    const CARD_ORDER_LABELS = ['첫 번째', '두 번째', '세 번째'];
 
     // ==================== 스크린 전환 ====================
     function showScreen(id) {
@@ -1338,15 +1453,20 @@
     function goToTopic() { showScreen('screenTopic'); }
 
     // ==================== 주제 선택 ====================
+    const NPC_SUBTOPIC_LINES = {
+        love: '사랑의 별이 반짝이는군요... 좀 더 자세히 알려주세요.',
+        business: '야망의 불꽃이 타오르고 있군요... 어떤 방향인가요?'
+    };
+
     function selectTopic(topic) {
         currentTopic = topic;
         if (topic === 'love') {
-            showSubtopicScreen('연애 세부 주제를 선택하세요', [
+            showSubtopicScreen(NPC_SUBTOPIC_LINES.love, [
                 { key: 'love_solo', label: '솔로 (새로운 만남)' },
                 { key: 'love_couple', label: '커플 (현재 관계)' }
             ]);
         } else if (topic === 'business') {
-            showSubtopicScreen('사업 세부 주제를 선택하세요', [
+            showSubtopicScreen(NPC_SUBTOPIC_LINES.business, [
                 { key: 'business_change', label: '이직' },
                 { key: 'business_promotion', label: '승진' },
                 { key: 'business_start', label: '개업 / 창업' }
@@ -1357,8 +1477,8 @@
         }
     }
 
-    function showSubtopicScreen(title, options) {
-        document.getElementById('subtopicTitle').textContent = title;
+    function showSubtopicScreen(npcText, options) {
+        document.getElementById('subtopicNpcText').textContent = npcText;
         const grid = document.getElementById('subtopicGrid');
         grid.innerHTML = options.map(o =>
             `<button class="subtopic-btn" onclick="selectSubtopic('${o.key}')">${o.label}</button>`
@@ -1371,50 +1491,101 @@
         startDraw();
     }
 
-    // ==================== 카드 뽑기 ====================
+    // ==================== 카드 선택 (22장 부채꼴) ====================
     function startDraw() {
-        drawThreeCards();
-        flippedCount = 0;
-        // 카드 UI 리셋
-        for (let i = 0; i < 3; i++) {
-            const container = document.getElementById('card' + i);
-            container.classList.remove('flipped');
-            const front = document.getElementById('cardFront' + i);
-            front.classList.remove('reversed');
-        }
-        // 카드 데이터 표시
-        drawnCards.forEach((dc, i) => {
-            const card = MAJOR_ARCANA[dc.id];
-            document.getElementById('cardNum' + i).textContent = card.number;
-            document.getElementById('cardEmoji' + i).textContent = card.emoji;
-            document.getElementById('cardName' + i).textContent = card.nameKo;
-            document.getElementById('cardNameEn' + i).textContent = card.name;
-            if (dc.reversed) {
-                document.getElementById('cardFront' + i).classList.add('reversed');
-            }
-        });
+        selectedCards = [];
+        drawnCards = [];
+        renderFanCards();
         showScreen('screenDraw');
     }
 
-    function drawThreeCards() {
+    function renderFanCards() {
+        const container = document.getElementById('fanContainer');
         const shuffled = [...Array(22).keys()].sort(() => Math.random() - 0.5);
-        drawnCards = shuffled.slice(0, 3).map(id => ({
-            id,
-            reversed: Math.random() < 0.5
-        }));
+        const totalCards = shuffled.length;
+        const totalAngle = 100; // -50 ~ +50
+        const step = totalAngle / (totalCards - 1);
+
+        container.innerHTML = shuffled.map((id, i) => {
+            const angle = -50 + step * i;
+            return `
+            <div class="fan-card" data-id="${id}" style="--angle:${angle}deg" onclick="toggleCard(${id})">
+                <div class="fan-card-inner">
+                    <div class="card-back-pattern">✦</div>
+                    <div class="card-back-label">TAROT</div>
+                </div>
+            </div>`;
+        }).join('');
+        updatePickCounter();
     }
 
-    function flipCard(index) {
-        const container = document.getElementById('card' + index);
-        if (container.classList.contains('flipped')) return;
-        container.classList.add('flipped');
-        flippedCount++;
-        if (flippedCount === 3) {
+    function updatePickCounter() {
+        document.getElementById('pickCounter').textContent = `${selectedCards.length} / 3`;
+    }
+
+    function toggleCard(id) {
+        const idx = selectedCards.indexOf(id);
+        if (idx > -1) {
+            selectedCards.splice(idx, 1);
+        } else {
+            if (selectedCards.length >= 3) return;
+            selectedCards.push(id);
+        }
+
+        // UI 업데이트
+        document.querySelectorAll('.fan-card').forEach(el => {
+            const cardId = parseInt(el.dataset.id);
+            const selIdx = selectedCards.indexOf(cardId);
+            el.classList.toggle('selected', selIdx > -1);
+            // 뱃지 표시
+            const existingBadge = el.querySelector('.fan-badge');
+            if (existingBadge) existingBadge.remove();
+            if (selIdx > -1) {
+                const badge = document.createElement('div');
+                badge.className = 'fan-badge';
+                badge.textContent = selIdx + 1;
+                el.appendChild(badge);
+            }
+            // 3장 선택 시 나머지 비활성화
+            if (selectedCards.length >= 3 && selIdx === -1) {
+                el.classList.add('disabled');
+            } else {
+                el.classList.remove('disabled');
+            }
+        });
+        updatePickCounter();
+
+        // 3장 완료 → 자동 진행
+        if (selectedCards.length === 3) {
             setTimeout(() => {
+                drawnCards = selectedCards.map(cid => ({
+                    id: cid,
+                    reversed: Math.random() < 0.5
+                }));
                 showScreen('screenLoading');
                 setTimeout(() => buildResult(), 2000);
-            }, 800);
+            }, 600);
         }
+    }
+
+    // ==================== tarotapi.dev 연동 ====================
+    function fetchApiCards() {
+        fetch('https://tarotapi.dev/api/v1/cards/search?type=major')
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.cards) {
+                    apiCards = {};
+                    data.cards.forEach(c => {
+                        apiCards[c.value_int] = {
+                            name: c.name,
+                            desc: c.desc,
+                            meaning_up: c.meaning_up,
+                            meaning_rev: c.meaning_rev
+                        };
+                    });
+                }
+            })
+            .catch(() => { apiCards = null; });
     }
 
     // ==================== 결과 생성 ====================
@@ -1430,39 +1601,52 @@
         url.searchParams.set('r', drawnCards.map(c => c.reversed ? 1 : 0).join(','));
         window.history.pushState({}, '', url);
 
-        let html = `<h2>타로 리딩 결과</h2>
+        let html = `<h2>별빛이 전하는 메시지</h2>
             <p class="result-topic-label">${topicLabel}</p>`;
 
-        // 카드별 해석
+        // 선택된 카드 요약 표시
+        html += `<div style="display:flex; justify-content:center; gap:16px; margin-bottom:36px; flex-wrap:wrap;">`;
         drawnCards.forEach((dc, i) => {
             const card = MAJOR_ARCANA[dc.id];
-            const interp = card.interpretations[topicKey] || card.interpretations.general;
-            const text = dc.reversed ? interp.rev : interp.up;
-            const dirLabel = dc.reversed ? '역방향 (Reversed)' : '정방향 (Upright)';
-            const dirClass = dc.reversed ? 'reversed' : 'upright';
-
+            const dirLabel = dc.reversed ? '역방향' : '정방향';
+            const dirColor = dc.reversed ? '#f87171' : '#4ade80';
+            const tr = CARD_TRANSLATIONS[dc.id];
+            const keywords = tr ? (dc.reversed ? tr.meaning_rev : tr.meaning_up) : '';
             html += `
-            <div class="result-card-section">
-                <div class="result-card-header">
-                    <span class="position-badge">${POSITION_LABELS[i]}</span>
-                    <div class="card-info">
-                        <div class="name">${card.emoji} ${card.nameKo} (${card.name})</div>
-                        <div class="direction ${dirClass}">${dirLabel}</div>
-                    </div>
-                </div>
-                <div class="result-card-body">${text}</div>
+            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(248,197,66,0.2); border-radius:16px; padding:18px 16px; text-align:center; min-width:140px; flex:1; max-width:200px; backdrop-filter:blur(8px);">
+                <div style="font-size:2em; margin-bottom:6px;">${card.emoji}</div>
+                <div style="font-family:'Noto Serif KR',serif; font-weight:700; font-size:1em; color:#e2e8f0; margin-bottom:4px;">${card.nameKo}</div>
+                <div style="font-size:0.75em; color:#94a3b8; margin-bottom:6px;">${card.name}</div>
+                <div style="font-size:0.8em; color:${dirColor}; font-weight:600; margin-bottom:8px;">${dirLabel}</div>
+                ${keywords ? `<div style="font-size:0.75em; color:#a78bfa; line-height:1.5;">${keywords}</div>` : ''}
             </div>`;
         });
+        html += `</div>`;
 
-        // 전체 요약
+        // 종합 리딩 (하나의 통합된 해석)
         html += `<div class="summary-section">
             <h3>종합 리딩</h3>
-            <p>${generateSummary(drawnCards, topicKey)}</p>
+            <p>${generateReading(drawnCards, topicKey)}</p>
         </div>`;
+
+        // 개별 카드 상징 (접기)
+        drawnCards.forEach((dc, i) => {
+            const card = MAJOR_ARCANA[dc.id];
+            const tr = CARD_TRANSLATIONS[dc.id];
+            if (tr) {
+                html += `
+                <div class="api-detail" style="margin-bottom:12px;">
+                    <details>
+                        <summary>🔮 ${CARD_ORDER_LABELS[i]} 카드 — ${card.nameKo}의 상징</summary>
+                        <p class="api-desc">${tr.desc}</p>
+                    </details>
+                </div>`;
+            }
+        });
 
         // 공유 버튼
         html += `
-        <div class="share-row">
+        <div class="share-row" style="margin-top:30px;">
             <button class="share-btn share-copy" onclick="copyLink()">📋 링크 복사</button>
             <button class="share-btn share-kakao" onclick="shareKakao()">💬 카카오톡</button>
             <button class="share-btn share-twitter" onclick="shareTwitter()">🐦 트위터</button>
@@ -1473,60 +1657,103 @@
         showScreen('screenResult');
     }
 
-    function generateSummary(cards, topicKey) {
-        const names = cards.map(c => {
-            const card = MAJOR_ARCANA[c.id];
-            return card.nameKo + (c.reversed ? '(역)' : '');
-        });
-        const pastCard = MAJOR_ARCANA[cards[0].id];
-        const presentCard = MAJOR_ARCANA[cards[1].id];
-        const futureCard = MAJOR_ARCANA[cards[2].id];
+    function generateReading(cards, topicKey) {
+        const c = cards.map(dc => ({
+            card: MAJOR_ARCANA[dc.id],
+            rev: dc.reversed,
+            interp: (MAJOR_ARCANA[dc.id].interpretations[topicKey] || MAJOR_ARCANA[dc.id].interpretations.general)
+        }));
 
-        // 긍정적 카드 수 세기
         const positiveIds = [0,1,3,6,10,17,19,21];
         const challengeIds = [13,15,16,18];
-        let tone = 'neutral';
-        const futurePositive = positiveIds.includes(cards[2].id) && !cards[2].reversed;
-        const futureChallenging = challengeIds.includes(cards[2].id) && !cards[2].reversed;
+        let positiveCount = cards.filter(x => positiveIds.includes(x.id) && !x.reversed).length;
+        let challengeCount = cards.filter(x => challengeIds.includes(x.id) || x.reversed).length;
+        let energy = positiveCount >= 2 ? '긍정' : challengeCount >= 2 ? '도전' : '혼합';
 
-        let summary = `과거의 <strong>${pastCard.nameKo}</strong> 카드는 `;
-        if (cards[0].reversed) {
-            summary += '지나간 시간 속 해결되지 않은 과제가 있었음을 보여줍니다. ';
+        let r = '';
+
+        // 1. 도입 — 세 카드의 조합이 말하는 전체 흐름
+        r += `당신이 선택한 세 장의 카드 — <strong>${c[0].card.nameKo}</strong>, <strong>${c[1].card.nameKo}</strong>, <strong>${c[2].card.nameKo}</strong> — 가 하나의 이야기를 들려줍니다.`;
+        r += '<br><br>';
+
+        // 2. 에너지 진단
+        if (energy === '긍정') {
+            r += '세 카드가 모두 <strong>밝고 순조로운 흐름</strong>을 가리키고 있습니다. 지금 당신을 둘러싼 에너지는 전반적으로 당신의 편이며, 움직이는 방향이 옳다는 신호입니다.';
+        } else if (energy === '도전') {
+            r += '세 카드가 공통적으로 <strong>시련과 성장의 에너지</strong>를 담고 있습니다. 쉽지 않은 구간을 지나고 있지만, 이 과정 자체가 당신을 단련시키고 있다는 의미이기도 합니다.';
         } else {
-            summary += '과거의 경험이 현재의 토대가 되었음을 의미합니다. ';
+            r += '세 카드에 <strong>빛과 그림자가 공존</strong>하고 있습니다. 한쪽으로 치우치지 않은 이 균형이 오히려 가장 현실적인 메시지를 전해줍니다. 좋은 흐름을 살리되, 경계해야 할 부분도 놓치지 마세요.';
         }
+        r += '<br><br>';
 
-        summary += `현재의 <strong>${presentCard.nameKo}</strong> 카드는 `;
-        if (cards[1].reversed) {
-            summary += '지금 직면한 내면의 갈등이나 장애물을 나타냅니다. ';
+        // 3. 첫 번째 카드 — 핵심 상황
+        r += `<strong>${c[0].card.emoji} ${c[0].card.nameKo}</strong>`;
+        r += c[0].rev ? ' (역방향)' : ' (정방향)';
+        r += '은 지금 당신이 처한 상황의 핵심을 보여줍니다. ';
+        r += c[0].rev ? c[0].interp.rev : c[0].interp.up;
+        r += '<br><br>';
+
+        // 4. 두 번째 카드 — 내면/주변 영향
+        r += `여기에 <strong>${c[1].card.emoji} ${c[1].card.nameKo}</strong>`;
+        r += c[1].rev ? ' (역방향)' : ' (정방향)';
+        r += '의 에너지가 겹쳐집니다. ';
+        r += c[1].rev ? c[1].interp.rev : c[1].interp.up;
+        r += '<br><br>';
+
+        // 5. 세 번째 카드 — 방향과 조언
+        r += `마지막으로 <strong>${c[2].card.emoji} ${c[2].card.nameKo}</strong>`;
+        r += c[2].rev ? ' (역방향)' : ' (정방향)';
+        r += '이 앞으로의 방향을 비��줍니다. ';
+        r += c[2].rev ? c[2].interp.rev : c[2].interp.up;
+        r += '<br><br>';
+
+        // 6. 카드 조합 시너지 해석 — 구체적 조언
+        r += '<strong>✦ 카드 조합이 전하는 메시지</strong><br>';
+        // 조합별 구체적 시너지 텍스트
+        const uprightCount = cards.filter(x => !x.reversed).length;
+        const hasStrengthCards = cards.some(x => [7,8,11].includes(x.id) && !x.reversed);
+        const hasChangeCards = cards.some(x => [0,10,13,16,20].includes(x.id));
+        const hasWisdomCards = cards.some(x => [2,5,9,14].includes(x.id));
+        const hasSuccessCards = cards.some(x => [19,21,3].includes(x.id) && !x.reversed);
+
+        if (hasSuccessCards && uprightCount >= 2) {
+            r += '카드 조합에 성취와 풍요의 에너지가 강하게 나타납니다. 지금 하고 있는 일이 결실을 맺을 가능성이 높으니, 현재의 노력을 멈추지 마세요. 특히 주변 사람들과의 협력이 시너지를 만들어낼 수 있습니다.';
+        } else if (hasChangeCards && hasStrengthCards) {
+            r += '변화의 카드와 힘의 카드가 함께 나왔습니다. 큰 전환이 다가오고 있지만 당신에게는 그것을 감당할 내면의 힘이 있다는 뜻입니다. 두려워하지 말고 변화의 흐름에 올라타세요.';
+        } else if (hasWisdomCards && uprightCount >= 2) {
+            r += '지혜와 성찰의 에너지가 강합니다. 지금은 행동보다 관찰이 유리한 시기입니다. 섣부른 판단을 내리기보다 한 발 물러서서 전체 그림을 보세요. 그 안에서 답이 보일 것입니다.';
+        } else if (challengeCount >= 2) {
+            r += '도전적인 카드가 겹쳐 나온 만큼 쉽지 않은 구간이지만, 이는 곧 큰 성장의 전조이기도 합니다. 감정에 휘둘리지 않고 한 걸음씩 나아간다면, 돌아봤을 때 이 시기가 전환점이었음을 깨닫게 될 것입니다.';
+        } else if (hasChangeCards && challengeCount >= 1) {
+            r += '변화와 주의의 신호가 함께 나타납니다. 무언가를 바꿔야 할 때이지만, 충동적으로 움직이기보다는 한 박자 쉬며 방향을 점검하세요. 준비된 변화만이 좋은 결과를 가져옵니다.';
         } else {
-            summary += '현재 당신이 가진 힘과 가능성을 보여주고 있습니다. ';
+            r += '세 카드가 고르게 분포된 에너지를 보여줍니다. 극적인 변화보다는 꾸준한 전진이 어울리는 시기입니다. 작은 실천을 반복하는 것이 가장 확실한 전략입니다.';
         }
+        r += '<br><br>';
 
-        summary += `미래의 <strong>${futureCard.nameKo}</strong> 카드는 `;
-        if (futurePositive) {
-            summary += '밝고 희망적인 결과를 예고합니다. 현재의 노력이 좋은 열매를 맺을 것입니다.';
-        } else if (futureChallenging) {
-            summary += '앞으로 도전이 있을 수 있지만, 이를 통해 더 강해질 수 있음을 알려줍니다. 용기를 갖고 나아가세요.';
-        } else if (cards[2].reversed) {
-            summary += '주의가 필요한 상황이 올 수 있음을 시사합니다. 미리 대비하고 신중하게 행동한다면 충분히 극복할 수 있습니다.';
-        } else {
-            summary += '긍정적인 변화의 흐름 속에 있음을 나타냅니다. 자신을 믿고 꾸준히 나아가세요.';
-        }
-
-        summary += '<br><br>세 장의 카드가 전하는 메시지의 핵심은 ';
+        // 7. 주제별 구체적 조언
+        r += '<strong>✦ 핵심 조언</strong><br>';
         const topicAdvice = {
-            general: '자기 자신을 믿고, 내면의 목소리에 귀 기울이라는 것입니다.',
-            love_solo: '진정한 사랑은 자신을 사랑하는 것에서 시작된다는 것입니다. 열린 마음으로 인연을 맞이하세요.',
-            love_couple: '서로에 대한 이해와 소통이 관계를 더욱 깊게 만든다는 것입니다.',
-            business_change: '변화를 두려워하지 말고, 준비된 마음으로 새로운 기회를 잡으라는 것입니다.',
-            business_promotion: '꾸준한 노력과 진정성이 인정받는 날이 반드시 온다는 것입니다.',
-            business_start: '과감한 도전과 철저한 준비가 성공의 두 날개라는 것입니다.',
-            wealth: '현명한 판단과 절제된 관리가 풍요로움의 열쇠라는 것입니다.'
+            general: '지금은 외부의 평가나 비교에 흔들리기보다, 내면의 확신을 키워야 할 때입니다. 당신이 진짜 원하는 것이 무엇인지 조용히 자문해보세요. 그 답이 명확해지는 순간, 행동의 방향도 자연스럽게 정해질 것입니다.',
+            love_solo: '억지로 만남을 만들기보다, 자신의 일상을 충실히 살아가는 것이 가장 강력한 인연의 자석입니다. 자기 자신에게 먼저 따뜻하게 대하세요. 그 에너지가 자연스럽게 좋은 사람을 끌어당길 것입니다. 다만, 기회가 왔을 때 "나중에"라고 미루지 마세요.',
+            love_couple: '오래된 관계일수록 "당연함"이라는 이름 아래 소중한 것들을 놓치기 쉽습니다. 상대방에게 마지막으로 진심을 담아 고마움을 표현한 게 언제인지 떠올려 보세요. 작은 말 한마디, 작은 행동 하나가 관계의 온도를 완전히 바꿀 수 있습니다.',
+            business_change: '이직을 고민하고 있다면, 단순히 현재가 불만족스러워서 떠나는 것인지, 아니면 가고 싶은 곳이 명확한 것인지를 구분하세요. 전자라면 한 박자 쉬고, 후자라면 지금 바로 움직이세요. 구체적인 준비 — 이력서, 포트폴리오, 네트워킹 — 를 시작하는 것만으로도 상황이 달라지기 시작합니다.',
+            business_promotion: '승진은 실력만으로 이루어지지 않습니다. 당신의 성과를 적절히 드러내고 있는지, 핵심 의사결정자에게 당신의 기여가 보이고 있는지 점검해보세요. 묵묵히 일만 하는 것보다, 자신의 가치를 정당하게 어필하는 것도 프로페셔널의 덕목입니다.',
+            business_start: '아이디어의 완성도보다 중요한 것은 시장의 반응입니다. 완벽하게 준비된 후에 시작하겠다는 생각은 영원히 시작하지 않겠다는 것과 같습니다. 최소한의 형태로라도 먼저 시장에 내놓고, 피드백을 받으며 수정해 나가세요. 다만, 자금 관리만큼은 보수적으로 접근하세요.',
+            wealth: '돈에 대한 불안이 클수록 단기 수익에 집착하기 쉽습니다. 지금 필요한 것은 "얼마를 벌겠다"는 목표보다 "어디에 쓰지 않겠다"는 원칙입니다. 불필요한 지출을 하나씩 줄이고, 남는 금액을 자동으로 저축이나 투자에 돌리는 시스템을 만드세요.'
         };
-        summary += topicAdvice[topicKey] || topicAdvice.general;
+        r += topicAdvice[topicKey] || topicAdvice.general;
+        r += '<br><br>';
 
-        return summary;
+        // 8. 마무리
+        const closingMessages = [
+            '별빛은 길을 비출 뿐, 걸어가는 것은 당신의 선택입니다. 오늘의 리딩이 당신에게 작은 등불이 되기를 바랍니다. ✨',
+            '운명은 정해진 것이 아니라 매 순간 만들어가는 것입니다. 카드의 메시지를 마음에 담고 자신만의 길을 걸어가세요. ✨',
+            '타로는 가능성의 지도입니다. 이 메시지를 나침반 삼되, 최종 결정은 언제나 당신의 것입니다. ✨'
+        ];
+        r += closingMessages[Math.floor(Math.random() * closingMessages.length)];
+
+        return r;
     }
 
     // ==================== 공유 기능 ====================
@@ -1579,7 +1806,7 @@
         currentTopic = '';
         currentSubtopic = '';
         drawnCards = [];
-        flippedCount = 0;
+        selectedCards = [];
         const url = new URL(window.location);
         url.search = '';
         window.history.pushState({}, '', url);
@@ -1591,6 +1818,9 @@
         if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
             Kakao.init('bf0fd5739aebee3aa7cd7e8ec516f118');
         }
+
+        // API 데이터 미리 가져오기
+        fetchApiCards();
 
         const params = new URLSearchParams(window.location.search);
         const t = params.get('t');
