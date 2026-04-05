@@ -1624,13 +1624,9 @@
     }
 
     function toggleCard(id) {
-        const idx = selectedCards.indexOf(id);
-        if (idx > -1) {
-            selectedCards.splice(idx, 1);
-        } else {
-            if (selectedCards.length >= 3) return;
-            selectedCards.push(id);
-        }
+        if (selectedCards.indexOf(id) > -1) return;
+        if (selectedCards.length >= 3) return;
+        selectedCards.push(id);
 
         document.querySelectorAll('.fan-card').forEach(el => {
             const cardId = parseInt(el.dataset.id);
