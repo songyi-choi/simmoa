@@ -1673,24 +1673,39 @@
             Kakao.init('bf0fd5739aebee3aa7cd7e8ec516f118');
         }
         const topicLabel = TOPIC_LABELS[currentSubtopic] || '타로 운세';
+        const cardNames = drawnCards.map(dc => {
+            const card = MAJOR_ARCANA[dc.id];
+            const dir = dc.reversed ? '(역)' : '';
+            return card.nameKo + dir;
+        }).join(', ');
+        const resultUrl = window.location.href;
         Kakao.Share.sendDefault({
             objectType: 'feed',
             content: {
-                title: '🔮 타로 카드 운세',
-                description: `${topicLabel} 리딩 결과를 확인해보세요!`,
-                imageUrl: 'https://via.placeholder.com/800x400/0a0a1a/f8c542?text=' + encodeURIComponent('🔮 타로 카드 운세'),
+                title: `🔮 ${topicLabel} 타로 리딩`,
+                description: `${cardNames} — 별빛이 전하는 메시지를 확인해보세요!`,
+                imageUrl: 'https://via.placeholder.com/800x400/0a0a1a/f8c542?text=' + encodeURIComponent('🔮 별빛 타로'),
                 link: {
-                    mobileWebUrl: window.location.href,
-                    webUrl: window.location.href
+                    mobileWebUrl: resultUrl,
+                    webUrl: resultUrl
                 }
             },
-            buttons: [{
-                title: '나도 타로 보기',
-                link: {
-                    mobileWebUrl: window.location.href.split('?')[0],
-                    webUrl: window.location.href.split('?')[0]
+            buttons: [
+                {
+                    title: '결과 보기',
+                    link: {
+                        mobileWebUrl: resultUrl,
+                        webUrl: resultUrl
+                    }
+                },
+                {
+                    title: '나도 해보기',
+                    link: {
+                        mobileWebUrl: window.location.href.split('?')[0],
+                        webUrl: window.location.href.split('?')[0]
+                    }
                 }
-            }]
+            ]
         });
     }
 
