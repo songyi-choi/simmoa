@@ -308,6 +308,66 @@
             text-shadow: 2px 2px 0 #000;
         }
 
+        /* 결과 카드 이미지 (픽셀아트 스타일) */
+        .result-cards-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 36px;
+            flex-wrap: wrap;
+        }
+        .result-card {
+            background: rgba(255,255,255,0.04);
+            border: 2px solid rgba(248,197,66,0.3);
+            border-radius: 2px;
+            padding: 16px 14px;
+            text-align: center;
+            min-width: 140px;
+            flex: 1;
+            max-width: 200px;
+            box-shadow: 3px 3px 0 #000;
+        }
+        .result-card-img-wrap {
+            width: 120px;
+            height: 200px;
+            margin: 0 auto 12px;
+            border: 3px solid #f8c542;
+            box-shadow: 2px 2px 0 #000;
+            overflow: hidden;
+            background: #1a103a;
+            position: relative;
+        }
+        .result-card-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .result-card-img-wrap.reversed img {
+            transform: rotate(180deg);
+        }
+        .result-card-name {
+            font-family: 'Galmuri11', monospace;
+            font-weight: 700;
+            font-size: 1em;
+            color: #e2e8f0;
+            margin-bottom: 4px;
+        }
+        .result-card-name-en {
+            font-size: 0.75em;
+            color: #94a3b8;
+            margin-bottom: 6px;
+        }
+        .result-card-dir {
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .result-card-keywords {
+            font-size: 0.75em;
+            color: #a78bfa;
+            line-height: 1.5;
+        }
+
         /* 결과 */
         .result-screen h2 {
             font-family: 'Galmuri11', monospace;
@@ -378,13 +438,72 @@
         }
         .btn-retry:hover { background: rgba(255,255,255,0.1); color: #fff; transform: translate(-1px, -1px); box-shadow: 4px 4px 0 #000; }
 
-        /* API 디테일 */
-        .api-detail { margin-top:14px; }
-        .api-detail details { background:rgba(255,255,255,0.03); border:2px solid rgba(255,255,255,0.08); border-radius:2px; box-shadow:3px 3px 0 #000; padding:0; }
-        .api-detail summary { padding:10px 14px; cursor:pointer; color:#a78bfa; font-size:0.9em; font-weight:bold; list-style:none; display:flex; align-items:center; gap:6px; }
-        .api-detail summary::after { content:'▼'; font-size:0.7em; transition:transform 0.3s; }
-        .api-detail details[open] summary::after { transform:rotate(180deg); }
-        .api-detail .api-desc { padding:8px 14px 14px; color:#94a3b8; font-size:0.85em; line-height:1.7; font-style:italic; font-family:'Noto Sans KR',sans-serif; }
+        /* 카드 상세 */
+        .detail-card {
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(248,197,66,0.15);
+            border-radius: 2px;
+            box-shadow: 3px 3px 0 #000;
+            overflow: hidden;
+        }
+        .detail-card-header {
+            display: flex;
+            gap: 16px;
+            padding: 16px;
+            align-items: flex-start;
+        }
+        .detail-card-img {
+            width: 80px;
+            min-width: 80px;
+            border: 2px solid #f8c542;
+            box-shadow: 2px 2px 0 #000;
+            overflow: hidden;
+            background: #1a103a;
+        }
+        .detail-card-img img {
+            width: 100%;
+            display: block;
+        }
+        .detail-card-img.reversed img {
+            transform: rotate(180deg);
+        }
+        .detail-card-info {
+            flex: 1;
+        }
+        .detail-card-order {
+            font-family: 'Galmuri11', monospace;
+            font-size: 0.75em;
+            color: #f8c542;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+        .detail-card-title {
+            font-family: 'Galmuri11', monospace;
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 6px;
+        }
+        .detail-card-body {
+            padding: 0 16px 16px;
+        }
+        .detail-card-reading {
+            color: #cbd5e1;
+            font-size: 0.92em;
+            line-height: 1.8;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 300;
+            margin-bottom: 12px;
+        }
+        .detail-card-desc {
+            color: #94a3b8;
+            font-size: 0.82em;
+            line-height: 1.7;
+            font-style: italic;
+            font-family: 'Noto Sans KR', sans-serif;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
 
         #pickCounter {
             font-family: 'Galmuri11', monospace;
@@ -404,6 +523,13 @@
             .chat-bubble { font-size: 0.88em; padding: 10px 12px; }
             .chat-opt-btn { padding: 8px 16px; font-size: 0.85em; }
             .result-screen h2 { font-size: 1.4em; }
+            .result-cards-row { gap: 12px; }
+            .result-card { min-width: 100px; padding: 12px 10px; }
+            .result-card-img-wrap { width: 90px; height: 150px; }
+            .result-card-name { font-size: 0.85em; }
+            .detail-card-header { gap: 12px; padding: 12px; }
+            .detail-card-img { width: 64px; min-width: 64px; }
+            .detail-card-body { padding: 0 12px 12px; }
             .summary-section { padding: 20px 16px; }
             .card-table { padding: 20px 12px 30px; }
             .btn-main { padding: 14px 36px; font-size: 1em; }
@@ -1241,6 +1367,32 @@
       21: { desc:'월계관으로 둘러싸인 무용수가 두 개의 지팡이를 들고 춤추고 있습니다. 네 모서리에 사자, 황소, 독수리, 천사가 자리합니다.', meaning_up:'완성, 성취, 통합, 새로운 시작', meaning_rev:'미완성, 정체, 마무리 부족' }
     };
 
+    // ==================== 카드 이미지 URL (Wikipedia Commons, Public Domain) ====================
+    const CARD_IMAGES = [
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/RWS_Tarot_00_Fool.jpg/200px-RWS_Tarot_00_Fool.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/RWS_Tarot_01_Magician.jpg/200px-RWS_Tarot_01_Magician.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/RWS_Tarot_02_High_Priestess.jpg/200px-RWS_Tarot_02_High_Priestess.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/RWS_Tarot_03_Empress.jpg/200px-RWS_Tarot_03_Empress.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/RWS_Tarot_04_Emperor.jpg/200px-RWS_Tarot_04_Emperor.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/RWS_Tarot_05_Hierophant.jpg/200px-RWS_Tarot_05_Hierophant.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/RWS_Tarot_06_Lovers.jpg/200px-RWS_Tarot_06_Lovers.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/RWS_Tarot_07_Chariot.jpg/200px-RWS_Tarot_07_Chariot.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/RWS_Tarot_08_Strength.jpg/200px-RWS_Tarot_08_Strength.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/RWS_Tarot_09_Hermit.jpg/200px-RWS_Tarot_09_Hermit.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/RWS_Tarot_10_Wheel_of_Fortune.jpg/200px-RWS_Tarot_10_Wheel_of_Fortune.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/RWS_Tarot_11_Justice.jpg/200px-RWS_Tarot_11_Justice.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/RWS_Tarot_12_Hanged_Man.jpg/200px-RWS_Tarot_12_Hanged_Man.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/RWS_Tarot_13_Death.jpg/200px-RWS_Tarot_13_Death.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/RWS_Tarot_14_Temperance.jpg/200px-RWS_Tarot_14_Temperance.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/RWS_Tarot_15_Devil.jpg/200px-RWS_Tarot_15_Devil.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/RWS_Tarot_16_Tower.jpg/200px-RWS_Tarot_16_Tower.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/RWS_Tarot_17_Star.jpg/200px-RWS_Tarot_17_Star.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/RWS_Tarot_18_Moon.jpg/200px-RWS_Tarot_18_Moon.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/RWS_Tarot_19_Sun.jpg/200px-RWS_Tarot_19_Sun.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/RWS_Tarot_20_Judgement.jpg/200px-RWS_Tarot_20_Judgement.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/RWS_Tarot_21_World.jpg/200px-RWS_Tarot_21_World.jpg'
+    ];
+
     // ==================== 상태 관리 ====================
     let currentTopic = '';
     let currentSubtopic = '';
@@ -1516,20 +1668,24 @@
         let html = `<h2>별빛이 전하는 메시지</h2>
             <p class="result-topic-label">${topicLabel}</p>`;
 
-        html += `<div style="display:flex; justify-content:center; gap:16px; margin-bottom:36px; flex-wrap:wrap;">`;
+        html += `<div class="result-cards-row">`;
         drawnCards.forEach((dc, i) => {
             const card = MAJOR_ARCANA[dc.id];
             const dirLabel = dc.reversed ? '역방향' : '정방향';
             const dirColor = dc.reversed ? '#f87171' : '#4ade80';
             const tr = CARD_TRANSLATIONS[dc.id];
             const keywords = tr ? (dc.reversed ? tr.meaning_rev : tr.meaning_up) : '';
+            const imgUrl = CARD_IMAGES[dc.id];
+            const reversedClass = dc.reversed ? ' reversed' : '';
             html += `
-            <div style="background:rgba(255,255,255,0.04); border:2px solid rgba(248,197,66,0.3); border-radius:2px; padding:18px 16px; text-align:center; min-width:140px; flex:1; max-width:200px; box-shadow:3px 3px 0 #000;">
-                <div style="font-size:2em; margin-bottom:6px;">${card.emoji}</div>
-                <div style="font-family:'Galmuri11',monospace; font-weight:700; font-size:1em; color:#e2e8f0; margin-bottom:4px;">${card.nameKo}</div>
-                <div style="font-size:0.75em; color:#94a3b8; margin-bottom:6px;">${card.name}</div>
-                <div style="font-size:0.8em; color:${dirColor}; font-weight:600; margin-bottom:8px;">${dirLabel}</div>
-                ${keywords ? `<div style="font-size:0.75em; color:#a78bfa; line-height:1.5;">${keywords}</div>` : ''}
+            <div class="result-card">
+                <div class="result-card-img-wrap${reversedClass}">
+                    <img src="${imgUrl}" alt="${card.nameKo}" loading="eager">
+                </div>
+                <div class="result-card-name">${card.nameKo}</div>
+                <div class="result-card-name-en">${card.name}</div>
+                <div class="result-card-dir" style="color:${dirColor}">${dirLabel}</div>
+                ${keywords ? `<div class="result-card-keywords">${keywords}</div>` : ''}
             </div>`;
         });
         html += `</div>`;
@@ -1542,15 +1698,30 @@
         drawnCards.forEach((dc, i) => {
             const card = MAJOR_ARCANA[dc.id];
             const tr = CARD_TRANSLATIONS[dc.id];
-            if (tr) {
-                html += `
-                <div class="api-detail" style="margin-bottom:12px;">
-                    <details>
-                        <summary>🔮 ${CARD_ORDER_LABELS[i]} 카드 — ${card.nameKo}의 상징</summary>
-                        <p class="api-desc">${tr.desc}</p>
-                    </details>
-                </div>`;
-            }
+            const imgUrl = CARD_IMAGES[dc.id];
+            const reversedClass = dc.reversed ? ' reversed' : '';
+            const dirLabel = dc.reversed ? '역방향' : '정방향';
+            const dirColor = dc.reversed ? '#f87171' : '#4ade80';
+            const interp = card.interpretations[topicKey] || card.interpretations.general;
+            const reading = dc.reversed ? interp.rev : interp.up;
+            html += `
+            <div class="detail-card" style="margin-bottom:20px;">
+                <div class="detail-card-header">
+                    <div class="detail-card-img${reversedClass}">
+                        <img src="${imgUrl}" alt="${card.nameKo}">
+                    </div>
+                    <div class="detail-card-info">
+                        <div class="detail-card-order">${CARD_ORDER_LABELS[i]} 카드</div>
+                        <div class="detail-card-title">${card.nameKo} <span style="color:#94a3b8; font-weight:400; font-size:0.75em;">${card.name}</span></div>
+                        <div style="font-size:0.85em; color:${dirColor}; font-weight:600; margin-bottom:8px;">${dirLabel}</div>
+                        ${tr ? `<div style="font-size:0.8em; color:#a78bfa; margin-bottom:6px;">${dc.reversed ? tr.meaning_rev : tr.meaning_up}</div>` : ''}
+                    </div>
+                </div>
+                <div class="detail-card-body">
+                    <p class="detail-card-reading">${reading}</p>
+                    ${tr ? `<p class="detail-card-desc">${tr.desc}</p>` : ''}
+                </div>
+            </div>`;
         });
 
         html += `
