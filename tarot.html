@@ -237,40 +237,65 @@
             aspect-ratio: 2/3;
             border-radius: 2px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            border: 2px solid rgba(248,197,66,0.4);
-            background: linear-gradient(135deg, #1a103a, #0d0820);
-            display: flex;
-            align-items: center;
-            justify-content: center;
             user-select: none;
-            box-shadow: 2px 2px 0 #000;
             position: relative;
+            perspective: 600px;
         }
         .fan-card-inner {
+            width: 100%; height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+        }
+        .fan-card.selected .fan-card-inner {
+            transform: rotateY(180deg);
+        }
+        .fan-card-back, .fan-card-front {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            border-radius: 2px;
+            border: 2px solid rgba(248,197,66,0.4);
+            box-shadow: 2px 2px 0 #000;
+            overflow: hidden;
+        }
+        .fan-card-back {
+            background: linear-gradient(135deg, #1a103a, #0d0820);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            opacity: 0.6;
-            width: 100%; height: 100%;
-            background:
+            background-image:
                 repeating-linear-gradient(0deg, transparent, transparent 8px, rgba(248,197,66,0.06) 8px, rgba(248,197,66,0.06) 10px),
                 repeating-linear-gradient(90deg, transparent, transparent 8px, rgba(248,197,66,0.06) 8px, rgba(248,197,66,0.06) 10px);
         }
-        .fan-card-inner .card-back-pattern { font-size: 1.6em; color: #f8c542; text-shadow: 1px 1px 0 #000; }
-        .fan-card-inner .card-back-label { font-size: 0.55em; color: #f8c542; opacity: 0.7; margin-top: 4px; letter-spacing: 2px; }
-        .fan-card:hover {
+        .fan-card-back .card-back-pattern { font-size: 1.6em; color: #f8c542; text-shadow: 1px 1px 0 #000; }
+        .fan-card-back .card-back-label { font-size: 0.55em; color: #f8c542; opacity: 0.7; margin-top: 4px; letter-spacing: 2px; }
+        .fan-card-front {
+            transform: rotateY(180deg);
+            background: #1a103a;
+        }
+        .fan-card-front img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .fan-card:hover .fan-card-back {
             border-color: #f8c542;
             box-shadow: 0 0 12px rgba(248,197,66,0.3), 3px 3px 0 #000;
+        }
+        .fan-card:not(.selected):hover {
             transform: translateY(-4px);
+            transition: transform 0.2s ease;
         }
         .fan-card.selected {
+            transform: translateY(-4px);
+            transition: transform 0.2s ease;
+        }
+        .fan-card.selected .fan-card-front {
             border-color: #fff;
             box-shadow: 0 0 20px rgba(248,197,66,0.5), 3px 3px 0 #000;
-            transform: translateY(-4px);
         }
-        .fan-card.selected .fan-card-inner { opacity: 0.9; }
         .fan-card.disabled { opacity: 0.3; pointer-events: none; }
         .fan-badge {
             position: absolute;
@@ -518,8 +543,8 @@
             .shop-sign h1 { font-size: 1.6em; }
             .pixel-crystal { font-size: 4rem; }
             .fan-container { grid-template-columns: repeat(5, 1fr); gap: 8px; }
-            .fan-card-inner .card-back-pattern { font-size: 1.2em; }
-            .fan-card-inner .card-back-label { font-size: 0.45em; }
+            .fan-card-back .card-back-pattern { font-size: 1.2em; }
+            .fan-card-back .card-back-label { font-size: 0.45em; }
             .chat-bubble { font-size: 0.88em; padding: 10px 12px; }
             .chat-opt-btn { padding: 8px 16px; font-size: 0.85em; }
             .result-screen h2 { font-size: 1.4em; }
@@ -1581,8 +1606,13 @@
             return `
             <div class="fan-card" data-id="${id}" onclick="toggleCard(${id})">
                 <div class="fan-card-inner">
-                    <div class="card-back-pattern">✦</div>
-                    <div class="card-back-label">TAROT</div>
+                    <div class="fan-card-back">
+                        <div class="card-back-pattern">✦</div>
+                        <div class="card-back-label">TAROT</div>
+                    </div>
+                    <div class="fan-card-front">
+                        <img src="${CARD_IMAGES[id]}" alt="${MAJOR_ARCANA[id].nameKo}" loading="lazy">
+                    </div>
                 </div>
             </div>`;
         }).join('');
