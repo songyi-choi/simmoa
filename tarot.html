@@ -1399,6 +1399,7 @@
     let drawnCards = [];
     let selectedCards = [];
     let apiCards = null;
+    let resultShareUrl = '';
 
     const TOPIC_LABELS = {
         general: '제너럴 운세',
@@ -1658,12 +1659,13 @@
         const topicKey = currentSubtopic;
         const topicLabel = TOPIC_LABELS[topicKey] || TOPIC_LABELS[currentTopic];
 
-        const url = new URL(window.location);
+        const url = new URL(window.location.href.split('?')[0]);
         url.searchParams.set('t', currentTopic);
         if (currentSubtopic !== currentTopic) url.searchParams.set('s', currentSubtopic);
         url.searchParams.set('c', drawnCards.map(c => c.id).join(','));
         url.searchParams.set('r', drawnCards.map(c => c.reversed ? 1 : 0).join(','));
-        window.history.pushState({}, '', url);
+        resultShareUrl = url.toString();
+        window.history.pushState({}, '', resultShareUrl);
 
         let html = `<h2>별빛이 전하는 메시지</h2>
             <p class="result-topic-label">${topicLabel}</p>`;
@@ -1828,10 +1830,17 @@
 
     // ==================== 공유 기능 ====================
     function copyLink() {
-        navigator.clipboard.writeText(window.location.href).then(() => {
+        const url = resultShareUrl || window.location.href;
+        navigator.clipboard.writeText(url).then(() => {
             alert('링크가 복사되었습니다!');
         }).catch(() => {
-            alert('링크 복사에 실패했습니다.');
+            const ta = document.createElement('textarea');
+            ta.value = url;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            alert('링크가 복사되었습니다!');
         });
     }
 
@@ -1849,7 +1858,9 @@
             const dir = dc.reversed ? '(역)' : '';
             return card.nameKo + dir;
         }).join(', ');
-        const resultUrl = window.location.href;
+        const shareUrl = resultShareUrl || window.location.href;
+        const baseUrl = window.location.href.split('?')[0];
+        console.log('[카카오 공유] shareUrl:', shareUrl);
         Kakao.Share.sendDefault({
             objectType: 'feed',
             content: {
@@ -1857,23 +1868,23 @@
                 description: `${cardNames} — 별빛이 전하는 메시지를 확인해보세요!`,
                 imageUrl: 'https://via.placeholder.com/800x400/0a0a1a/f8c542?text=' + encodeURIComponent('🔮 별빛 타로'),
                 link: {
-                    mobileWebUrl: resultUrl,
-                    webUrl: resultUrl
+                    mobileWebUrl: shareUrl,
+                    webUrl: shareUrl
                 }
             },
             buttons: [
                 {
                     title: '결과 보기',
                     link: {
-                        mobileWebUrl: resultUrl,
-                        webUrl: resultUrl
+                        mobileWebUrl: shareUrl,
+                        webUrl: shareUrl
                     }
                 },
                 {
                     title: '나도 해보기',
                     link: {
-                        mobileWebUrl: window.location.href.split('?')[0],
-                        webUrl: window.location.href.split('?')[0]
+                        mobileWebUrl: baseUrl,
+                        webUrl: baseUrl
                     }
                 }
             ]
@@ -1884,7 +1895,8 @@
         const topicLabel = TOPIC_LABELS[currentSubtopic] || '타로 운세';
         const cardNames = drawnCards.map(c => MAJOR_ARCANA[c.id].nameKo).join(', ');
         const text = `🔮 나의 ${topicLabel} 타로 리딩: ${cardNames}`;
-        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.href)}`, '_blank');
+        const shareUrl = resultShareUrl || window.location.href;
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}`, '_blank');
     }
 
     function resetAll() {
