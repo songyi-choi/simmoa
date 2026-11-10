@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>환산 계산기</title>
+    <meta name="description" content="USDT로 구매한 금액을 구매 날짜의 테더 시세(업비트 KRW-USDT)로 원화 환산해 주는 계산기. 채굴기 등 해외 구매 금액을 한국 돈으로 확인하세요.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6727122014134843"
+         crossorigin="anonymous"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple SD Gothic Neo', sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 16px;
+            color: #222;
+        }
+
+        .container {
+            background: #fff;
+            border-radius: 16px;
+            padding: 40px 32px;
+            max-width: 480px;
+            width: 100%;
+            border: 1px solid #e0e0e0;
+        }
+
+        .home-link {
+            display: inline-block;
+            color: #999;
+            text-decoration: none;
+            font-size: 0.85em;
+            margin-bottom: 20px;
+        }
+        .home-link:hover { color: #26a17b; }
+
+        h1 {
+            text-align: center;
+            font-size: 1.6em;
+            font-weight: 700;
+            margin-bottom: 32px;
+        }
+
+
+        .field { margin-bottom: 18px; }
+
+        .field label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9em;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .field .hint {
+            font-weight: 400;
+            color: #aaa;
+            font-size: 0.85em;
+            margin-left: 4px;
+        }
+
+        .input-wrap { position: relative; }
+
+        .input-wrap input {
+            width: 100%;
+            padding: 13px 64px 13px 14px;
+            border: 1.5px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+            color: #222;
+            background: #fff;
+            transition: border-color 0.2s;
+        }
+        .input-wrap input:focus { outline: none; border-color: #26a17b; }
+
+        .input-wrap .unit {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 0.85em;
+            pointer-events: none;
+        }
+
+        input[type="date"] {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+            color: #222;
+            background: #fff;
+        }
+        input[type="date"]:focus { outline: none; border-color: #26a17b; }
+
+        .row { display: flex; gap: 10px; }
+        .row .field { flex: 1; }
+
+        .rate-box {
+            background: #f3faf7;
+            border: 1.5px solid #cfe9df;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 18px;
+        }
+
+        .rate-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .rate-title { font-weight: 600; font-size: 0.9em; color: #1d7a5d; }
+
+        .rate-status { font-size: 0.8em; color: #888; }
+        .rate-status.error { color: #d9534f; }
+
+        .rate-types {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .rate-type {
+            padding: 8px 4px;
+            border: 1.5px solid #cfe9df;
+            background: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            text-align: center;
+            color: #555;
+            transition: all 0.15s;
+        }
+        .rate-type .t { display: block; font-size: 0.75em; color: #999; }
+        .rate-type .v { display: block; font-size: 0.9em; font-weight: 600; margin-top: 2px; }
+        .rate-type.active { border-color: #26a17b; background: #26a17b; color: #fff; }
+        .rate-type.active .t { color: #e0f5ee; }
+        .rate-type:disabled { cursor: default; opacity: 0.5; }
+
+        .rate-box .input-wrap input { border-color: #cfe9df; }
+
+        .rate-note { font-size: 0.75em; color: #999; margin-top: 8px; line-height: 1.5; }
+
+        .check {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            color: #444;
+            margin-bottom: 24px;
+            cursor: pointer;
+        }
+        .check input { width: 18px; height: 18px; accent-color: #26a17b; }
+
+        .result {
+            border-top: 1.5px dashed #ddd;
+            padding-top: 22px;
+        }
+
+        .result-line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .result-line span:last-child { color: #333; font-weight: 500; }
+
+        .total {
+            margin-top: 16px;
+            background: #222;
+            color: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        .total .label { font-size: 0.85em; color: #aaa; margin-bottom: 6px; }
+        .total .krw { font-size: 1.8em; font-weight: 700; word-break: break-all; }
+        .total .korean { font-size: 0.85em; color: #8fd9be; margin-top: 6px; }
+
+        .actions { display: flex; gap: 10px; margin-top: 16px; }
+        .actions button {
+            flex: 1;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            border: 1.5px solid #222;
+        }
+        .btn-copy { background: #fff; color: #222; }
+        .btn-share { background: #26a17b; border-color: #26a17b !important; color: #fff; }
+
+        .info {
+            margin-top: 32px;
+            font-size: 0.8em;
+            color: #999;
+            line-height: 1.7;
+        }
+        .info strong { color: #666; }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #222;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        @media (max-width: 420px) {
+            .container { padding: 32px 20px; }
+            .row { flex-direction: column; gap: 0; }
+            .total .krw { font-size: 1.5em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="home-link">← 무쓸모.test</a>
+        <h1>💵 환산 계산기</h1>
+
+        <div class="row">
+            <div class="field">
+                <label for="price">단가</label>
+                <div class="input-wrap">
+                    <input type="text" id="price" inputmode="decimal" placeholder="예: 3,500" autocomplete="off">
+                    <span class="unit">USDT</span>
+                </div>
+            </div>
+            <div class="field" style="max-width: 130px;">
+                <label for="qty">수량</label>
+                <div class="input-wrap">
+                    <input type="text" id="qty" inputmode="numeric" value="1" autocomplete="off">
+                    <span class="unit">대</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="extra">추가 비용</label>
+            <div class="input-wrap">
+                <input type="text" id="extra" inputmode="decimal" placeholder="0" autocomplete="off">
+                <span class="unit">USDT</span>
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="date">구매 날짜</label>
+            <input type="date" id="date">
+        </div>
+
+        <div class="rate-box">
+            <div class="rate-head">
+                <span class="rate-title">1 USDT 시세 (업비트)</span>
+                <span class="rate-status" id="rateStatus">불러오는 중…</span>
+            </div>
+            <div class="rate-types" id="rateTypes">
+                <button type="button" class="rate-type" data-type="opening_price" disabled><span class="t">시가</span><span class="v">-</span></button>
+                <button type="button" class="rate-type" data-type="high_price" disabled><span class="t">고가</span><span class="v">-</span></button>
+                <button type="button" class="rate-type" data-type="low_price" disabled><span class="t">저가</span><span class="v">-</span></button>
+                <button type="button" class="rate-type active" data-type="trade_price" disabled><span class="t" id="closeLabel">종가</span><span class="v">-</span></button>
+            </div>
+            <div class="input-wrap">
+                <input type="text" id="rate" inputmode="decimal" placeholder="환율 직접 입력" autocomplete="off">
+                <span class="unit">원</span>
+            </div>
+            <p class="rate-note">시세를 불러오면 자동으로 채워져요. 판매자가 정한 환율이 있으면 직접 수정하세요.</p>
+        </div>
+
+        <label class="check">
+            <input type="checkbox" id="vat">
+            부가세 10% 포함해서 계산
+        </label>
+
+        <div class="result">
+            <div class="result-line"><span>USDT 합계</span><span id="sumUsdt">0 USDT</span></div>
+            <div class="result-line"><span>적용 환율</span><span id="appliedRate">-</span></div>
+            <div class="result-line" id="vatLine" style="display:none;"><span>부가세 (10%)</span><span id="vatKrw">0원</span></div>
+            <div class="total">
+                <div class="label" id="totalLabel">원화 환산 금액</div>
+                <div class="krw" id="totalKrw">0원</div>
+                <div class="korean" id="totalKorean"></div>
+            </div>
+            <div class="actions">
+                <button type="button" class="btn-copy" onclick="copyResult()">결과 복사</button>
+                <button type="button" class="btn-share" onclick="shareResult()">공유하기</button>
+            </div>
+        </div>
+
+        <div class="info">
+            <strong>시세 기준</strong><br>
+            업비트 KRW-USDT 일봉 기준이며, 하루는 한국시간 오전 9시부터 다음 날 오전 9시까지예요.
+            오늘 날짜는 실시간 현재가가 적용돼요.<br>
+            실제 거래 환율·수수료와 차이가 있을 수 있으니 참고용으로만 사용하세요.
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const API = 'https://api.upbit.com/v1';
+        const $ = (id) => document.getElementById(id);
+
+        let candle = null;       // 선택한 날짜의 시세 데이터
+        let rateType = 'trade_price';
+        let requestSeq = 0;
+
+        // ---- 날짜 유틸 (항상 한국시간 기준) ----
+        function kstToday() {
+            const now = new Date(Date.now() + 9 * 3600 * 1000);
+            return now.toISOString().slice(0, 10);
+        }
+        function addDays(ymd, n) {
+            const d = new Date(ymd + 'T00:00:00Z');
+            d.setUTCDate(d.getUTCDate() + n);
+            return d.toISOString().slice(0, 10);
+        }
+
+        // ---- 숫자 유틸 ----
+        function parseNum(str) {
+            const n = parseFloat(String(str).replace(/,/g, ''));
+            return isFinite(n) ? n : 0;
+        }
+        function fmt(n, digits = 0) {
+            return n.toLocaleString('ko-KR', { maximumFractionDigits: digits });
+        }
+        function toKoreanUnit(n) {
+            n = Math.round(n);
+            if (n < 10000) return '';
+            const eok = Math.floor(n / 1e8);
+            const man = Math.floor((n % 1e8) / 1e4);
+            const rest = n % 1e4;
+            let s = '';
+            if (eok) s += eok.toLocaleString('ko-KR') + '억 ';
+            if (man) s += man.toLocaleString('ko-KR') + '만 ';
+            if (rest) s += rest.toLocaleString('ko-KR');
+            return '약 ' + s.trim() + '원';
+        }
+
+        // 입력하면서 천 단위 콤마 자동 표시
+        function attachComma(input) {
+            input.addEventListener('input', () => {
+                const raw = input.value.replace(/[^0-9.]/g, '');
+                const [int, ...dec] = raw.split('.');
+                const intFmt = int ? Number(int).toLocaleString('en-US') : '';
+                input.value = dec.length ? `${intFmt || '0'}.${dec.join('').slice(0, 6)}` : intFmt;
+                calculate();
+            });
+        }
+
+        // ---- 시세 조회 ----
+        async function loadRate(ymd) {
+            const seq = ++requestSeq;
+            const isToday = ymd === kstToday();
+            const status = $('rateStatus');
+            status.textContent = '불러오는 중…';
+            status.classList.remove('error');
+            setRateButtons(null);
+
+            try {
+                let data;
+                if (isToday) {
+                    const res = await fetch(`${API}/ticker?markets=KRW-USDT`);
+                    if (!res.ok) throw new Error(res.status);
+                    data = (await res.json())[0];
+                } else {
+                    // 일봉은 KST 09:00 시작. to(미포함) = 다음 날 00:00 KST 로 두면 해당 날짜 일봉이 반환됨
+                    const to = encodeURIComponent(`${addDays(ymd, 1)}T00:00:00+09:00`);
+                    const res = await fetch(`${API}/candles/days?market=KRW-USDT&count=1&to=${to}`);
+                    if (!res.ok) throw new Error(res.status);
+                    const arr = await res.json();
+                    data = arr[0];
+                    if (!data || data.candle_date_time_kst.slice(0, 10) !== ymd) {
+                        throw new Error('NO_DATA');
+                    }
+                }
+                if (seq !== requestSeq) return; // 그 사이 날짜가 바뀜
+
+                candle = data;
+                $('closeLabel').textContent = isToday ? '현재가' : '종가';
+                setRateButtons(data);
+                $('rate').value = fmt(data[rateType], 2);
+                status.textContent = isToday ? '실시간' : `${ymd} 기준`;
+                calculate();
+            } catch (e) {
+                if (seq !== requestSeq) return;
+                candle = null;
+                status.textContent = e.message === 'NO_DATA' ? '해당 날짜 시세 없음' : '불러오기 실패 · 직접 입력';
+                status.classList.add('error');
+                calculate();
+            }
+        }
+
+        function setRateButtons(data) {
+            document.querySelectorAll('.rate-type').forEach((btn) => {
+                const v = data ? data[btn.dataset.type] : null;
+                btn.querySelector('.v').textContent = v ? fmt(v, 2) : '-';
+                btn.disabled = !data;
+                btn.classList.toggle('active', btn.dataset.type === rateType);
+            });
+        }
+
+        document.querySelectorAll('.rate-type').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                if (!candle) return;
+                rateType = btn.dataset.type;
+                setRateButtons(candle);
+                $('rate').value = fmt(candle[rateType], 2);
+                calculate();
+            });
+        });
+
+        // ---- 계산 ----
+        function getResult() {
+            const price = parseNum($('price').value);
+            const qty = parseNum($('qty').value);
+            const extra = parseNum($('extra').value);
+            const rate = parseNum($('rate').value);
+            const vatOn = $('vat').checked;
+
+            const usdt = price * qty + extra;
+            const base = usdt * rate;
+            const vat = vatOn ? base * 0.1 : 0;
+            return { price, qty, extra, rate, usdt, base, vat, total: base + vat, vatOn, date: $('date').value };
+        }
+
+        function calculate() {
+            const r = getResult();
+            $('sumUsdt').textContent = `${fmt(r.usdt, 6)} USDT`;
+            $('appliedRate').textContent = r.rate ? `1 USDT = ${fmt(r.rate, 2)}원` : '-';
+            $('vatLine').style.display = r.vatOn ? 'flex' : 'none';
+            $('vatKrw').textContent = `${fmt(Math.round(r.vat))}원`;
+            $('totalLabel').textContent = r.vatOn ? '원화 환산 금액 (부가세 포함)' : '원화 환산 금액';
+            $('totalKrw').textContent = `${fmt(Math.round(r.total))}원`;
+            $('totalKorean').textContent = toKoreanUnit(r.total);
+        }
+
+        function resultText() {
+            const r = getResult();
+            const lines = [
+                `💵 테더 원화 환산 (${r.date})`,
+                `${fmt(r.price, 6)} USDT × ${fmt(r.qty)}${r.extra ? ` + ${fmt(r.extra, 6)}` : ''} = ${fmt(r.usdt, 6)} USDT`,
+                `환율: 1 USDT = ${fmt(r.rate, 2)}원`,
+            ];
+            if (r.vatOn) lines.push(`부가세 10%: ${fmt(Math.round(r.vat))}원`);
+            lines.push(`합계: ${fmt(Math.round(r.total))}원`);
+            return lines.join('\n');
+        }
+
+        function copyResult() {
+            navigator.clipboard.writeText(resultText())
+                .then(() => showToast('클립보드에 복사되었습니다! 📋'))
+                .catch(() => showToast('복사에 실패했습니다.'));
+        }
+
+        async function shareResult() {
+            if (navigator.share) {
+                try {
+                    await navigator.share({ title: '환산 계산기', text: resultText(), url: location.href });
+                } catch (err) {
+                    if (err.name !== 'AbortError') copyResult();
+                }
+            } else {
+                copyResult();
+            }
+        }
+
+        function showToast(message) {
+            const toast = $('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        // ---- 초기화 ----
+        ['price', 'qty', 'extra', 'rate'].forEach((id) => attachComma($(id)));
+        $('vat').addEventListener('change', calculate);
+
+        const dateInput = $('date');
+        const today = kstToday();
+        dateInput.value = today;
+        dateInput.max = today;
+        dateInput.addEventListener('change', () => {
+            if (!dateInput.value) return;
+            if (dateInput.value > today) dateInput.value = today;
+            loadRate(dateInput.value);
+        });
+
+        loadRate(today);
+    </script>
+</body>
+</html>
