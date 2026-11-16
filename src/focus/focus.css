@@ -1,0 +1,244 @@
+/* 집중하면 복이 와요 — 따뜻한 손그림 일러스트
+   흰 도화지 위에 크레파스 그림이 주인공. 상자 대신 여백으로 나누고,
+   손글씨(Gaegu)는 제목·시간·버튼에만, 읽는 글은 고운돋움으로. */
+:root {
+  --ink: #2f2925;
+  --paper: #ffffff;
+  --orange: #f08a3c;
+  --orange-deep: #c8622a;
+  --yellow: #f7c948;
+  --red: #e8553a;
+  --blue: #3f8fd2;
+  --muted: #6e6359;
+  --faint: #a2968a;
+  --hand: "Gaegu", cursive;
+  --text: "Gowun Dodum", system-ui, sans-serif;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  font-size: 16px;
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  min-height: 100vh;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button { font: inherit; color: inherit; cursor: pointer; border: none; background: none; }
+button:disabled { cursor: default; }
+:focus-visible { outline: 2px dashed var(--orange); outline-offset: 4px; }
+
+/* 흰 도화지 질감: 화면 전체에 한 장 (Doodles.tsx PaperTexture) */
+.paper-texture { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; mix-blend-mode: multiply; opacity: 0.5; }
+
+/* ── 손그림 공통 ──────────────────── */
+.rough { position: relative; isolation: isolate; }
+.rough > .rough-svg { position: absolute; inset: 0; z-index: -1; overflow: visible; pointer-events: none; }
+.rough-line { display: block; height: 10px; }
+
+.bakery { max-width: 1040px; margin: 0 auto; padding: 20px 20px 80px; }
+
+/* ── 머리말 ───────────────────────── */
+.bakery-header { position: relative; text-align: center; padding-top: 8px; }
+.back-link { position: absolute; left: 0; top: 10px; color: var(--muted); text-decoration: none; font-size: 0.95rem; }
+.back-link:hover { color: var(--ink); }
+.title-block { padding-top: 34px; }
+.bakery-header h1 {
+  font-family: var(--hand); font-weight: 400; font-size: clamp(2.1rem, 8vw, 3.6rem); line-height: 1.1; white-space: nowrap;
+  display: flex; align-items: center; justify-content: center; gap: 8px; color: #43382f; letter-spacing: 0;
+}
+/* 크레파스로 쓴 듯한 제목 글씨 */
+.bakery-header h1 .title-text { filter: url(#crayon-text); }
+.sign-cookie { width: 1.5em; animation: wobble 3s ease-in-out infinite; }
+.subtitle { margin-top: 6px; font-size: 1rem; color: var(--muted); }
+
+.tabs { display: flex; justify-content: center; gap: 26px; margin: 26px auto 40px; }
+.tabs button { padding: 2px 6px; font-family: var(--hand); font-weight: 700; font-size: 1.35rem; color: var(--faint); letter-spacing: 0; }
+.tabs button.on { color: var(--ink); }
+.tabs .count { font-size: 1.05rem; }
+
+/* ── 레이아웃: 왼쪽 그림, 오른쪽 바구니·목표 ── */
+.bake-layout {
+  display: grid; column-gap: 56px; row-gap: 40px;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "oven basket" "oven recipe";
+  align-items: start;
+}
+.oven-card { grid-area: oven; }
+.basket-card { grid-area: basket; }
+.recipe-card { grid-area: recipe; }
+@media (max-width: 800px) {
+  .bake-layout { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; grid-template-areas: "oven" "basket" "recipe"; row-gap: 44px; }
+}
+
+h2 { font-family: var(--hand); font-weight: 700; font-size: 1.55rem; line-height: 1.2; margin-bottom: 10px; letter-spacing: 0; }
+h2 .highlight { display: inline-block; padding: 0 4px; }
+h3 { font-family: var(--hand); font-weight: 700; letter-spacing: 0; }
+
+/* ── 오븐 ─────────────────────────── */
+.card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.today { color: var(--muted); font-size: 0.95rem; }
+.fast-badge { font-size: 0.85rem; color: #b8381f; text-decoration: none; border-bottom: 1.5px dashed #e8553a; margin-left: 4px; }
+
+.goal-now { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
+.goal-now .title-text { flex: 1; margin: 0; font-size: 1.9rem; overflow-wrap: anywhere; }
+.sessions { display: flex; gap: 5px; flex-shrink: 0; }
+.pip { display: inline-block; width: 22px; height: 22px; }
+
+.oven { position: relative; max-width: 520px; margin: 18px auto 0; }
+.oven-art { position: relative; aspect-ratio: 900 / 630; }
+.oven-art img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity 0.8s ease; }
+.oven-art img.on { opacity: 1; }
+.oven.baking .oven-art { animation: hum 1.6s ease-in-out infinite; }
+/* 시간은 유리창 위쪽(그림 900×630 기준 x 140~590, y 230~360)에 겹쳐 쓴다 */
+.oven-time {
+  position: absolute; left: 16%; right: 35%; top: 36%; height: 21%;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  font-family: var(--hand); font-weight: 700; font-size: clamp(2.2rem, 9vw, 3.8rem); line-height: 1; letter-spacing: 0;
+  font-variant-numeric: tabular-nums; color: #3a2a1e;
+  text-shadow: 0 0 6px rgba(255, 248, 232, 0.9), 0 0 2px rgba(255, 248, 232, 0.9);
+}
+.oven-time.small { font-size: clamp(1.05rem, 4vw, 1.55rem); line-height: 1.2; }
+
+.caption { text-align: center; font-size: 1.02rem; color: var(--muted); margin-top: 14px; }
+.oven-actions { display: flex; gap: 14px; justify-content: center; align-items: center; margin-top: 18px; }
+
+/* 버튼 — 크레파스 빗금 칠하기 */
+.btn { font-family: var(--hand); font-weight: 700; font-size: 1.35rem; letter-spacing: 0; padding: 6px 30px 8px; transition: transform 0.12s; }
+.btn:hover:not(:disabled) { transform: rotate(-1.5deg) scale(1.03); }
+.btn:active:not(:disabled) { transform: translate(1px, 2px) scale(0.98); }
+.btn:disabled { color: var(--faint); }
+.btn.ghost { font-family: var(--text); font-weight: 400; font-size: 0.95rem; color: var(--muted); text-decoration: underline; text-decoration-style: wavy; text-decoration-color: var(--faint); text-underline-offset: 6px; padding: 4px 8px; }
+.btn.ghost:hover:not(:disabled) { transform: none; color: var(--ink); }
+
+/* ── 오른쪽 칸 ────────────────────── */
+.basket-empty { display: flex; align-items: center; gap: 14px; color: var(--muted); font-size: 0.98rem; }
+.basket-svg { width: 84px; flex-shrink: 0; }
+.basket-hint { font-size: 0.95rem; color: var(--muted); }
+.basket { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 10px; margin-top: 8px; }
+.basket-cookie { width: 100%; display: flex; flex-direction: column; align-items: center; padding: 6px 4px; border-radius: 14px; transition: transform 0.15s, background 0.15s; }
+.basket-cookie:hover { transform: translateY(-3px); background: rgba(247, 201, 72, 0.18); }
+.mini-cookie { width: 80px; animation: wobble 2.6s ease-in-out infinite; }
+.basket li:nth-child(2n) .mini-cookie { animation-delay: 0.4s; }
+.basket-label { font-size: 0.88rem; color: var(--muted); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.input-line input {
+  width: 100%; padding: 4px 2px; font: inherit; font-size: 1.1rem; color: var(--ink);
+  border: none; background: transparent; border-radius: 0;
+}
+.input-line input::placeholder { color: var(--faint); }
+.input-line input:focus { outline: none; }
+.input-line .rough-line { margin-top: -4px; }
+.goal-options { display: flex; gap: 18px; margin-top: 18px; align-items: flex-end; flex-wrap: wrap; }
+.goal-options label { display: flex; flex-direction: column; gap: 2px; font-size: 0.85rem; color: var(--muted); }
+.select-box { display: inline-block; padding: 0 2px 4px; }
+.select-box select { padding: 2px 2px; font: inherit; font-size: 1.05rem; color: var(--ink); border: none; background: transparent; cursor: pointer; }
+.select-box select:focus { outline: none; }
+.minutes-input { width: 3.2ch; padding: 2px 0; font: inherit; font-size: 1.05rem; color: var(--ink); border: none; background: transparent; text-align: right; -moz-appearance: textfield; }
+.minutes-input::-webkit-outer-spin-button, .minutes-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.minutes-input:focus { outline: none; }
+.select-box .unit { font-size: 1.05rem; margin-left: 2px; }
+.select-box:focus-within { outline: 2px dashed var(--orange); outline-offset: 3px; }
+.goal-options .btn { margin-left: auto; padding: 4px 22px 6px; font-size: 1.25rem; }
+.goal-sum { margin-top: 10px; font-size: 0.88rem; color: var(--muted); }
+
+.recipe-card h3 { font-size: 1.15rem; color: var(--muted); margin: 26px 0 0; }
+.goal-list { list-style: none; margin-top: 14px; }
+.goal-list li { display: flex; align-items: center; min-height: 46px; position: relative; }
+.goal-list .li-rule { position: absolute; left: 0; right: 0; bottom: -4px; opacity: 0.6; }
+.goal-list li.active::before { content: ""; position: absolute; left: -14px; width: 6px; height: 6px; border-radius: 50%; background: var(--orange); }
+.goal-pick { flex: 1; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 4px 2px; text-align: left; min-width: 0; }
+.goal-title { overflow-wrap: anywhere; font-size: 1rem; }
+.goal-meta { font-size: 0.85rem; color: var(--muted); white-space: nowrap; }
+.goal-list.done li { color: var(--muted); }
+.goal-list.done .goal-title { flex: 1; text-decoration: line-through 1.5px rgba(200, 98, 42, 0.6); }
+.goal-remove { width: 36px; height: 36px; color: var(--faint); font-size: 1.2rem; flex-shrink: 0; }
+.goal-remove:hover { color: var(--red); }
+
+/* ── 쿠키 그림 공통 ─────────────── */
+.cookie-art { position: relative; display: block; aspect-ratio: 750 / 520; }
+.cookie-art img { position: relative; display: block; width: 100%; height: 100%; }
+.cookie-art.cracked img { animation: pop 0.45s cubic-bezier(0.2, 1.4, 0.4, 1); }
+/* 등급: 뒤에 은은한 빛 + 반짝이 */
+.cookie-art.rare::before, .cookie-art.legend::before {
+  content: ""; position: absolute; inset: -8% -4%; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(247, 201, 72, 0.55), rgba(247, 201, 72, 0));
+}
+.cookie-art.legend::before { background: radial-gradient(closest-side, rgba(239, 123, 92, 0.45), rgba(247, 201, 72, 0.25) 60%, rgba(247, 201, 72, 0)); }
+.cookie-art.legend img { filter: saturate(1.25) hue-rotate(-8deg); }
+.cookie-art.rare::after, .cookie-art.legend::after {
+  content: "✦"; position: absolute; right: -4%; top: -10%; font-size: 0.32em; line-height: 1;
+  color: #f2b636; animation: twinkle 1.6s ease-in-out infinite;
+}
+.cookie-art.legend::after { content: "✦ ✦"; color: #ef7b5c; letter-spacing: 0.3em; }
+
+/* ── 쿠키 열기 ────────────────────── */
+.modal-backdrop {
+  position: fixed; inset: 0; z-index: 50; background: rgba(47, 41, 37, 0.32);
+  display: flex; align-items: center; justify-content: center; padding: 16px; animation: fade 0.2s ease-out;
+}
+.modal {
+  width: 100%; max-width: 400px; max-height: calc(100vh - 32px); overflow-y: auto; overflow-x: hidden;
+  padding: 28px 26px 24px; text-align: center; background: #fffefb; border-radius: 22px;
+  box-shadow: 0 18px 50px rgba(60, 40, 20, 0.18), 0 2px 6px rgba(60, 40, 20, 0.08);
+  animation: pop 0.3s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+.modal .today { display: block; }
+.modal-goal { font-size: 0.98rem; margin: 2px 0 6px; color: var(--muted); }
+.modal-hint { font-family: var(--hand); font-size: 1.35rem; margin-top: 8px; letter-spacing: 0; }
+.modal-drawing { position: relative; padding: 10px 0; }
+
+.fortune-cookie { position: relative; width: 230px; margin: 0 auto; display: block; font-size: 120px; }
+.fortune-cookie.ready { animation: wobble 1.8s ease-in-out infinite; }
+.fortune-cookie.ready:hover { animation-duration: 0.6s; }
+.fortune-cookie.cracking { animation: shake 0.3s ease-in-out infinite; }
+
+.fortune-entry { margin-top: 4px; animation: slide-up 0.5s ease-out; }
+.fortune-title { font-size: 1.6rem; line-height: 1.2; margin: 10px 0 6px; }
+.fortune-message { font-size: 1.02rem; line-height: 1.7; word-break: keep-all; overflow-wrap: anywhere; }
+.slip-lucky { margin: 12px 0 18px; font-size: 0.9rem; color: var(--muted); }
+.fortune-entry .btn { width: 100%; }
+
+.rarity-badge { display: inline-block; font-family: var(--hand); font-weight: 700; font-size: 0.95rem; letter-spacing: 0; padding: 0 12px 2px; white-space: nowrap; }
+
+/* ── 운세 액자(도감) ──────────────── */
+.collection.empty { text-align: center; font-size: 1rem; color: var(--muted); padding: 30px 22px 40px; }
+.empty-cookie { width: 150px; font-size: 80px; margin: 0 auto 14px; }
+.collection-stats { display: flex; justify-content: center; gap: clamp(20px, 7vw, 64px); }
+.collection-stats > div { text-align: center; display: flex; flex-direction: column; align-items: center; }
+.stat-cookie { width: 64px; font-size: 48px; }
+.collection-stats strong { font-family: var(--hand); font-size: 2rem; line-height: 1.1; }
+.collection-stats span { font-size: 0.85rem; color: var(--muted); }
+.collection-note { text-align: center; font-size: 0.9rem; color: var(--muted); margin-top: 14px; }
+.filter-row { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; margin: 24px 0 34px; }
+.filter-row button { padding: 0 4px; font-family: var(--hand); font-weight: 700; font-size: 1.15rem; color: var(--faint); letter-spacing: 0; }
+.filter-row button.on { color: var(--ink); }
+
+.frames { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 34px 30px; }
+.frame { padding: 20px 22px; text-align: center; }
+.frame-art { position: relative; display: flex; align-items: center; justify-content: center; height: 116px; }
+.page-cookie { width: 150px; font-size: 80px; }
+.badge-corner { position: absolute; left: -6px; top: -6px; }
+.frame .fortune-title { font-size: 1.35rem; }
+.frame .fortune-message { font-size: 0.95rem; text-align: left; }
+.frame .slip-lucky { margin: 10px 0 2px; font-size: 0.85rem; }
+.slip-meta { font-size: 0.8rem; color: var(--faint); }
+
+/* ── 애니메이션 ───────────────────── */
+@keyframes wobble { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+@keyframes shake { 0%, 100% { transform: translateX(0) rotate(0); } 25% { transform: translateX(-4px) rotate(-4deg); } 75% { transform: translateX(4px) rotate(4deg); } }
+@keyframes hum { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+@keyframes twinkle { 0%, 100% { transform: scale(1) rotate(0); } 50% { transform: scale(0.6) rotate(20deg); } }
+@keyframes pop { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide-up { from { transform: translateY(20px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}

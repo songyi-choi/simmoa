@@ -2,10 +2,10 @@
 // Cloudflare Pages 에서 `npm run build` 한 번으로 전체 사이트(React 타로 + 정적 HTML)가 배포되도록 함.
 //
 // 복사 대상:
-//   - 루트의 *.html 중 tarot.html 을 제외한 모든 파일 (index, animal, blog-*, ...)
+//   - 루트의 *.html 중 Vite 엔트리(tarot.html, focus.html)를 제외한 모든 파일 (index, animal, blog-*, ...)
 //   - 루트 레벨 메타 파일: ads.txt, robots.txt, robot.txt, sitemap.xml
 //
-// 주의: tarot.html 은 Vite 가 이미 dist/ 로 빌드했으므로 덮어쓰면 안 된다.
+// 주의: tarot.html, focus.html 은 Vite 가 이미 dist/ 로 빌드했으므로 덮어쓰면 안 된다.
 
 import { readdirSync, copyFileSync, existsSync, statSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
@@ -20,7 +20,7 @@ if (!existsSync(distDir)) {
   process.exit(1);
 }
 
-const EXCLUDED_HTML = new Set(['tarot.html']);
+const EXCLUDED_HTML = new Set(['tarot.html', 'focus.html']);
 const ROOT_META_FILES = ['ads.txt', 'robots.txt', 'robot.txt', 'sitemap.xml'];
 
 let copiedHtml = 0;
