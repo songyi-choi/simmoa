@@ -1,7 +1,6 @@
 import type { Cookie } from "../lib/types";
 import { Heading } from "./Sketch";
-import { BasketDoodle } from "./Doodles";
-import { CookieArt } from "./Art";
+import { BasketArt, CookieArt } from "./Art";
 
 interface Props {
   cookies: Cookie[];
@@ -14,7 +13,7 @@ export function Basket({ cookies, onOpen }: Props) {
       <Heading color="#f4a45c">쿠키 바구니</Heading>
       {cookies.length === 0 ? (
         <div className="basket-empty">
-          <BasketDoodle />
+          <BasketArt />
           <p>목표를 다 채우면 여기에 포춘쿠키가 담겨요</p>
         </div>
       ) : (

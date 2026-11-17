@@ -23,3 +23,8 @@ export function CookieArt({ rarity = "common", cracked = false, className }: { r
     </span>
   );
 }
+
+/** 바구니 (빈 바구니 안내용) */
+export function BasketArt() {
+  return <img src="/focus/basket.webp" alt="" className="basket-art" width={600} height={640} decoding="async" aria-hidden />;
+}
